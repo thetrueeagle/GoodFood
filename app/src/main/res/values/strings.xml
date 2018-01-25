@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">GoodFood</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_log_in">Log in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_sign_up">Sign up</string>
+    <string name="action_sign_in">Register</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="my_profile">My Profile</string>
+    <string name="recipes">Recipes</string>
+    <string name="order_veg_bags">Order Veg Bags</string>
+    <string name="cooking_classes">Cooking Classes</string>
+    <string name="information">Information</string>
+    <string name="title_activity_order">OrderActivity</string>
+    <string name="submit">Submit</string>
+    <string name="comment">Comment</string>
+
+    <string-array name="order_amount">
+        <item>Select amount</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string name="title_activity_my_profile">MyProfileActivity</string>
+    <string name="title_activity_achievements">AchievementsActivity</string>
+
+
+</resources>
