@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +26,7 @@ public class LoginActivity extends Activity {
     SharedPreferences sharedpreferences;
 
     public static final String MyPREFERENCES = "MyPrefs" ;
-    public static final String Name = "nameKey";
+    public static final String PREFS_NAME = "name";
 
 
     @Override
@@ -34,11 +35,11 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
 
-        email = (EditText) findViewById(R.id.email);
-        pass = (EditText) findViewById(R.id.password);
-        login = (Button) findViewById(R.id.log_in_button);
+        email = findViewById(R.id.email);
+        pass = findViewById(R.id.password);
+        login = findViewById(R.id.log_in_button);
 
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE); //functions as session control?? doesn't work yet
         
 
         login.setOnClickListener(new OnClickListener() {
@@ -51,17 +52,19 @@ public class LoginActivity extends Activity {
                 String password = pass.getText().toString();
 
 
-                if(db.checkPassword(username, password)){
+
+                //encrypt password method
+
+
+                if(db.checkPassword(username, password)){    //checks if password mathes the one in database
 
                     Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_LONG).show();
-
-                    String n  = username;
 
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
 
-                    editor.putString(Name, n);
-                    editor.commit();
+                    editor.putString(PREFS_NAME, username);
+                    editor.apply();
 
                     Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
@@ -70,8 +73,8 @@ public class LoginActivity extends Activity {
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Username/Password incorrect", Toast.LENGTH_LONG).show();
-                    email.setText("");
-                    pass.setText("");
+                    //email.setText("");
+                    //pass.setText("");
                 }
 
 

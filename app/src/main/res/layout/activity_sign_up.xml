@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,6 +20,24 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="353dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/rock_salt"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorLink="#FFFFFF"
+        android:textSize="36sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_optimizationLevel="none" />
 
     <ScrollView
         android:id="@+id/login_form"
@@ -109,8 +128,8 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="130dp"
-                android:background="#008ae6"
+                android:layout_marginTop="50dp"
+                android:background="@android:color/holo_blue_dark"
                 android:onClick="register"
                 android:text="@string/action_sign_in"
                 android:textColor="#FFFFFF"

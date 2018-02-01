@@ -12,36 +12,49 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import static com.goodfood.ape.goodfood.LoginActivity.MyPREFERENCES;
+import static com.goodfood.ape.goodfood.LoginActivity.PREFS_NAME;
 
 public class HomeActivity extends AppCompatActivity {
 
-    MyDBHandler dbHandler;
+    MyDBHandler db;
     TextView welcomeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        //SharedPreferences.Editor editor = sharedpreferences.edit();
+        welcomeName = findViewById(R.id.welcomeName);
+
+        db = new MyDBHandler(HomeActivity.this, null, null, 1);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        welcomeName.setText(db.getName(sharedpreferences.getString(PREFS_NAME, "")));
+
+
+
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "This button will log you out", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast.makeText(getApplicationContext(), "Successfully logged out", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplicationContext(), StartScreen.class));
             }
         });
 
 
-        Button btnOrderActivity = (Button) findViewById(R.id.order_veg_bag);
+        Button btnOrderActivity = findViewById(R.id.order_veg_bag);
         btnOrderActivity.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 launchOrder();
             }
         });
-        Button btnClassesActivity = (Button) findViewById(R.id.cooking_classes);
+        Button btnClassesActivity = findViewById(R.id.cooking_classes);
         btnClassesActivity.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -49,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        Button btnRecipesActivity = (Button) findViewById(R.id.recipes);
+        Button btnRecipesActivity = findViewById(R.id.recipes);
         btnRecipesActivity.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -57,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        Button btnMyProfileActivity = (Button) findViewById(R.id.my_profile);
+        Button btnMyProfileActivity = findViewById(R.id.my_profile);
         btnMyProfileActivity.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -65,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        Button btnInformationActivity = (Button) findViewById(R.id.infromation);
+        Button btnInformationActivity = findViewById(R.id.infromation);
         btnInformationActivity.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -74,9 +87,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-        SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        welcomeName.setText(sharedpreferences.getString("nameKey", null));
+
     }
 
 
@@ -92,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void launchRecipes() {
-        Intent intent = new Intent(this, OrderActivity.class);
+        Intent intent = new Intent(this, Recipes.class);
         startActivity(intent);
     }
 

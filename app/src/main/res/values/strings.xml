@@ -41,6 +41,21 @@
     </string-array>
     <string name="title_activity_my_profile">MyProfileActivity</string>
     <string name="title_activity_achievements">AchievementsActivity</string>
+    <string name="title_activity_recipes">Recipes</string>
+
+    <string name="search">Search</string>
+    <string name="keyword">Keyword</string>
+    <string name="ingredients_title">Select maximum number of ingredients</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="dietary_title">Select any dietary options</string>
+    <string name="health_title">Select any health options</string>
+    <string name="calorie_title">Select desired calorie range</string>
+    <string name="nutrient_title">Select any nutrient range</string>
+    <string name="anna_eglite">Anna Eglite</string>
+    <string name="daily_intake">Daily intake</string>
+    <string name="achievements">Achievements</string>
+    <string name="my_details">My Details</string>
 
 
 </resources>

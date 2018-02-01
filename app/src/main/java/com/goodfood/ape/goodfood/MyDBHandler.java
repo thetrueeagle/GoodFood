@@ -10,7 +10,10 @@ import android.database.Cursor;
 import android.content.Context;
 import android.content.ContentValues;
 
+import org.mindrot.jbcrypt.BCrypt;
 
+import java.security.MessageDigest;
+import java.security.SecureRandom;
 
 
 public class MyDBHandler extends SQLiteOpenHelper {
@@ -110,6 +113,26 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
         return dbString;
     }
 
+
+
+    public String getName(String username){
+        String name = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT firstName FROM " + TABLE_NAME + " WHERE email=\"" + username + "\";";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()){
+            if (c.getString(c.getColumnIndex("firstName")) != null){
+                name += c.getString(c.getColumnIndex("firstName"));
+                name += "\n";
+            }
+            c.moveToNext();
+        }
+        db.close();
+        c.close();
+        return name;
+    }
+
     public boolean checkPassword(String email, String password) {
 
         SQLiteDatabase db = getWritableDatabase();
@@ -135,6 +158,23 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
 
         return check;
     }
+
+
+/*    public String encryptPassword (String password){ //SECURITY NOT ESSENTIAL FOR THIS PROJECT
+
+
+
+
+        String generatedSecuredPasswordHash = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        System.out.println(generatedSecuredPasswordHash);
+
+        boolean matched = BCrypt.checkpw(password, generatedSecuredPasswordHash);
+        System.out.println(matched);
+
+
+
+
+    }*/
 
 
 

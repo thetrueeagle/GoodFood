@@ -42,7 +42,16 @@
         <activity
             android:name=".AchievementsActivity"
             android:label="@string/title_activity_achievements"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Recipes"
+            android:label="@string/title_activity_recipes"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.goodfood.ape.goodfood.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -22,13 +22,13 @@ public class SignUpActivity extends Activity {
         setContentView(R.layout.activity_sign_up);
 
 
-        first = (EditText) findViewById(R.id.name);
-        last = (EditText) findViewById(R.id.lastName);
-        email = (EditText) findViewById(R.id.email);
-        pass = (EditText) findViewById(R.id.password);
-        confpass = (EditText) findViewById(R.id.confirmPassword);
+        first = findViewById(R.id.name);
+        last = findViewById(R.id.lastName);
+        email = findViewById(R.id.email);
+        pass = findViewById(R.id.password);
+        confpass = findViewById(R.id.confirmPassword);
 
-        register = (Button) findViewById(R.id.register_button);
+        register = findViewById(R.id.register_button);
 
 
         register.setOnClickListener(new OnClickListener() {
@@ -47,12 +47,11 @@ public class SignUpActivity extends Activity {
 
 
                     db = new MyDBHandler(SignUpActivity.this, null, null, 1);
+
+                    //encrypt pass method
+
                     Users user = new Users(edfirst, edlast, edemail, edpass);
 
-                    //email.set_firstName(edfirst);
-                    //email.set_lastName(edlast);
-                    //email.set_email(edemail);
-                    //email.set_password(edpass);
                     db.addUser(user);
 
                     Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_LONG).show();
@@ -60,8 +59,8 @@ public class SignUpActivity extends Activity {
                 } else {
 
                     Toast.makeText(getApplicationContext(), "Password doesn't match", Toast.LENGTH_LONG).show();
-                    //pass.setText("");
-                    //confpass.setText("");
+                    pass.setText("");
+                    confpass.setText("");
                 }
             }
         });

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="count">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>>10</item>
+    </string-array>
+
+    <string-array name="dietary_options">
+        <item>Balanced</item>
+        <item>High-fiber</item>
+        <item>High-protein</item>
+        <item>Low-carb</item>
+        <item>Low-fat</item>
+        <item>Low-sodium</item>
+    </string-array>
+
+    <string-array name="health_options">
+        <item>Alcohol-free</item>
+        <item>Celery-free</item>
+        <item>Crustacean-free</item>
+        <item>Dairy-free</item>
+        <item>Egg-free</item>
+        <item>Fish-free</item>
+        <item>Gluten-free</item>
+        <item>Kidney friendly</item>
+        <item>Kosher</item>
+        <item>Low potassium</item>
+        <item>Lupine-free</item>
+        <item>Mustard-free</item>
+        <item>No oil added</item>
+        <item>No sugar</item>
+        <item>Paleo</item>
+        <item>Peanut-free</item>
+        <item>Pescatarian</item>
+        <item>Pork-free</item>
+        <item>Red meat-free</item>
+        <item>Sesame-free</item>
+        <item>Shellfish-free</item>
+        <item>Soy-free</item>
+        <item>Sugar-conscious</item>
+        <item>Tree nut-free</item>
+        <item>Vegan</item>
+        <item>Vegetarian</item>
+        <item>Wheat-free</item>
+
+
+    </string-array>
+
+
+    <string-array name="nutrient_options">
+        <item>Calcium</item>
+        <item>Carbs</item>
+        <item>Cholesterol</item>
+        <item>Monounsaturated</item>
+        <item>Polyunsaturated</item>
+        <item>Saturated</item>
+        <item>Fat</item>
+        <item>Trans</item>
+        <item>Iron</item>
+        <item>Fiber</item>
+        <item>Folate</item>
+        <item>Potassium</item>
+        <item>Magnesium</item>
+        <item>Sodium</item>
+        <item>Energy</item>
+        <item>Niacin (B3)</item>
+        <item>Phosphorus</item>
+        <item>Protein</item>
+        <item>Riboflavin (B2)</item>
+        <item>Sugars</item>
+        <item>Thiamin (B1)</item>
+        <item>Vitamin A</item>
+        <item>Vitamin E</item>
+        <item>Vitamin B12</item>
+        <item>Vitamin B6</item>
+        <item>Vitamin C</item>
+        <item>Vitamin D</item>
+        <item>Vitamin K</item>
+
+    </string-array>
+
+</resources>

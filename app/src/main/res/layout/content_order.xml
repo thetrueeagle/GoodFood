@@ -62,7 +62,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="#008ae6"
+        android:background="@android:color/holo_blue_dark"
         android:text="@string/submit"
         android:textColor="#ffffff"
         android:textSize="18sp"

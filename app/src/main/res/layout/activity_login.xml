@@ -100,7 +100,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="150dp"
-                android:background="#008ae6"
+                android:background="@android:color/holo_blue_dark"
                 android:fontFamily="sans-serif"
                 android:onClick="login"
                 android:text="@string/action_log_in"
