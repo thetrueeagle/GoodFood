@@ -2,10 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.goodfood.ape.goodfood">
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -52,6 +50,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.goodfood.ape.goodfood.HomeActivity" />
         </activity>
+        <activity
+            android:name=".DailyIntake"
+            android:label="@string/title_activity_daily_intake"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

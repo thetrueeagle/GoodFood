@@ -26,6 +26,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_FIRSTNAME =  "firstName";
     public static final String COLUMN_LASTNAME =  "lastName";
     public static final String COLUMN_EMAIL =  "email";
+    public static final String COLUMN_POINTS =  "points";
+    public static final String COLUMN_DAYS_STRIKE =  "strike";
+    public static final String COLUMN_DAILY_INTAKE =  "dailyIntake";
+    public static final String COLUMN_RECIPE_COUNT = "recipeCount";
     public static final String COLUMN_PASSWORD =  "password";
 
 
@@ -35,7 +39,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
                     COLUMN_FIRSTNAME + " TEXT, "+
                     COLUMN_LASTNAME + " TEXT, "+
                     COLUMN_EMAIL + " TEXT, " +
-                    COLUMN_PASSWORD + " TEXT " + ");";
+                    COLUMN_PASSWORD + " TEXT, " +
+                    COLUMN_POINTS + " INTEGER, " +
+                    COLUMN_DAYS_STRIKE+ " INTEGER, " +
+                    COLUMN_DAILY_INTAKE + " INTEGER, " +
+                    COLUMN_RECIPE_COUNT + " INTEGER" + ");";
 
 
 public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -52,9 +60,14 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
         values.put(COLUMN_FIRSTNAME, "Anna");
         values.put(COLUMN_LASTNAME, "Eglite");
         values.put(COLUMN_EMAIL, "anna@gmail.com");
-        values.put(COLUMN_PASSWORD, "helloworld");
+        values.put(COLUMN_PASSWORD, "github");
+        values.put(COLUMN_POINTS, 0);
+        values.put(COLUMN_DAYS_STRIKE, 0);
+        values.put(COLUMN_DAILY_INTAKE, 0);
+        values.put(COLUMN_RECIPE_COUNT, 0);
+
         db.insert(TABLE_NAME, null, values);
-        db.close();
+        //db.close();
 
     }
 
@@ -70,10 +83,14 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     public void addUser(Users user){
 
     ContentValues values = new ContentValues();
-    values.put(COLUMN_FIRSTNAME, user.get_firstName());
-    values.put(COLUMN_LASTNAME, user.get_lastName());
-    values.put(COLUMN_EMAIL, user.get_email());
+    values.put(COLUMN_FIRSTNAME, user.getFirstName());
+    values.put(COLUMN_LASTNAME, user.getLastName());
+    values.put(COLUMN_EMAIL, user.getEmail());
     values.put(COLUMN_PASSWORD, user.get_password());
+    values.put(COLUMN_POINTS, 0);
+    values.put(COLUMN_DAYS_STRIKE, 0);
+    values.put(COLUMN_DAILY_INTAKE, 0);
+    values.put(COLUMN_RECIPE_COUNT, 0);
     SQLiteDatabase db = getWritableDatabase();
     db.insert(TABLE_NAME, null, values);
     db.close();
@@ -81,37 +98,20 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     }
 
 
-    //Delete a email from the database
+    //Delete a user from the database
 
-    public void deleteUser(String password) {
+/*    public void deleteUser(String password) {
 
         SQLiteDatabase db = getWritableDatabase();
 
-        //Users have to enter password to delete their profile. Add query here to check password --> retrieve matching email ID and then delete that row
+        Users have to enter password to delete their profile. Add query here to check password --> retrieve matching email ID and then delete that row
 
-        //db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + "=\"" + userId + "\";" );
-
-
-    }
+        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + "=\"" + userId + "\";" );
 
 
-    public String databaseToString(){
-        String dbString = "";
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT firstName FROM " + TABLE_NAME + " WHERE 1";
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
-        while (!c.isAfterLast()){
-            if (c.getString(c.getColumnIndex("firstName")) != null){
-                dbString += c.getString(c.getColumnIndex("firstName"));
-                dbString += "\n";
-            }
-            c.moveToNext();
-        }
-        db.close();
-        c.close();
-        return dbString;
-    }
+    }*/
+
+
 
 
 
@@ -131,6 +131,16 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
         db.close();
         c.close();
         return name;
+    }
+
+
+    public void updateDailyIntake(int intake){
+
+        String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_DAILY_INTAKE + "=" + intake + ";";
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+        db.close();
+
     }
 
     public boolean checkPassword(String email, String password) {

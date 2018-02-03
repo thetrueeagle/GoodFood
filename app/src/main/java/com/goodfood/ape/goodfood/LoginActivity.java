@@ -53,10 +53,9 @@ public class LoginActivity extends Activity {
 
 
 
-                //encrypt password method
 
 
-                if(db.checkPassword(username, password)){    //checks if password mathes the one in database
+                if(db.checkPassword(username, password)){    //checks if password matches the one in database
 
                     Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_LONG).show();
 
@@ -66,15 +65,15 @@ public class LoginActivity extends Activity {
                     editor.putString(PREFS_NAME, username);
                     editor.apply();
 
-                    Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
+                   Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
+                   startActivity(intent);
                     finish();
 
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Username/Password incorrect", Toast.LENGTH_LONG).show();
                     //email.setText("");
-                    //pass.setText("");
+                    pass.setText("");
                 }
 
 

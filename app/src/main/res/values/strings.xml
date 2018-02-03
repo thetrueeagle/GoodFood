@@ -56,6 +56,7 @@
     <string name="daily_intake">Daily intake</string>
     <string name="achievements">Achievements</string>
     <string name="my_details">My Details</string>
+    <string name="title_activity_daily_intake">DailyIntake</string>
 
 
 </resources>

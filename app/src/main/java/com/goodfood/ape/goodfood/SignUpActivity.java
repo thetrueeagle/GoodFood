@@ -50,7 +50,7 @@ public class SignUpActivity extends Activity {
 
                     //encrypt pass method
 
-                    Users user = new Users(edfirst, edlast, edemail, edpass);
+                    Users user = new Users(edfirst, edlast, edemail, edpass, 0, 0, 0, 0);
 
                     db.addUser(user);
 

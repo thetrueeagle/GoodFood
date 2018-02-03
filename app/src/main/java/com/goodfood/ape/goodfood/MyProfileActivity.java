@@ -39,16 +39,33 @@ public class MyProfileActivity extends AppCompatActivity {
      Button btnAchievementsActivity = findViewById(R.id.achievements);
         btnAchievementsActivity.setOnClickListener(new View.OnClickListener(){
             @Override
+            public void onClick(View arg0){
+                Intent intent = new Intent(MyProfileActivity.this, AchievementsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        Button btnDailyIntake = findViewById(R.id.daily_intake);
+        btnDailyIntake.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View arg0){
+                Intent intent = new Intent(MyProfileActivity.this, DailyIntake.class);
+                startActivity(intent);
+            }
+        });
+
+        Button btnMyDetails = findViewById(R.id.my_details);
+        btnMyDetails.setOnClickListener(new View.OnClickListener(){
+            @Override
             public void onClick(View view){
-                launchAchievements();
+                //Intent intent = new Intent(MyProfileActivity.this, MyDetailsActivity.class);
+                //startActivity(intent);
             }
         });
 
     }
-    private void launchAchievements () {
-        Intent intent = new Intent(this, AchievementsActivity.class);
-        startActivity(intent);
-    }
+
 
 
 }

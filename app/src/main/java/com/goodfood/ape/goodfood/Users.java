@@ -11,14 +11,22 @@ public class Users {
     private String lastName;
     private String email;
     private String password;
+    private int points;
+    private int daysStrike;
+    private int dailyIntake;
+    private int recipeCount;
 
-    public Users(String name, String surname, String email, String password) {
+    public Users(String name, String surname, String email, String password, int points, int daysStrike, int dailyIntake, int recipeCount) {
 
         //this._id = id;
         this.firstName = name;
         this.lastName = surname;
         this.email = email;
         this.password = password;
+        this.points = points;
+        this.daysStrike = daysStrike;
+        this.dailyIntake = dailyIntake;
+        this.recipeCount = recipeCount;
     }
 
     public void set_id ( int id) {
@@ -29,27 +37,28 @@ public class Users {
         return _id;
     }
 
-    public void set_firstName ( String firstName) {
+
+    public void setFirstName ( String firstName) {
         this.firstName = firstName;
     }
 
-    public String get_firstName () {
+    public String getFirstName () {
         return firstName;
     }
 
-    public void set_lastName ( String lastName) {
+    public void setLastName ( String lastName) {
         this.lastName = lastName;
     }
 
-    public String get_lastName () {
+    public String getLastName () {
         return lastName;
     }
 
-    public void set_email ( String email) {
+    public void setEmail ( String email) {
         this.email = email;
     }
 
-    public String get_email () {
+    public String getEmail () {
         return email;
     }
 
@@ -61,4 +70,36 @@ public class Users {
         return password;
     }
 
+
+    public int getDailyIntake() {
+        return dailyIntake;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public int getDaysStrike() {
+        return daysStrike;
+    }
+
+    public int getRecipeCount() {
+        return recipeCount;
+    }
+
+    public void setDailyIntake(int dailyIntake) {
+        this.dailyIntake = dailyIntake;
+    }
+
+    public void setDaysStrike(int daysStrike) {
+        this.daysStrike = daysStrike;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void setRecipeCount(int recipeCount) {
+        this.recipeCount = recipeCount;
+    }
 }
