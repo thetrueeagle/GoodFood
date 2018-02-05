@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,23 @@ public class Recipes extends AppCompatActivity {
 
 
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+        Button btnSearch = findViewById(R.id.search);
+        btnSearch.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                //add variable collection
+                Intent intent = new Intent(Recipes.this, ResultsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
+
+
 
 
     public void selectIngredientNo(View view){

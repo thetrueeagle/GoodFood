@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.goodfood.ape.goodfood">
 
-
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -53,6 +52,10 @@
         <activity
             android:name=".DailyIntake"
             android:label="@string/title_activity_daily_intake"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ResultsActivity"
+            android:label="@string/title_activity_results"
             android:theme="@style/AppTheme"></activity>
     </application>
 
