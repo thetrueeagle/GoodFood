@@ -6,6 +6,7 @@ android {
         applicationId "com.goodfood.ape.goodfood"
         minSdkVersion 19
         targetSdkVersion 26
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -30,9 +31,10 @@ android {
         testImplementation 'junit:junit:4.12'
         androidTestImplementation 'com.android.support.test:runner:1.0.1'
         androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-        compile group: 'de.svenkubiak', name: 'jBCrypt', version: '0.4'
-        compile 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.3.0'
-        compile 'com.daimajia.numberprogressbar:library:1.4@aar'
+        implementation group: 'de.svenkubiak', name: 'jBCrypt', version: '0.4'
+        implementation 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.3.0'
+        implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
+        //implementation 'com.squareup.picasso:picasso:2.5.2'
 
 
 

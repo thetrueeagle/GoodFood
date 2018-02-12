@@ -1,6 +1,8 @@
 package com.goodfood.ape.goodfood;
 
 import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,22 +13,33 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class ResultsActivity extends AppCompatActivity {
 
+
+    private String TAG = ResultsActivity.class.getSimpleName();
+
+    private ProgressDialog pDialog;
+    private ArrayList<Result> recipeList = new ArrayList<>();
+
+    // URL to get recipes JSON
+    private static String url = "https://api.edamam.com/search?q=chicken&app_id=d2788de0&app_key=053cc5a069567069a64745e46e5e8546&from=0&to=3&calories=gte%20591,%20lte%20722&health=alcohol-free";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -42,35 +55,32 @@ public class ResultsActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-
-    private String TAG = ResultsActivity.class.getSimpleName();
-
-    private ProgressDialog pDialog;
-    private TextView title;
-    private ImageView image;
-    private ListView ingredients;
-    ArrayList<HashMap<String, String>> recipeList;
-
-    // URL to get JSON
-    private static String url = "https://api.edamam.com/search?app_id=d2788de0&app_key=053cc5a069567069a64745e46e5e8546&r=http://www.edamam.com/ontologies/edamam.owl%23recipe_7bf4a371c6884d809682a72808da7dc2";
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
+        new GetRecipes().execute();
 
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        //mViewPager = (ViewPager) findViewById(R.id.container);
+        //mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
     }
 
@@ -114,10 +124,12 @@ public class ResultsActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+        public static PlaceholderFragment newInstance(int sectionNumber, ArrayList<Result> resultList) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
+
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putSerializable("recipeList", resultList);
             fragment.setArguments(args);
             return fragment;
         }
@@ -126,11 +138,11 @@ public class ResultsActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_results, container, false);
-
-            TextView title = rootView.findViewById(R.id.title);
-            title.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            ImageView image = rootView.findViewById(R.id.image);
-            ListView ingredients = rootView.findViewById(R.id.ingredients);
+            TextView textView = rootView.findViewById(R.id.title);
+            ArrayList<Result> results = new ArrayList<>();
+            results = (ArrayList<Result>) getArguments().getSerializable("recipeList");
+            int number = getArguments().getInt(ARG_SECTION_NUMBER);
+            textView.setText(results.get(number-1).getTitle());
             return rootView;
         }
     }
@@ -149,13 +161,128 @@ public class ResultsActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return PlaceholderFragment.newInstance(position + 1, recipeList);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return recipeList.size();
         }
+    }
+
+
+
+
+    /**
+     * Async task class to get json by making HTTP call
+     */
+    private class GetRecipes extends AsyncTask<Void, Void, Void> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(ResultsActivity.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler sh = new HttpHandler();
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(url);
+
+            Log.e(TAG, "Response from url: " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    JSONObject result = new JSONObject(jsonStr);
+                    JSONArray hits = result.getJSONArray("hits");
+
+
+
+                        // looping through contents
+                        for (int i = 0; i < hits.length(); i++) {
+                            JSONObject contents = hits.getJSONObject(i);
+                            JSONObject c = contents.getJSONObject("recipe");
+                            String uri = c.getString("uri");
+                            String title = c.getString("label");
+                            String image = c.getString("image");
+
+                            // Ingredients node is JSON Object
+                            JSONArray ingredients = c.getJSONArray("ingredientLines");
+
+                            String[] ingredientsList = new String[ingredients.length()];
+                            for (int a = 0; a < ingredientsList.length; a++) {
+                                ingredientsList[a] = ingredients.getString(a);
+                            }
+
+                            String instructionUrl = c.getString("url");
+
+
+                            Result recipe = new Result(uri, title, image, ingredientsList, instructionUrl);
+
+
+                            // adding contact to contact list
+                            recipeList.add(recipe);
+
+                    }
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+
+                }
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+            /**
+             * Updating parsed JSON data into ListView
+             * */
+
+            // Create the adapter that will return a fragment for each of the three
+            // primary sections of the activity.
+            mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+            // Set up the ViewPager with the sections adapter.
+            mViewPager = (ViewPager) findViewById(R.id.container);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+
+
+        }
+
+
     }
 }
