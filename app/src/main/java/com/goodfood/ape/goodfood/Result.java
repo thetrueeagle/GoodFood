@@ -1,12 +1,13 @@
 package com.goodfood.ape.goodfood;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 
 /**
  * Created by ape on 05/02/2018.
  */
 
-public class Result {
+public class Result implements Serializable {
 
 
     private String uri;

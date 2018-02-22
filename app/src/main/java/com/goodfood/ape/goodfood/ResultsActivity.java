@@ -1,6 +1,8 @@
 package com.goodfood.ape.goodfood;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
@@ -20,8 +22,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +47,8 @@ public class ResultsActivity extends AppCompatActivity {
     private ArrayList<Result> recipeList = new ArrayList<>();
 
     // URL to get recipes JSON
-    private static String url = "https://api.edamam.com/search?q=chicken&app_id=d2788de0&app_key=053cc5a069567069a64745e46e5e8546&from=0&to=3&calories=gte%20591,%20lte%20722&health=alcohol-free";
+
+    private String url;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -59,28 +68,15 @@ public class ResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
+        Intent intent = getIntent();
+        url = intent.getStringExtra("URL");
 
         new GetRecipes().execute();
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
-        //mViewPager = (ViewPager) findViewById(R.id.container);
-        //mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
 
     }
 
@@ -139,10 +135,60 @@ public class ResultsActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_results, container, false);
             TextView textView = rootView.findViewById(R.id.title);
+            ImageView image = rootView.findViewById(R.id.image);
+            ListView ingredients = rootView.findViewById(R.id.ingredients);
             ArrayList<Result> results = new ArrayList<>();
             results = (ArrayList<Result>) getArguments().getSerializable("recipeList");
             int number = getArguments().getInt(ARG_SECTION_NUMBER);
             textView.setText(results.get(number-1).getTitle());
+            String imageURL = results.get(number-1).getImageUrl();
+            Picasso.with(getActivity()).load(imageURL).into(image);
+            String[] ingredientsList = results.get(number-1).getIngredients();
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, ingredientsList);
+            // Set The Adapter
+            ingredients.setAdapter(adapter);
+
+            final Uri uri = Uri.parse(results.get(number-1).getInstructionUrl()); // missing 'http://' will cause crashed
+            Button btnIngredients = rootView.findViewById(R.id.instructions);
+            btnIngredients.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+            });
+
+
+            final FloatingActionButton favouriteBtn = rootView.findViewById(R.id.favouriteButton);
+            favouriteBtn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                //add recipe to favourite list
+                    if(favouriteBtn.getDrawable().equals(getResources().getDrawable(android.R.drawable.btn_star_big_off)))
+                    favouriteBtn.setImageResource(android.R.drawable.btn_star_big_on);
+                    if(favouriteBtn.getDrawable().equals(getResources().getDrawable(android.R.drawable.btn_star_big_on)))
+                        favouriteBtn.setImageResource(android.R.drawable.btn_star_big_off);
+
+                }
+            });
+
+
+            final FloatingActionButton doneBtn = rootView.findViewById(R.id.doneButton);
+            doneBtn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    //mark recipe as done and increment score in database
+
+
+
+
+                }
+            });
+
+
+
             return rootView;
         }
     }

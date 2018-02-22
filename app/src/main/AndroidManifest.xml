@@ -57,6 +57,7 @@
             android:name=".ResultsActivity"
             android:label="@string/title_activity_results"
             android:theme="@style/AppTheme" />
+        <activity android:name=".InformationActivity"></activity>
     </application>
 
 </manifest>
