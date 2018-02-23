@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-public class MyProfileActivity extends AppCompatActivity {
+public class MyProfile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class MyProfileActivity extends AppCompatActivity {
         btnAchievementsActivity.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0){
-                Intent intent = new Intent(MyProfileActivity.this, AchievementsActivity.class);
+                Intent intent = new Intent(MyProfile.this, Achievements.class);
                 startActivity(intent);
             }
         });
@@ -50,7 +50,7 @@ public class MyProfileActivity extends AppCompatActivity {
         btnDailyIntake.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0){
-                Intent intent = new Intent(MyProfileActivity.this, DailyIntake.class);
+                Intent intent = new Intent(MyProfile.this, DailyIntake.class);
                 startActivity(intent);
             }
         });
@@ -59,7 +59,7 @@ public class MyProfileActivity extends AppCompatActivity {
         btnMyDetails.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                //Intent intent = new Intent(MyProfileActivity.this, MyDetailsActivity.class);
+                //Intent intent = new Intent(MyProfile.this, MyDetailsActivity.class);
                 //startActivity(intent);
             }
         });

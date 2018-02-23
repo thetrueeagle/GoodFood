@@ -3,24 +3,21 @@ package com.goodfood.ape.goodfood;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.goodfood.ape.goodfood.LoginActivity.MyPREFERENCES;
-import static com.goodfood.ape.goodfood.LoginActivity.PREFS_NAME;
+import static com.goodfood.ape.goodfood.Login.MyPREFERENCES;
+import static com.goodfood.ape.goodfood.Login.PREFS_NAME;
 
-public class HomeActivity extends AppCompatActivity {
+public class Home extends AppCompatActivity {
 
     MyDBHandler db;
-    TextView welcomeName;
+    TextView welcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +25,12 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         //SharedPreferences.Editor editor = sharedpreferences.edit();
-        welcomeName = findViewById(R.id.welcomeName);
+        welcome = findViewById(R.id.welcome);
 
-        db = new MyDBHandler(HomeActivity.this, null, null, 1);
+        db = new MyDBHandler(Home.this, null, null, 1);
 
 
-        welcomeName.setText(db.getName(sharedpreferences.getString(PREFS_NAME, "")));
+        welcome.setText("Welcome, "+ db.getName(sharedpreferences.getString(PREFS_NAME, "")));
 
 
 
@@ -93,27 +90,27 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void launchOrder() {
-        Intent intent = new Intent(this, OrderActivity.class);
+        Intent intent = new Intent(this, Order.class);
         startActivity(intent);
     }
 
     private void launchClasses() {
-        Intent intent = new Intent(this, OrderActivity.class);
+        Intent intent = new Intent(this, Order.class);
         startActivity(intent);
     }
 
     private void launchRecipes() {
-        Intent intent = new Intent(this, Recipes.class);
+        Intent intent = new Intent(this, RecipeMenu.class);
         startActivity(intent);
     }
 
     private void launchMyProfile() {
-        Intent intent = new Intent(this, MyProfileActivity.class);
+        Intent intent = new Intent(this, MyProfile.class);
         startActivity(intent);
     }
 
     private void launchInformation() {
-        Intent intent = new Intent(this, OrderActivity.class);
+        Intent intent = new Intent(this, Order.class);
         startActivity(intent);
     }
 

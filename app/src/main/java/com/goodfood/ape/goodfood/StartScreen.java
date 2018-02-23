@@ -36,12 +36,12 @@ public class StartScreen extends AppCompatActivity {
 
 
     private void launchLogIn() {
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }
 
     private void launchSignUp() {
-        Intent intent = new Intent(this, SignUpActivity.class);
+        Intent intent = new Intent(this, SignUp.class);
         startActivity(intent);
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#66c2ff"
-    tools:context="com.goodfood.ape.goodfood.ResultsActivity$PlaceholderFragment">
+    tools:context="com.goodfood.ape.goodfood.ResultList$PlaceholderFragment">
 
     <TextView
         android:id="@+id/title"

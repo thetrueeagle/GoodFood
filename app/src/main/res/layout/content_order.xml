@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#66c2ff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.goodfood.ape.goodfood.OrderActivity"
+    tools:context="com.goodfood.ape.goodfood.Order"
     tools:showIn="@layout/activity_order">
 
     <TextView

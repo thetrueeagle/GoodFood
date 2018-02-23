@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#66c2ff"
-    tools:context="com.goodfood.ape.goodfood.InformationActivity">
+    tools:context="com.goodfood.ape.goodfood.Information">
 
     <TextView
         android:id="@+id/textView8"
@@ -35,7 +35,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@android:color/holo_blue_dark"
-        android:text="Local food scene"
+        android:text="@string/local_food_scene"
         android:textColor="#ffffff"
         android:textSize="18sp"
         android:textStyle="bold"

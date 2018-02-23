@@ -1,20 +1,15 @@
 package com.goodfood.ape.goodfood;
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
 
@@ -54,7 +49,7 @@ public class Recipes extends AppCompatActivity {
                 EditText keywordField = findViewById(R.id.keywordField);
                 keyword = keywordField.getText().toString();
                 finalUrl=generateURL(keyword, ingredients, dietLabels, healthLabels, calorieMin, calorieMax);
-                Intent intent = new Intent(Recipes.this, ResultsActivity.class);
+                Intent intent = new Intent(Recipes.this, ResultList.class);
                 intent.putExtra("URL", finalUrl);
                 startActivity(intent);
             }

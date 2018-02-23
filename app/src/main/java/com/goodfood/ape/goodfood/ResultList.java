@@ -1,14 +1,15 @@
 package com.goodfood.ape.goodfood;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,16 +36,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ResultsActivity extends AppCompatActivity {
+import static com.goodfood.ape.goodfood.Login.MyPREFERENCES;
+
+public class ResultList extends AppCompatActivity {
 
 
-    private String TAG = ResultsActivity.class.getSimpleName();
+    private String TAG = ResultList.class.getSimpleName();
 
     private ProgressDialog pDialog;
     private ArrayList<Result> recipeList = new ArrayList<>();
+
+
 
     // URL to get recipes JSON
 
@@ -133,13 +137,12 @@ public class ResultsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_results, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_results, container, false);
             TextView textView = rootView.findViewById(R.id.title);
             ImageView image = rootView.findViewById(R.id.image);
             ListView ingredients = rootView.findViewById(R.id.ingredients);
-            ArrayList<Result> results = new ArrayList<>();
-            results = (ArrayList<Result>) getArguments().getSerializable("recipeList");
-            int number = getArguments().getInt(ARG_SECTION_NUMBER);
+            final ArrayList<Result> results =  (ArrayList<Result>) getArguments().getSerializable("recipeList");
+            final int number = getArguments().getInt(ARG_SECTION_NUMBER);
             textView.setText(results.get(number-1).getTitle());
             String imageURL = results.get(number-1).getImageUrl();
             Picasso.with(getActivity()).load(imageURL).into(image);
@@ -160,29 +163,60 @@ public class ResultsActivity extends AppCompatActivity {
                 }
             });
 
-
+            final MyDBHandler db = new MyDBHandler(getContext(), null, null, 1);
             final FloatingActionButton favouriteBtn = rootView.findViewById(R.id.favouriteButton);
+            if(db.checkRecipe(results.get(number-1), 0)){
+                favouriteBtn.setImageResource(android.R.drawable.btn_star_big_on);
+            }
             favouriteBtn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
                 //add recipe to favourite list
-                    if(favouriteBtn.getDrawable().equals(getResources().getDrawable(android.R.drawable.btn_star_big_off)))
-                    favouriteBtn.setImageResource(android.R.drawable.btn_star_big_on);
-                    if(favouriteBtn.getDrawable().equals(getResources().getDrawable(android.R.drawable.btn_star_big_on)))
+
+                    Drawable.ConstantState d1 = ContextCompat.getDrawable(getContext(), android.R.drawable.btn_star_big_off).getConstantState();
+                    Drawable.ConstantState d2 = ContextCompat.getDrawable(getContext(), android.R.drawable.btn_star_big_on).getConstantState();
+                    Drawable actual = favouriteBtn.getDrawable();
+                    if(actual.getConstantState().equals(d1)) {
+
+                        db.addRecipe(results.get(number-1), 0);
+
+                        favouriteBtn.setImageResource(android.R.drawable.btn_star_big_on);
+                    }
+                    if(actual.getConstantState().equals(d2)) {
+
+                        db.deleteRecipe(results.get(number-1), 0);
+
                         favouriteBtn.setImageResource(android.R.drawable.btn_star_big_off);
+                    }
 
                 }
             });
 
 
             final FloatingActionButton doneBtn = rootView.findViewById(R.id.doneButton);
+            if(db.checkRecipe(results.get(number-1), 1)){
+                doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
+            }
             doneBtn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    //mark recipe as done and increment score in database
+                    //add recipe to favourite list
 
+                    Drawable.ConstantState d1 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_off_background).getConstantState();
+                    Drawable.ConstantState d2 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_on_background).getConstantState();
+                    Drawable actual = doneBtn.getDrawable();
+                    if(actual.getConstantState().equals(d1)) {
 
+                        db.addRecipe(results.get(number-1), 1);
 
+                        doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
+                    }
+                    if(actual.getConstantState().equals(d2)) {
+
+                        db.deleteRecipe(results.get(number-1), 1);
+
+                        doneBtn.setImageResource(android.R.drawable.checkbox_off_background);
+                    }
 
                 }
             });
@@ -230,7 +264,7 @@ public class ResultsActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(ResultsActivity.this);
+            pDialog = new ProgressDialog(ResultList.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();

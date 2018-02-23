@@ -9,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class OrderActivity extends AppCompatActivity {
+public class Order extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +88,7 @@ public class OrderActivity extends AppCompatActivity {
                     EditText commentBox = findViewById(R.id.comment);
                     final String comment = commentBox.getText().toString();
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Order.this);
                     builder.setCancelable(true);
                     builder.setTitle("Confirm order");
                     builder.setMessage("Are you sure you want to order?");

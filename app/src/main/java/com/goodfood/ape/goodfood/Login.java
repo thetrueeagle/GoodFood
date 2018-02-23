@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,13 +14,12 @@ import android.widget.Toast;
 
 
 
-public class LoginActivity extends Activity {
+public class Login extends Activity {
 
 
     EditText email, pass;
     Button login;
     MyDBHandler db;
-    Cursor cursor;
     SharedPreferences sharedpreferences;
 
     public static final String MyPREFERENCES = "MyPrefs" ;
@@ -47,36 +44,38 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
                 // TODO Auto-generated method stub
-                db = new MyDBHandler(LoginActivity.this, null, null, 1);
+                db = new MyDBHandler(Login.this, null, null, 1);
                 String username = email.getText().toString();
                 String password = pass.getText().toString();
 
 
+                if (username.equals("") || password.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Please fill in your details!", Toast.LENGTH_LONG).show();
+                } else {
 
 
+                    if (db.checkPassword(username, password)) {    //checks if password matches the one in database
 
-                if(db.checkPassword(username, password)){    //checks if password matches the one in database
-
-                    Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_LONG).show();
 
 
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
 
-                    editor.putString(PREFS_NAME, username);
-                    editor.apply();
+                        editor.putString(PREFS_NAME, username);
+                        editor.apply();
 
-                   Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
-                   startActivity(intent);
-                    finish();
+                        Intent intent = new Intent(Login.this, Home.class);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Username/Password incorrect", Toast.LENGTH_LONG).show();
+                        //email.setText("");
+                        pass.setText("");
+                    }
+
 
                 }
-                else{
-                    Toast.makeText(getApplicationContext(), "Username/Password incorrect", Toast.LENGTH_LONG).show();
-                    //email.setText("");
-                    pass.setText("");
-                }
-
-
             }
         });
 

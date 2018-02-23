@@ -10,18 +10,18 @@ import android.database.Cursor;
 import android.content.Context;
 import android.content.ContentValues;
 
-import org.mindrot.jbcrypt.BCrypt;
-
-import java.security.MessageDigest;
-import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "app.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
-    public static final String TABLE_NAME = "users";
+    public static final String USER_TABLE_NAME = "users";
+    public static final String FAVOURITE_TABLE_NAME = "favourite";
+    public static final String DONE_TABLE_NAME = "done";
     public static final String COLUMN_ID =  "_id";
     public static final String COLUMN_FIRSTNAME =  "firstName";
     public static final String COLUMN_LASTNAME =  "lastName";
@@ -31,10 +31,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_DAILY_INTAKE =  "dailyIntake";
     public static final String COLUMN_RECIPE_COUNT = "recipeCount";
     public static final String COLUMN_PASSWORD =  "password";
+    public static final String COLUMN_URL =  "url";
+    public static final String COLUMN_TITLE =  "title";
 
 
-    private static final String CREATE_TABLE_QUERY =
-            "CREATE TABLE " + TABLE_NAME + " (" +
+    private static final String CREATE_USER_TABLE_QUERY =
+            "CREATE TABLE " + USER_TABLE_NAME + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_FIRSTNAME + " TEXT, "+
                     COLUMN_LASTNAME + " TEXT, "+
@@ -45,6 +47,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
                     COLUMN_DAILY_INTAKE + " INTEGER, " +
                     COLUMN_RECIPE_COUNT + " INTEGER" + ");";
 
+    private static final String CREATE_FAVOURITE_TABLE_QUERY =
+            "CREATE TABLE " + FAVOURITE_TABLE_NAME + " (" +
+                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_TITLE + " TEXT, "+
+                    COLUMN_URL + " TEXT" + ");";
+
+    private static final String CREATE_DONE_TABLE_QUERY =
+            "CREATE TABLE " + DONE_TABLE_NAME + " (" +
+                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_TITLE + " TEXT, "+
+                    COLUMN_URL + " TEXT" + ");";
+
 
 public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
 
@@ -54,26 +68,20 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL(CREATE_TABLE_QUERY);
+        db.execSQL(CREATE_USER_TABLE_QUERY);
+        db.execSQL(CREATE_FAVOURITE_TABLE_QUERY);
+        db.execSQL(CREATE_DONE_TABLE_QUERY);
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_FIRSTNAME, "Anna");
-        values.put(COLUMN_LASTNAME, "Eglite");
-        values.put(COLUMN_EMAIL, "anna@gmail.com");
-        values.put(COLUMN_PASSWORD, "github");
-        values.put(COLUMN_POINTS, 0);
-        values.put(COLUMN_DAYS_STRIKE, 0);
-        values.put(COLUMN_DAILY_INTAKE, 0);
-        values.put(COLUMN_RECIPE_COUNT, 0);
 
-        db.insert(TABLE_NAME, null, values);
         //db.close();
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + FAVOURITE_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DONE_TABLE_NAME);
         onCreate(db);
 
     }
@@ -92,9 +100,68 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     values.put(COLUMN_DAILY_INTAKE, 0);
     values.put(COLUMN_RECIPE_COUNT, 0);
     SQLiteDatabase db = getWritableDatabase();
-    db.insert(TABLE_NAME, null, values);
+    db.insert(USER_TABLE_NAME, null, values);
     db.close();
 
+    }
+
+    public void addRecipe(Result recipe, int which){
+
+
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TITLE, recipe.getTitle());
+        values.put(COLUMN_URL, recipe.getInstructionUrl());
+        SQLiteDatabase db = getWritableDatabase();
+        if(which==0) {
+            db.insert(FAVOURITE_TABLE_NAME, null, values);
+        }
+        else if(which==1){
+            db.insert(DONE_TABLE_NAME, null, values);
+        }
+        db.close();
+
+    }
+
+    public void deleteRecipe(Result recipe, int which){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        if(which==0) {
+            db.execSQL("DELETE FROM " + FAVOURITE_TABLE_NAME + " WHERE " + COLUMN_URL + "=\"" + recipe.getInstructionUrl() + "\";");
+        }
+        else if(which==1){
+            db.execSQL("DELETE FROM " + DONE_TABLE_NAME + " WHERE " + COLUMN_URL + "=\"" + recipe.getInstructionUrl() + "\";");
+        }
+    }
+
+
+    public boolean checkRecipe(Result recipe, int which) {
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query="";
+        if(which==0) {
+            query = "SELECT count(*) FROM " + FAVOURITE_TABLE_NAME + " WHERE url = \"" + recipe.getInstructionUrl() + "\";";
+        }
+        else if(which==1){
+            query = "SELECT count(*) FROM " + DONE_TABLE_NAME + " WHERE url = \"" + recipe.getInstructionUrl() + "\";";
+        }
+        boolean check = false;
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        int count = c.getInt(0);
+        if (count>0){
+
+            check = true;
+        }
+        else if (count==0){
+            check = false;
+        }
+
+        db.close();
+        c.close();
+
+        return check;
     }
 
 
@@ -106,11 +173,38 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
 
         Users have to enter password to delete their profile. Add query here to check password --> retrieve matching email ID and then delete that row
 
-        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + "=\"" + userId + "\";" );
+        db.execSQL("DELETE FROM " + USER_TABLE_NAME + " WHERE " + COLUMN_ID + "=\"" + userId + "\";" );
 
 
     }*/
 
+
+    public ArrayList<HashMap<String, String>> getDatabase(int which){
+        ArrayList<HashMap<String, String>> list = new ArrayList<>();
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query="";
+        if(which==0) {
+            query = "SELECT title, url FROM " + FAVOURITE_TABLE_NAME + ";";
+        }
+        else if(which==1){
+            query = "SELECT title, url FROM " + DONE_TABLE_NAME + ";";
+        }
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()){
+            if (c.getString(c.getColumnIndex("title")) != null){
+                HashMap<String, String> recipe = new HashMap<>();
+                recipe.put("title", c.getString(c.getColumnIndex("title")));
+                recipe.put("url", c.getString(c.getColumnIndex("url")));
+                list.add(recipe);
+            }
+            c.moveToNext();
+        }
+        db.close();
+        c.close();
+        return list;
+    }
 
 
 
@@ -118,7 +212,7 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     public String getName(String username){
         String name = "";
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT firstName FROM " + TABLE_NAME + " WHERE email=\"" + username + "\";";
+        String query = "SELECT firstName FROM " + USER_TABLE_NAME + " WHERE email=\"" + username + "\";";
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
         while (!c.isAfterLast()){
@@ -136,7 +230,7 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
 
     public void updateDailyIntake(int intake){
 
-        String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_DAILY_INTAKE + "=" + intake + ";";
+        String query = "UPDATE " + USER_TABLE_NAME + " SET " + COLUMN_DAILY_INTAKE + "=" + intake + ";";
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(query);
         db.close();
@@ -146,7 +240,7 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     public boolean checkPassword(String email, String password) {
 
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT password FROM " + TABLE_NAME + " WHERE email = \"" + email + "\" AND password = \"" + password + "\";";
+        String query = "SELECT password FROM " + USER_TABLE_NAME + " WHERE email = \"" + email + "\" AND password = \"" + password + "\";";
         String storedPass = "";
         boolean check = false;
         Cursor c = db.rawQuery(query, null);
@@ -160,6 +254,29 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
             c.moveToNext();
         }
         if (storedPass.equals(password)){
+            check = true;
+        }
+
+        db.close();
+        c.close();
+
+        return check;
+    }
+
+
+    public boolean checkDatabaseEmpty() {
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT count(*) FROM " + USER_TABLE_NAME +  ";";
+        boolean check = false;
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        int count = c.getInt(0);
+        if (count>0){
+
+            check = false;
+        }
+        else if (count==0){
             check = true;
         }
 

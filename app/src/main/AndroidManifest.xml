@@ -19,45 +19,49 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".Login"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".SignUp"
             android:label="@string/title_activity_sign_up" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".OrderActivity"
+            android:name=".Order"
             android:label="@string/title_activity_order"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".MyProfileActivity"
+            android:name=".MyProfile"
             android:label="@string/title_activity_my_profile"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".AchievementsActivity"
+            android:name=".Achievements"
             android:label="@string/title_activity_achievements"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Recipes"
             android:label="@string/title_activity_recipes"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName=".Home"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.goodfood.ape.goodfood.HomeActivity" />
+                android:value="com.goodfood.ape.goodfood.Home" />
         </activity>
         <activity
             android:name=".DailyIntake"
             android:label="@string/title_activity_daily_intake"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ResultsActivity"
+            android:name=".ResultList"
             android:label="@string/title_activity_results"
             android:theme="@style/AppTheme" />
-        <activity android:name=".InformationActivity"></activity>
+        <activity android:name=".Information" />
+        <activity android:name=".FoodInfo" />
+        <activity android:name=".RecipeMenu" />
+        <activity android:name=".Favourites" />
+        <activity android:name=".Done"></activity>
     </application>
 
 </manifest>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#66c2ff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.goodfood.ape.goodfood.HomeActivity"
+    tools:context="com.goodfood.ape.goodfood.Home"
     tools:showIn="@layout/activity_home">
 
     <Button
@@ -82,35 +82,19 @@
 
     <TextView
         android:id="@+id/welcome"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:text="Welcome,"
+        android:gravity="center"
+        android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/order_veg_bag"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.278"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside"
         tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/welcomeName"
-        android:layout_width="100dp"
-        android:layout_height="32dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.168"
-        app:layout_constraintStart_toEndOf="@+id/welcome"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.119" />
 </android.support.constraint.ConstraintLayout>
