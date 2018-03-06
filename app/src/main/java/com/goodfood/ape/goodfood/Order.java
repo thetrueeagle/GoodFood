@@ -26,8 +26,7 @@ public class Order extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
 
         //Drop down menu
         Spinner spinner = findViewById(R.id.selectBags);
@@ -42,23 +41,6 @@ public class Order extends AppCompatActivity {
 
 
 
-        //Log out button
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        //Back button
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
 
         //Create button activity
         Button btnSubmitActivity = findViewById(R.id.submit);
@@ -73,10 +55,10 @@ public class Order extends AppCompatActivity {
                 Calendar calendar = Calendar.getInstance();
                 weekDay = dayFormat.format(calendar.getTime());
                 int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-                if((weekDay.equals("Tuesday")&&currentHour<17)||(weekDay.equals("Wednesday"))||(weekDay.equals("Thursday"))||(weekDay.equals("Friday"))||(weekDay.equals("Saturday"))||(weekDay.equals("Sunday"))){                  //Implement further to restrict orders after Tuesday 5pm
+                if((weekDay.equals("Tuesday")&&currentHour>17)||(weekDay.equals("Wednesday"))||(weekDay.equals("Thursday"))||(weekDay.equals("Friday"))||(weekDay.equals("Saturday"))||(weekDay.equals("Sunday"))){     //Orders only allowed Mondays and Tuesdays until 5pm
 
                     Toast.makeText(getApplicationContext(),
-                            "Orders are not accepted today, try again on Monday :)",
+                            "Orders are not accepted for this week anymore, try again on Monday :)",
                             Toast.LENGTH_LONG)
                             .show();
                 }
@@ -87,6 +69,10 @@ public class Order extends AppCompatActivity {
                     final String amount = bags.getSelectedItem().toString();
                     EditText commentBox = findViewById(R.id.comment);
                     final String comment = commentBox.getText().toString();
+                    EditText extrasBox = findViewById(R.id.extras);
+                    final String extras = extrasBox.getText().toString();
+                    EditText allergiesBox = findViewById(R.id.allergies);
+                    final String allergies = allergiesBox.getText().toString();
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(Order.this);
                     builder.setCancelable(true);
@@ -97,7 +83,7 @@ public class Order extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
-                                    submitOrder(amount, comment);
+                                    submitOrder(amount, comment, extras, allergies);
                                 }
                             });
                     builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -119,18 +105,24 @@ public class Order extends AppCompatActivity {
 
     }
 
-    private void submitOrder(String bags, String comment) {
+    private void submitOrder(String bags, String comment, String extras, String allergies) {
 
-        String emailBody = "Hello! \nI would like to order "+bags+" vegetable bag(s). \n"+comment+"\nThanks in advance!";
+        MyDBHandler db = new MyDBHandler(this, "", null, 1);
+        String name = db.getName()+" "+db.getSurname();
+
+        String emailBody = "Hello! \nI would like to order "+bags+" vegetable bag(s). \n"+comment+"\nExtras:" +extras+"\nAllergies:"+allergies+"\nThanks in advance!\n"+name;
 
 
         Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, "Veg Bag Order");
         intent.putExtra(Intent.EXTRA_TEXT, emailBody);
-        intent.setData(Uri.parse("mailto:annap.eglite@gmail.com")); // or just "mailto:" for blank
+        intent.setData(Uri.parse("mailto:matt.woodthorpe@stir.ac.uk")); // or just "mailto:" for blank
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
         startActivity(intent);
+        db.updateOrderCount();
+
+
 
 
 

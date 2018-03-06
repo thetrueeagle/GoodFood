@@ -33,12 +33,6 @@ public class Recipes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 
         Button btnSearch = findViewById(R.id.searchButton);
@@ -97,7 +91,7 @@ public class Recipes extends AppCompatActivity {
 
 
 
-        ;
+
 
         // 3. Get the AlertDialog from create()
         builder.show();
@@ -202,9 +196,11 @@ public class Recipes extends AppCompatActivity {
         // Setup the new range seek bar
         final RangeSeekBar<Integer> rangeSeekBar = new RangeSeekBar<Integer>(this);
         // Set the range
-        rangeSeekBar.setRangeValues(0, 1000);
+        rangeSeekBar.setRangeValues(0, 2000);
         rangeSeekBar.setSelectedMinValue(20);
         rangeSeekBar.setSelectedMaxValue(657);
+
+        rangeSeekBar.setTextAboveThumbsColorResource(android.R.color.black);
 
         LinearLayout linear = new LinearLayout(this);
 
@@ -239,70 +235,28 @@ public class Recipes extends AppCompatActivity {
     }
 
 
-    /*public void selectNutrientRange(View view){
-
-
-        // Use the Builder class for convenient dialog construction
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.nutrient_title)
-                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-
-                    }
-                });
-
-        builder.setMultiChoiceItems(R.array.nutrient_options, null, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-
-            }
-
-            public void onClick(DialogInterface dialog, int which) {
-                // The 'which' argument contains the index position
-                // of the selected item
-
-                temp = which;
-            }
-        });
-
-
-        // Setup the new range seek bar
-        RangeSeekBar<Integer> rangeSeekBar = new RangeSeekBar<Integer>(this);
-        // Set the range
-        rangeSeekBar.setRangeValues(0, 1000);
-        rangeSeekBar.setSelectedMinValue(20);
-        rangeSeekBar.setSelectedMaxValue(657);
-
-        LinearLayout linear = new LinearLayout(this);
-
-        linear.addView(rangeSeekBar);
-
-
-        builder.setView(linear);
-        // 3. Get the AlertDialog from create()
-        builder.show();
-
-
-
-    }*/
-
 
 
     public String generateURL(String keyword, int ingredients, String[] diet, String[] health, int calorieMin, int calorieMax){
             String url="https://api.edamam.com/search?app_id=d2788de0&app_key=053cc5a069567069a64745e46e5e8546&from=0&to=100";
-            String keywordParam="";
+            String keywordParam="&q=";
             String ingredientParam="";
             String dietParam="";
             String healthParam="";
             String calorieParam="";
 
-            keywordParam = "&q="+keyword;
+
+            String[] splited = keyword.split("\\s+");
+            if(splited.length==1){
+                keywordParam=keywordParam+keyword;
+            }
+
+            for(int i=0; i<splited.length; i++){
+                keywordParam +=splited[i]+"+";
+            }
+            keywordParam = keywordParam.substring(0, keywordParam.length()-1);
+
+
             if (ingredients!=0){
                 ingredientParam = "&ingr="+ingredients;
 

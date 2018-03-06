@@ -4,14 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 
 
 public class Login extends Activity {
@@ -22,7 +20,7 @@ public class Login extends Activity {
     MyDBHandler db;
     SharedPreferences sharedpreferences;
 
-    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String MyPREFERENCES = "MyPrefs";
     public static final String PREFS_NAME = "name";
 
 
@@ -36,20 +34,20 @@ public class Login extends Activity {
         pass = findViewById(R.id.password);
         login = findViewById(R.id.log_in_button);
 
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE); //functions as session control?? doesn't work yet
-        
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
 
         login.setOnClickListener(new OnClickListener() {
 
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { //when Log in is clicked
                 // TODO Auto-generated method stub
                 db = new MyDBHandler(Login.this, null, null, 1);
                 String username = email.getText().toString();
                 String password = pass.getText().toString();
 
 
-                if (username.equals("") || password.equals("")) {
+                if (username.equals("") || password.equals("")) { //if fields are empty
                     Toast.makeText(getApplicationContext(), "Please fill in your details!", Toast.LENGTH_LONG).show();
                 } else {
 
@@ -80,48 +78,6 @@ public class Login extends Activity {
         });
 
 
-
-
     }
 
-    /* @Override
-                    public boolean onCreateOptionsMenu(Menu menu) {
-MenuInflater inflater = getMenuInflater();
-inflater.inflate(R.menu.action_settings, menu);
-            return super.onCreateOptionsMenu(menu);
-           //
-     }
-     */
-   /* public boolean onOptionsItemSelected(MenuItem item) {
-        // Take appropriate action for each action item click
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                // search action
-                Intent i=new Intent(MainActivity.this,RegisterActivity.class);
-                startActivity(i);
-                return true;
-        }
-        return false;
-
-    } */
-                /*             @Override
-                                protected void onResume() {
-                                                // TODO Auto-generated method stub
-                                                 list = db.getAllRegister();
-                                //            list=((alertv) alert).showAlert();
-                                                                Customlist adapter = new Customlist(MainActivity.this, list);
-                                                //            mylistview.setAdapter(adapter);
-
-                                                                if(adapter.getCount()!=0){
-                                                                      mylistview.setAdapter(adapter);
-
-
-                                                                }else{
-                                                                     Toast.makeText(MainActivity.this, "No Items Available",Toast.LENGTH_SHORT).show();
-                                                                }
-                                                super.onResume();
-                                  }
-  */
-
 }
-

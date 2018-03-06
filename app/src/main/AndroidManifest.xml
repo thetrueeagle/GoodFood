@@ -61,7 +61,9 @@
         <activity android:name=".FoodInfo" />
         <activity android:name=".RecipeMenu" />
         <activity android:name=".Favourites" />
-        <activity android:name=".Done"></activity>
+        <activity android:name=".Done" />
+        <activity android:name=".MyDetails" />
+        <activity android:name=".AppInfo"></activity>
     </application>
 
 </manifest>

@@ -69,7 +69,7 @@ public class SignUp extends Activity {
 
 
 
-                        //encrypt pass method
+                        edpass=db.get_SHA_512_SecurePassword(edpass, "goodfood");
 
                         Users user = new Users(edfirst, edlast, edemail, edpass, 0, 0, 0, 0);
 

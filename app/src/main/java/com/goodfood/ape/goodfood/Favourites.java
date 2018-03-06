@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -25,17 +24,17 @@ public class Favourites extends AppCompatActivity {
 
         ListView favourites = findViewById(R.id.favouritesList);
         MyDBHandler db = new MyDBHandler(this, null, null, 1);
-        ArrayList<HashMap<String, String>> favouritesList = db.getDatabase(0);
+        ArrayList<HashMap<String, String>> favouritesList = db.getDatabase(0);  //get the list of 'favourite' recipes from database table
 
         ListAdapter adapter = new SimpleAdapter(
                 Favourites.this, favouritesList,
-                R.layout.list_item, new String[]{"title", "url"}, new int[]{R.id.title, R.id.url});
+                R.layout.list_item, new String[]{"title", "url"}, new int[]{R.id.title, R.id.url});  //populate list view with database data
 
         favourites.setAdapter(adapter);
 
         favourites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {   //in an item in the list is clicked, open recipe
 
                 TextView textView = view.findViewById(R.id.url);
                 String url = textView.getText().toString();
@@ -46,7 +45,6 @@ public class Favourites extends AppCompatActivity {
 
             }
         });
-
 
 
     }

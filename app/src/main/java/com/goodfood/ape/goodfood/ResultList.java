@@ -141,85 +141,97 @@ public class ResultList extends AppCompatActivity {
             TextView textView = rootView.findViewById(R.id.title);
             ImageView image = rootView.findViewById(R.id.image);
             ListView ingredients = rootView.findViewById(R.id.ingredients);
-            final ArrayList<Result> results =  (ArrayList<Result>) getArguments().getSerializable("recipeList");
-            final int number = getArguments().getInt(ARG_SECTION_NUMBER);
-            textView.setText(results.get(number-1).getTitle());
-            String imageURL = results.get(number-1).getImageUrl();
-            Picasso.with(getActivity()).load(imageURL).into(image);
-            String[] ingredientsList = results.get(number-1).getIngredients();
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, ingredientsList);
-            // Set The Adapter
-            ingredients.setAdapter(adapter);
-
-            final Uri uri = Uri.parse(results.get(number-1).getInstructionUrl()); // missing 'http://' will cause crashed
             Button btnIngredients = rootView.findViewById(R.id.instructions);
-            btnIngredients.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view){
+            final ArrayList<Result> results =  (ArrayList<Result>) getArguments().getSerializable("recipeList");
+            int size = results.size();
+            if(size==0){
+                image.setImageResource(R.drawable.sadface);
+                textView.setText("Sorry, no results found!");
+                btnIngredients.setVisibility(View.INVISIBLE);
 
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                }
-            });
-
-            final MyDBHandler db = new MyDBHandler(getContext(), null, null, 1);
-            final FloatingActionButton favouriteBtn = rootView.findViewById(R.id.favouriteButton);
-            if(db.checkRecipe(results.get(number-1), 0)){
-                favouriteBtn.setImageResource(android.R.drawable.btn_star_big_on);
             }
-            favouriteBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view){
-                //add recipe to favourite list
+            else {
+                final int number = getArguments().getInt(ARG_SECTION_NUMBER);
+                textView.setText(results.get(number - 1).getTitle());
+                String imageURL = results.get(number - 1).getImageUrl();
+                Picasso.with(getActivity()).load(imageURL).into(image);
+                String[] ingredientsList = results.get(number - 1).getIngredients();
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, ingredientsList);
+                // Set The Adapter
+                ingredients.setAdapter(adapter);
 
-                    Drawable.ConstantState d1 = ContextCompat.getDrawable(getContext(), android.R.drawable.btn_star_big_off).getConstantState();
-                    Drawable.ConstantState d2 = ContextCompat.getDrawable(getContext(), android.R.drawable.btn_star_big_on).getConstantState();
-                    Drawable actual = favouriteBtn.getDrawable();
-                    if(actual.getConstantState().equals(d1)) {
+                final Uri uri = Uri.parse(results.get(number - 1).getInstructionUrl()); // missing 'http://' will cause crashed
 
-                        db.addRecipe(results.get(number-1), 0);
+                btnIngredients.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                        favouriteBtn.setImageResource(android.R.drawable.btn_star_big_on);
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
                     }
-                    if(actual.getConstantState().equals(d2)) {
+                });
 
-                        db.deleteRecipe(results.get(number-1), 0);
-
-                        favouriteBtn.setImageResource(android.R.drawable.btn_star_big_off);
-                    }
-
+                final MyDBHandler db = new MyDBHandler(getContext(), null, null, 1);
+                final FloatingActionButton favouriteBtn = rootView.findViewById(R.id.favouriteButton);
+                if (db.checkRecipe(results.get(number - 1), 0)) {
+                    favouriteBtn.setImageResource(android.R.drawable.btn_star_big_on);
                 }
-            });
+                favouriteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //add recipe to favourite list
+
+                        Drawable.ConstantState d1 = ContextCompat.getDrawable(getContext(), android.R.drawable.btn_star_big_off).getConstantState();
+                        Drawable.ConstantState d2 = ContextCompat.getDrawable(getContext(), android.R.drawable.btn_star_big_on).getConstantState();
+                        Drawable actual = favouriteBtn.getDrawable();
+                        if (actual.getConstantState().equals(d1)) {
+
+                            db.addRecipe(results.get(number - 1), 0);
+
+                            favouriteBtn.setImageResource(android.R.drawable.btn_star_big_on);
+                        }
+                        if (actual.getConstantState().equals(d2)) {
+
+                            db.deleteRecipe(results.get(number - 1), 0);
+
+                            favouriteBtn.setImageResource(android.R.drawable.btn_star_big_off);
+                        }
+
+                    }
+                });
 
 
-            final FloatingActionButton doneBtn = rootView.findViewById(R.id.doneButton);
-            if(db.checkRecipe(results.get(number-1), 1)){
-                doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
+                final FloatingActionButton doneBtn = rootView.findViewById(R.id.doneButton);
+                if (db.checkRecipe(results.get(number - 1), 1)) {
+                    doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
+                }
+                doneBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //add recipe to favourite list
+
+                        Drawable.ConstantState d1 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_off_background).getConstantState();
+                        Drawable.ConstantState d2 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_on_background).getConstantState();
+                        Drawable actual = doneBtn.getDrawable();
+                        if (actual.getConstantState().equals(d1)) {
+
+                            db.addRecipe(results.get(number - 1), 1);
+                            db.updateRecipeCount(1);
+
+                            doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
+                        }
+                        if (actual.getConstantState().equals(d2)) {
+
+                            db.deleteRecipe(results.get(number - 1), 1);
+                            db.updateRecipeCount(1);
+
+                            doneBtn.setImageResource(android.R.drawable.checkbox_off_background);
+                        }
+
+                    }
+                });
             }
-            doneBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view){
-                    //add recipe to favourite list
-
-                    Drawable.ConstantState d1 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_off_background).getConstantState();
-                    Drawable.ConstantState d2 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_on_background).getConstantState();
-                    Drawable actual = doneBtn.getDrawable();
-                    if(actual.getConstantState().equals(d1)) {
-
-                        db.addRecipe(results.get(number-1), 1);
-
-                        doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
-                    }
-                    if(actual.getConstantState().equals(d2)) {
-
-                        db.deleteRecipe(results.get(number-1), 1);
-
-                        doneBtn.setImageResource(android.R.drawable.checkbox_off_background);
-                    }
-
-                }
-            });
 
 
 
@@ -247,7 +259,12 @@ public class ResultList extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return recipeList.size();
+            if(recipeList.size()==0){
+                return 1;
+            }
+            else {
+                return recipeList.size();
+            }
         }
     }
 

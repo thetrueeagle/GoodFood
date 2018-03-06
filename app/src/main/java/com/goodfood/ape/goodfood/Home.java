@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import static com.goodfood.ape.goodfood.Login.MyPREFERENCES;
-import static com.goodfood.ape.goodfood.Login.PREFS_NAME;
 
 public class Home extends AppCompatActivity {
 
@@ -23,21 +22,23 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        //SharedPreferences.Editor editor = sharedpreferences.edit();
+        final SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);  //get sharedPreferences from storage
+
         welcome = findViewById(R.id.welcome);
 
         db = new MyDBHandler(Home.this, null, null, 1);
 
 
-        welcome.setText("Welcome, "+ db.getName(sharedpreferences.getString(PREFS_NAME, "")));
-
+        welcome.setText("Welcome, " + db.getName()); //display welcome name
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.remove("name");   //if logging out, delete sharedPreference key value entry
+                editor.apply();
                 Toast.makeText(getApplicationContext(), "Successfully logged out", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(), StartScreen.class));
             }
@@ -45,75 +46,43 @@ public class Home extends AppCompatActivity {
 
 
         Button btnOrderActivity = findViewById(R.id.order_veg_bag);
-        btnOrderActivity.setOnClickListener(new View.OnClickListener(){
+        btnOrderActivity.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                launchOrder();
-            }
-        });
-        Button btnClassesActivity = findViewById(R.id.cooking_classes);
-        btnClassesActivity.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                launchClasses();
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, Order.class);
+                startActivity(intent);
             }
         });
 
         Button btnRecipesActivity = findViewById(R.id.recipes);
-        btnRecipesActivity.setOnClickListener(new View.OnClickListener(){
+        btnRecipesActivity.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                launchRecipes();
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, RecipeMenu.class);
+                startActivity(intent);
             }
         });
 
         Button btnMyProfileActivity = findViewById(R.id.my_profile);
-        btnMyProfileActivity.setOnClickListener(new View.OnClickListener(){
+        btnMyProfileActivity.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                launchMyProfile();
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, MyProfile.class);
+                startActivity(intent);
             }
         });
 
         Button btnInformationActivity = findViewById(R.id.infromation);
-        btnInformationActivity.setOnClickListener(new View.OnClickListener(){
+        btnInformationActivity.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                launchInformation();
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, Information.class);
+                startActivity(intent);
             }
         });
 
 
-
     }
-
-
-
-    private void launchOrder() {
-        Intent intent = new Intent(this, Order.class);
-        startActivity(intent);
-    }
-
-    private void launchClasses() {
-        Intent intent = new Intent(this, Order.class);
-        startActivity(intent);
-    }
-
-    private void launchRecipes() {
-        Intent intent = new Intent(this, RecipeMenu.class);
-        startActivity(intent);
-    }
-
-    private void launchMyProfile() {
-        Intent intent = new Intent(this, MyProfile.class);
-        startActivity(intent);
-    }
-
-    private void launchInformation() {
-        Intent intent = new Intent(this, Order.class);
-        startActivity(intent);
-    }
-
 
 
 }

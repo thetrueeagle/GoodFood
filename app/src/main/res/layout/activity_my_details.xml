@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#66c2ff"
+    tools:context="com.goodfood.ape.goodfood.MyDetails">
+
+    <TextView
+        android:id="@+id/myDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/my_details"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/detailsTable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.361" />
+
+    <TableLayout
+        android:id="@+id/detailsTable"
+        android:layout_width="match_parent"
+        android:layout_height="455dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/dailyIntakeLabel"
+                style="@style/textMyDetails"
+                android:layout_marginTop="10dp"
+                android:text="Current daily intake:" />
+
+            <TextView
+                android:id="@+id/dailyIntakeValue"
+                style="@style/textMyDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/daysStrikeLabel"
+                style="@style/textMyDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Days strike:" />
+
+            <TextView
+                android:id="@+id/daysStrikeValue"
+                style="@style/textMyDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/recipesMadeLabel"
+                style="@style/textMyDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Recipes made:" />
+
+            <TextView
+                android:id="@+id/recipesMadeValue"
+                style="@style/textMyDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/badgesEarnedLabel"
+                style="@style/textMyDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Badges earned:" />
+
+            <TextView
+                android:id="@+id/badgesEarnedValue"
+                style="@style/textMyDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/ordersMadeLabel"
+                style="@style/textMyDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Orders made:" />
+
+            <TextView
+                android:id="@+id/ordersMadeValue"
+                style="@style/textMyDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp" />
+        </TableRow>
+    </TableLayout>
+</android.support.constraint.ConstraintLayout>
