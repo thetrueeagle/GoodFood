@@ -86,13 +86,6 @@ public class Recipes extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
         // 3. Get the AlertDialog from create()
         builder.show();
 
@@ -250,9 +243,11 @@ public class Recipes extends AppCompatActivity {
             if(splited.length==1){
                 keywordParam=keywordParam+keyword;
             }
+            else {
 
-            for(int i=0; i<splited.length; i++){
-                keywordParam +=splited[i]+"+";
+                for (int i = 0; i < splited.length; i++) {
+                    keywordParam += splited[i] + "+";
+                }
             }
             keywordParam = keywordParam.substring(0, keywordParam.length()-1);
 
