@@ -7,100 +7,10 @@
     android:background="#66c2ff"
     tools:context="com.goodfood.ape.goodfood.FoodInfo">
 
-    <TableLayout
-        android:id="@+id/tableLayout2"
-        android:layout_width="368dp"
-        android:layout_height="484dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <ImageView
-                android:id="@+id/happyCow"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/cow" />
-
-            <ImageView
-                android:id="@+id/society"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/sucs" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp">
-
-            <ImageView
-                android:id="@+id/foodAssembly"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/assembly" />
-
-            <ImageView
-                android:id="@+id/farmersMarket"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:layout_weight="3"
-                app:srcCompat="@drawable/dddad1effa55a2cd191aadeb83f8d170" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp">
-
-            <ImageView
-                android:id="@+id/riversideBakery"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/riversidebakery" />
-
-            <ImageView
-                android:id="@+id/healthFoodShop"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_weight="3"
-                app:srcCompat="@drawable/healthfoodstore" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="156dp">
-
-            <ImageView
-                android:id="@+id/greenAndBlue"
-                android:layout_width="185dp"
-                android:layout_height="132dp"
-                android:layout_gravity="top|center"
-                android:layout_weight="3"
-                android:src="@drawable/university_of_stirling_students_union_project_logo_large" />
-        </TableRow>
-
-    </TableLayout>
-
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -108,8 +18,97 @@
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/greenAndBlue"
+        android:layout_width="234dp"
+        android:layout_height="132dp"
+        android:layout_gravity="top|center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="3"
+        android:src="@drawable/university_of_stirling_students_union_project_logo_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/riversideBakery" />
+
+    <ImageView
+        android:id="@+id/healthFoodShop"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/farmersMarket"
+        app:srcCompat="@drawable/healthfoodstore" />
+
+    <ImageView
+        android:id="@+id/riversideBakery"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        app:layout_constraintEnd_toStartOf="@+id/healthFoodShop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodAssembly"
+        app:srcCompat="@drawable/riversidebakery" />
+
+    <ImageView
+        android:id="@+id/farmersMarket"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/society"
+        app:srcCompat="@drawable/dddad1effa55a2cd191aadeb83f8d170" />
+
+    <ImageView
+        android:id="@+id/foodAssembly"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        app:layout_constraintEnd_toStartOf="@+id/farmersMarket"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/happyCow"
+        app:srcCompat="@drawable/assembly" />
+
+    <ImageView
+        android:id="@+id/society"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="36dp"
+        android:layout_weight="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:srcCompat="@drawable/sucs" />
+
+    <ImageView
+        android:id="@+id/happyCow"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_weight="1"
+        app:layout_constraintEnd_toStartOf="@+id/society"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:srcCompat="@drawable/cow" />
 </android.support.constraint.ConstraintLayout>
