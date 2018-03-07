@@ -42,7 +42,7 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="242dp">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -95,46 +95,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/password"
-                    android:imeActionId="6"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <EditText
-                    android:id="@+id/confirmPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/confirm_password"
-                    android:inputType="textPassword" />
             </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/register_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
-                android:background="@android:color/holo_blue_dark"
-                android:text="@string/action_sign_in"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/register_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="202dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/holo_blue_dark"
+        android:text="@string/action_sign_in"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </LinearLayout>

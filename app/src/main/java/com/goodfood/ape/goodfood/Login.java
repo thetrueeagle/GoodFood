@@ -15,7 +15,7 @@ import android.widget.Toast;
 public class Login extends Activity {
 
 
-    EditText email, pass;
+    EditText email;
     Button login;
     MyDBHandler db;
     SharedPreferences sharedpreferences;
@@ -31,7 +31,6 @@ public class Login extends Activity {
 
 
         email = findViewById(R.id.email);
-        pass = findViewById(R.id.password);
         login = findViewById(R.id.log_in_button);
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -44,15 +43,15 @@ public class Login extends Activity {
                 // TODO Auto-generated method stub
                 db = new MyDBHandler(Login.this, null, null, 1);
                 String username = email.getText().toString();
-                String password = pass.getText().toString();
 
 
-                if (username.equals("") || password.equals("")) { //if fields are empty
+
+                if (username.equals("")) { //if fields are empty
                     Toast.makeText(getApplicationContext(), "Please fill in your details!", Toast.LENGTH_LONG).show();
                 } else {
 
 
-                    if (db.checkPassword(username, password)) {    //checks if password matches the one in database
+                    if (db.checkData(username)) {    //checks if password matches the one in database
 
                         Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_LONG).show();
 
@@ -68,8 +67,8 @@ public class Login extends Activity {
 
                     } else {
                         Toast.makeText(getApplicationContext(), "Username/Password incorrect", Toast.LENGTH_LONG).show();
-                        //email.setText("");
-                        pass.setText("");
+                        email.setText("");
+
                     }
 
 

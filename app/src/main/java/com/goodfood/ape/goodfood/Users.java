@@ -10,19 +10,17 @@ public class Users {
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
     private int points;
     private int daysStrike;
     private int dailyIntake;
     private int recipeCount;
 
-    public Users(String name, String surname, String email, String password, int points, int daysStrike, int dailyIntake, int recipeCount) {
+    public Users(String name, String surname, String email, int points, int daysStrike, int dailyIntake, int recipeCount) {
 
         //this._id = id;
         this.firstName = name;
         this.lastName = surname;
         this.email = email;
-        this.password = password;
         this.points = points;
         this.daysStrike = daysStrike;
         this.dailyIntake = dailyIntake;
@@ -62,13 +60,6 @@ public class Users {
         return email;
     }
 
-    public void set_password ( String password) {
-        this.password = password;
-    }
-
-    public String get_password () {
-        return password;
-    }
 
 
     public int getDailyIntake() {

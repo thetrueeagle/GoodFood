@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class SignUp extends Activity {
 
-    EditText first, last, email, pass, confpass;
+    EditText first, last, email;
     Button register;
     MyDBHandler db;
 
@@ -44,8 +44,6 @@ public class SignUp extends Activity {
         first = findViewById(R.id.name);
         last = findViewById(R.id.lastName);
         email = findViewById(R.id.email);
-        pass = findViewById(R.id.password);
-        confpass = findViewById(R.id.confirmPassword);
 
         register = findViewById(R.id.register_button);
         db = new MyDBHandler(SignUp.this, null, null, 1);
@@ -61,29 +59,16 @@ public class SignUp extends Activity {
                     String edfirst = first.getText().toString();
                     String edlast = last.getText().toString();
                     String edemail = email.getText().toString();
-                    String edpass = pass.getText().toString();
-                    String edConf = confpass.getText().toString();
-
-                    if (edConf.equals(edpass)) {
 
 
-
-
-                        edpass=db.get_SHA_512_SecurePassword(edpass, "goodfood");
-
-                        Users user = new Users(edfirst, edlast, edemail, edpass, 0, 0, 0, 0);
+                        Users user = new Users(edfirst, edlast, edemail, 0, 0, 0, 0);
 
                         db.addUser(user);
 
                         Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(getApplicationContext(), Home.class));
-                    } else {
-
-                        Toast.makeText(getApplicationContext(), "Password doesn't match", Toast.LENGTH_LONG).show();
-                        pass.setText("");
-                        confpass.setText("");
                     }
-                }
+
                 else if(db.checkDatabaseEmpty()==false){
                     Toast.makeText(getApplicationContext(), "A user is already registered with this device. Please log in!", Toast.LENGTH_LONG).show();
                 }

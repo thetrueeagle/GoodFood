@@ -21,7 +21,7 @@ import java.util.HashMap;
 public class MyDBHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "app.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     public static final String USER_TABLE_NAME = "users";
     public static final String FAVOURITE_TABLE_NAME = "favourite";
@@ -36,7 +36,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_RECIPE_COUNT = "recipeCount";
     public static final String COLUMN_ORDER_COUNT = "orderCount";
     public static final String COLUMN_BADGE_COUNT = "badgeCount";
-    public static final String COLUMN_PASSWORD =  "password";
     public static final String COLUMN_URL =  "url";
     public static final String COLUMN_TITLE =  "title";
 
@@ -47,7 +46,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
                     COLUMN_FIRSTNAME + " TEXT, "+
                     COLUMN_LASTNAME + " TEXT, "+
                     COLUMN_EMAIL + " TEXT, " +
-                    COLUMN_PASSWORD + " TEXT, " +
                     COLUMN_POINTS + " INTEGER, " +
                     COLUMN_DAYS_STRIKE+ " INTEGER, " +
                     COLUMN_DAILY_INTAKE + " INTEGER, " +
@@ -102,7 +100,6 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     values.put(COLUMN_FIRSTNAME, user.getFirstName());
     values.put(COLUMN_LASTNAME, user.getLastName());
     values.put(COLUMN_EMAIL, user.getEmail());
-    values.put(COLUMN_PASSWORD, user.get_password());
     values.put(COLUMN_POINTS, 0);
     values.put(COLUMN_DAYS_STRIKE, 0);
     values.put(COLUMN_DAILY_INTAKE, 0);
@@ -480,21 +477,21 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
 
 
 
-    public boolean checkPassword(String email, String password) {
+    public boolean checkData(String email) {
 
 
-        password = get_SHA_512_SecurePassword(password, "goodfood");
+
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT password FROM " + USER_TABLE_NAME + " WHERE email = \"" + email + "\" AND password = \"" + password + "\";";
-        String storedPass = "";
+        String query = "SELECT email FROM " + USER_TABLE_NAME + " WHERE email = \"" + email + "\";";
+        String storedEmail = "";
 
         boolean check = false;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
         while (!c.isAfterLast()){
 
-            if (c.getString(c.getColumnIndex("password")) !=null){
-                storedPass = c.getString(c.getColumnIndex("password"));
+            if (c.getString(c.getColumnIndex("email")) !=null){
+                storedEmail = c.getString(c.getColumnIndex("email"));
 
             }
             c.moveToNext();
@@ -502,7 +499,7 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
 
 
 
-        if (storedPass.equals(password)){
+        if (storedEmail.equals(email)){
             check = true;
         }
 
@@ -535,23 +532,6 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
         return check;
     }
 
-    public String get_SHA_512_SecurePassword(String passwordToHash, String salt){
-        String generatedPassword = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-            md.update(salt.getBytes(StandardCharsets.UTF_8));
-            byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++){
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            generatedPassword = sb.toString();
-        }
-        catch (NoSuchAlgorithmException e){
-            e.printStackTrace();
-        }
-        return generatedPassword;
-    }
 
 
 
