@@ -3,6 +3,7 @@
     <string name="log_in">Log In</string>
     <string name="sign_up">Sign Up</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_start">Start</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -22,8 +23,7 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="my_profile">My Profile</string>
-    <string name="recipes">Recipes</string>
+    <string name="recipes">Start cooking</string>
     <string name="order_veg_bags">Order Veg Bags</string>
     <string name="cooking_classes">Cooking Classes</string>
     <string name="information">Information</string>
@@ -53,7 +53,7 @@
     <string name="calorie_title">Select desired calorie range</string>
     <string name="nutrient_title">Select any nutrient range</string>
     <string name="anna_eglite">Anna Eglite</string>
-    <string name="daily_intake">Daily intake</string>
+    <string name="daily_intake">Track daily intake</string>
     <string name="achievements">Achievements</string>
     <string name="my_details">My Details</string>
     <string name="title_activity_daily_intake">DailyIntake</string>
@@ -64,6 +64,34 @@
     <string name="favourites">Favourites</string>
     <string name="done">Done</string>
     <string name="completed_recipes">Completed Recipes</string>
+
+
+
+
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Welcome to GoodFood!</string>
+    <string name="slide_1_desc">We\'ll take you through a quick tutorial of what we\'re about!</string>
+
+    <string name="slide_2_title">Orders</string>
+    <string name="slide_2_desc">You can make Veg Bag orders from The Green &amp; Blue Space!</string>
+
+    <string name="slide_3_title">Recipes</string>
+    <string name="slide_3_desc">You can look up amazing recipes based on your preferences!</string>
+
+    <string name="slide_4_title">Daily Intake</string>
+    <string name="slide_4_desc">You can keep track of your daily fruit and veggie intake! Remember, it\'s at least 5-a-day!</string>
+
+    <string name="slide_5_title">Achievements</string>
+    <string name="slide_5_desc">And for all those things you can earn badges, as well as track your daily intake to remain motivated!</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+
+
 
 
 </resources>

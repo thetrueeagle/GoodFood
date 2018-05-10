@@ -11,18 +11,18 @@ public class Users {
     private String lastName;
     private String email;
     private int points;
-    private int daysStrike;
+    private int daysStreak;
     private int dailyIntake;
     private int recipeCount;
 
-    public Users(String name, String surname, String email, int points, int daysStrike, int dailyIntake, int recipeCount) {
+    public Users(String name, String surname, String email, int points, int daysStreak, int dailyIntake, int recipeCount) {
 
         //this._id = id;
         this.firstName = name;
         this.lastName = surname;
         this.email = email;
         this.points = points;
-        this.daysStrike = daysStrike;
+        this.daysStreak = daysStreak;
         this.dailyIntake = dailyIntake;
         this.recipeCount = recipeCount;
     }
@@ -70,8 +70,8 @@ public class Users {
         return points;
     }
 
-    public int getDaysStrike() {
-        return daysStrike;
+    public int getDaysStreak() {
+        return daysStreak;
     }
 
     public int getRecipeCount() {
@@ -82,8 +82,8 @@ public class Users {
         this.dailyIntake = dailyIntake;
     }
 
-    public void setDaysStrike(int daysStrike) {
-        this.daysStrike = daysStrike;
+    public void setDaysStreak(int daysStreak) {
+        this.daysStreak = daysStreak;
     }
 
     public void setPoints(int points) {

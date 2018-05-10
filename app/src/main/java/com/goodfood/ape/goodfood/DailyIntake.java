@@ -15,11 +15,11 @@ import com.daimajia.numberprogressbar.NumberProgressBar;
 import java.util.Calendar;
 
 
-import static com.goodfood.ape.goodfood.Login.MyPREFERENCES;
 
 public class DailyIntake extends AppCompatActivity {
 
     private NumberProgressBar bar;
+    private PrefManager prefManager;
     MyDBHandler db = new MyDBHandler(DailyIntake.this, null, null, 1);
 
     @Override
@@ -28,11 +28,11 @@ public class DailyIntake extends AppCompatActivity {
         setContentView(R.layout.activity_daily_intake);
 
 
-        SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE); //gets the saved SharedPreferences file from storage
-        if (sharedpreferences.contains("date")) { //checks if a stored date is present
+        prefManager = new PrefManager(DailyIntake.this);
+        if (prefManager.getDate()!=-1) { //checks if a stored date is present
 
 
-            int lastUpdated = sharedpreferences.getInt("date", 0); //gets the stored date
+            int lastUpdated = prefManager.getDate();
             Calendar calendar = Calendar.getInstance();
             int today = calendar.get(Calendar.DAY_OF_YEAR);
 
@@ -40,17 +40,13 @@ public class DailyIntake extends AppCompatActivity {
 
                 db.checkDateAndUpdate(true); //strike maintained (if intake>=5)
                 lastUpdated = today;
-                SharedPreferences.Editor editor = sharedpreferences.edit();
+                prefManager.setDate(lastUpdated);
 
-                editor.putInt("date", lastUpdated);
-                editor.apply();
             } else if ((today - lastUpdated > 1)) { //checks if more than 1 day has passed
                 db.checkDateAndUpdate(false); //strike has been lost
                 lastUpdated = today;
-                SharedPreferences.Editor editor = sharedpreferences.edit();
+                prefManager.setDate(lastUpdated);
 
-                editor.putInt("date", lastUpdated);
-                editor.apply();
 
             }
 
@@ -60,10 +56,7 @@ public class DailyIntake extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             int today = calendar.get(Calendar.DAY_OF_YEAR);
 
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-
-            editor.putInt("date", today);
-            editor.apply();
+            prefManager.setDate(today);
 
         }
 
@@ -106,8 +99,8 @@ public class DailyIntake extends AppCompatActivity {
         });
 
 
-        Button btnLink = findViewById(R.id.link);
-        btnLink.setOnClickListener(new View.OnClickListener() {
+        ImageButton btnInfo = findViewById(R.id.infoButton);
+        btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Uri uri = Uri.parse("https://www.nhs.uk/Livewell/5ADAY/Pages/Whatcounts.aspx"); // link to NHS page

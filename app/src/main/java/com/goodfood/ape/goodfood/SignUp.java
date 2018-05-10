@@ -13,9 +13,10 @@ import android.widget.Toast;
 
 public class SignUp extends Activity {
 
-    EditText first, last, email;
+    EditText first, last, email, code;
     Button register;
     MyDBHandler db;
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class SignUp extends Activity {
         first = findViewById(R.id.name);
         last = findViewById(R.id.lastName);
         email = findViewById(R.id.email);
+        code = findViewById(R.id.userCode);
 
         register = findViewById(R.id.register_button);
         db = new MyDBHandler(SignUp.this, null, null, 1);
@@ -59,11 +61,15 @@ public class SignUp extends Activity {
                     String edfirst = first.getText().toString();
                     String edlast = last.getText().toString();
                     String edemail = email.getText().toString();
+                    String edcode = code.getText().toString();
 
 
                         Users user = new Users(edfirst, edlast, edemail, 0, 0, 0, 0);
 
                         db.addUser(user);
+                        prefManager = new PrefManager(SignUp.this);
+                        prefManager.setName(edfirst);
+                        prefManager.setCode(edcode);
 
                         Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(getApplicationContext(), Home.class));

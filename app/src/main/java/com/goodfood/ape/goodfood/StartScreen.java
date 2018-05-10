@@ -8,52 +8,45 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import static com.goodfood.ape.goodfood.Login.MyPREFERENCES;
+
 
 public class StartScreen extends AppCompatActivity {
 
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
 
-        SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        if(sharedpreferences.contains("name"))
+        prefManager = new PrefManager(this);
+        String name = prefManager.getName();
+        if(!name.equals(""))
         {
             Intent intent = new Intent(this, Home.class);
             startActivity(intent);
         }
 
-        Button btnLogInActivity = (Button) findViewById(R.id.log_in_button);
+        Button btnLogInActivity = findViewById(R.id.log_in_button);
         btnLogInActivity.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view){
-            launchLogIn();
+            public void onClick(View view) {
+                Intent intent = new Intent(StartScreen.this, Login.class);
+                startActivity(intent);
             }
         });
 
 
-        Button btnSignUpActivity = (Button) findViewById(R.id.sign_up_button);
+        Button btnSignUpActivity = findViewById(R.id.sign_up_button);
         btnSignUpActivity.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                launchSignUp();
+                Intent intent = new Intent(StartScreen.this, SignUp.class);
+                startActivity(intent);
             }
         });
     }
 
 
-
-
-    private void launchLogIn() {
-        Intent intent = new Intent(this, Login.class);
-        startActivity(intent);
-    }
-
-    private void launchSignUp() {
-        Intent intent = new Intent(this, SignUp.class);
-        startActivity(intent);
-    }
 }
 

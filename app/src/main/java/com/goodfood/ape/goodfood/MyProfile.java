@@ -31,14 +31,7 @@ public class MyProfile extends AppCompatActivity {
         });
 
 
-        Button btnDailyIntake = findViewById(R.id.daily_intake);
-        btnDailyIntake.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View arg0){
-                Intent intent = new Intent(MyProfile.this, DailyIntake.class);
-                startActivity(intent);
-            }
-        });
+
 
         Button btnMyDetails = findViewById(R.id.my_details);
         btnMyDetails.setOnClickListener(new View.OnClickListener(){

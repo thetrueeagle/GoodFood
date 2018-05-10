@@ -352,7 +352,7 @@ public class Achievements extends AppCompatActivity {
 
         }
 
-        if(db.getDaysStrike()>=1){
+        if(db.getDaysStreak()>=1){
 
             count+=1;
             TableRow tr14 = new TableRow(this);
@@ -377,7 +377,7 @@ public class Achievements extends AppCompatActivity {
 
         }
 
-        if(db.getDaysStrike()>=5){
+        if(db.getDaysStreak()>=5){
 
             count+=1;
             TableRow tr15 = new TableRow(this);
@@ -402,7 +402,7 @@ public class Achievements extends AppCompatActivity {
 
         }
 
-        if(db.getDaysStrike()>=10){
+        if(db.getDaysStreak()>=10){
 
             count+=1;
             TableRow tr16 = new TableRow(this);
@@ -427,7 +427,7 @@ public class Achievements extends AppCompatActivity {
 
         }
 
-        if(db.getDaysStrike()>=20){
+        if(db.getDaysStreak()>=20){
 
             count+=1;
             TableRow tr17 = new TableRow(this);
@@ -452,7 +452,7 @@ public class Achievements extends AppCompatActivity {
 
         }
 
-        if(db.getDaysStrike()>=50){
+        if(db.getDaysStreak()>=50){
 
             count+=1;
             TableRow tr18 = new TableRow(this);
@@ -477,7 +477,7 @@ public class Achievements extends AppCompatActivity {
 
         }
 
-        if(db.getDaysStrike()>=100){
+        if(db.getDaysStreak()>=100){
 
             count+=1;
             TableRow tr19 = new TableRow(this);
@@ -502,7 +502,7 @@ public class Achievements extends AppCompatActivity {
 
         }
 
-        if((db.getDaysStrike()>=100)&&(db.getOrderCount()>=500)&&(db.getRecipeCount()>=1000))
+        if((db.getDaysStreak()>=100)&&(db.getOrderCount()>=500)&&(db.getRecipeCount()>=1000))
         {
             count+=1;
             TableRow tr20 = new TableRow(this);

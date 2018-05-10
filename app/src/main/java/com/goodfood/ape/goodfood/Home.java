@@ -1,8 +1,6 @@
 package com.goodfood.ape.goodfood;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,34 +9,34 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.goodfood.ape.goodfood.Login.MyPREFERENCES;
+
 
 public class Home extends AppCompatActivity {
 
     MyDBHandler db;
     TextView welcome;
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        final SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);  //get sharedPreferences from storage
+
 
         welcome = findViewById(R.id.welcome);
 
-        db = new MyDBHandler(Home.this, null, null, 1);
+        prefManager = new PrefManager(this);
+        String name = prefManager.getName();
 
 
-        welcome.setText("Welcome, " + db.getName()); //display welcome name
+        welcome.setText("Welcome, " + name); //display welcome name
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.remove("name");   //if logging out, delete sharedPreference key value entry
-                editor.apply();
+                prefManager.removePref("name");
                 Toast.makeText(getApplicationContext(), "Successfully logged out", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(), StartScreen.class));
             }
@@ -63,16 +61,25 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        Button btnMyProfileActivity = findViewById(R.id.my_profile);
-        btnMyProfileActivity.setOnClickListener(new View.OnClickListener() {
+        Button btnDailyIntake = findViewById(R.id.daily_intake);
+        btnDailyIntake.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Home.this, MyProfile.class);
+            public void onClick(View arg0){
+                Intent intent = new Intent(Home.this, DailyIntake.class);
                 startActivity(intent);
             }
         });
 
-        Button btnInformationActivity = findViewById(R.id.infromation);
+        Button btnMyProfileActivity = findViewById(R.id.my_details);
+        btnMyProfileActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, MyDetails.class);
+                startActivity(intent);
+            }
+        });
+
+        Button btnInformationActivity = findViewById(R.id.information);
         btnInformationActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +87,21 @@ public class Home extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btnAchievementsActivity = findViewById(R.id.achievements);
+        btnAchievementsActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, Achievements.class);
+                startActivity(intent);
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onBackPressed(){
 
 
     }

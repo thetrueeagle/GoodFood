@@ -10,11 +10,7 @@ import android.database.Cursor;
 import android.content.Context;
 import android.content.ContentValues;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 
@@ -26,50 +22,50 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String USER_TABLE_NAME = "users";
     public static final String FAVOURITE_TABLE_NAME = "favourite";
     public static final String DONE_TABLE_NAME = "done";
-    public static final String COLUMN_ID =  "_id";
-    public static final String COLUMN_FIRSTNAME =  "firstName";
-    public static final String COLUMN_LASTNAME =  "lastName";
-    public static final String COLUMN_EMAIL =  "email";
-    public static final String COLUMN_POINTS =  "points";
-    public static final String COLUMN_DAYS_STRIKE =  "strike";
-    public static final String COLUMN_DAILY_INTAKE =  "dailyIntake";
+    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_FIRSTNAME = "firstName";
+    public static final String COLUMN_LASTNAME = "lastName";
+    public static final String COLUMN_EMAIL = "email";
+    public static final String COLUMN_POINTS = "points";
+    public static final String COLUMN_DAYS_STREAK = "streak";
+    public static final String COLUMN_DAILY_INTAKE = "dailyIntake";
     public static final String COLUMN_RECIPE_COUNT = "recipeCount";
     public static final String COLUMN_ORDER_COUNT = "orderCount";
     public static final String COLUMN_BADGE_COUNT = "badgeCount";
-    public static final String COLUMN_URL =  "url";
-    public static final String COLUMN_TITLE =  "title";
+    public static final String COLUMN_URL = "url";
+    public static final String COLUMN_TITLE = "title";
 
 
     private static final String CREATE_USER_TABLE_QUERY =
             "CREATE TABLE " + USER_TABLE_NAME + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_FIRSTNAME + " TEXT, "+
-                    COLUMN_LASTNAME + " TEXT, "+
+                    COLUMN_FIRSTNAME + " TEXT, " +
+                    COLUMN_LASTNAME + " TEXT, " +
                     COLUMN_EMAIL + " TEXT, " +
                     COLUMN_POINTS + " INTEGER, " +
-                    COLUMN_DAYS_STRIKE+ " INTEGER, " +
+                    COLUMN_DAYS_STREAK + " INTEGER, " +
                     COLUMN_DAILY_INTAKE + " INTEGER, " +
                     COLUMN_RECIPE_COUNT + " INTEGER," +
                     COLUMN_ORDER_COUNT + " INTEGER," +
-                    COLUMN_BADGE_COUNT + " INTEGER" +");";
+                    COLUMN_BADGE_COUNT + " INTEGER" + ");";
 
     private static final String CREATE_FAVOURITE_TABLE_QUERY =
             "CREATE TABLE IF NOT EXISTS " + FAVOURITE_TABLE_NAME + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_TITLE + " TEXT, "+
+                    COLUMN_TITLE + " TEXT, " +
                     COLUMN_URL + " TEXT" + ");";
 
     private static final String CREATE_DONE_TABLE_QUERY =
             "CREATE TABLE IF NOT EXISTS " + DONE_TABLE_NAME + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_TITLE + " TEXT, "+
+                    COLUMN_TITLE + " TEXT, " +
                     COLUMN_URL + " TEXT" + ");";
 
 
-public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
 
-    super(context, DATABASE_NAME, factory, DATABASE_VERSION);
-}
+        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -94,50 +90,47 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
 
     //Add new row to database
 
-    public void addUser(Users user){
+    public void addUser(Users user) {
 
-    ContentValues values = new ContentValues();
-    values.put(COLUMN_FIRSTNAME, user.getFirstName());
-    values.put(COLUMN_LASTNAME, user.getLastName());
-    values.put(COLUMN_EMAIL, user.getEmail());
-    values.put(COLUMN_POINTS, 0);
-    values.put(COLUMN_DAYS_STRIKE, 0);
-    values.put(COLUMN_DAILY_INTAKE, 0);
-    values.put(COLUMN_RECIPE_COUNT, 0);
-    values.put(COLUMN_ORDER_COUNT, 0);
-    values.put(COLUMN_BADGE_COUNT, 0);
-    SQLiteDatabase db = getWritableDatabase();
-    db.insert(USER_TABLE_NAME, null, values);
-    db.close();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_FIRSTNAME, user.getFirstName());
+        values.put(COLUMN_LASTNAME, user.getLastName());
+        values.put(COLUMN_EMAIL, user.getEmail());
+        values.put(COLUMN_POINTS, 0);
+        values.put(COLUMN_DAYS_STREAK, 0);
+        values.put(COLUMN_DAILY_INTAKE, 0);
+        values.put(COLUMN_RECIPE_COUNT, 0);
+        values.put(COLUMN_ORDER_COUNT, 0);
+        values.put(COLUMN_BADGE_COUNT, 0);
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(USER_TABLE_NAME, null, values);
+        db.close();
 
     }
 
-    public void addRecipe(Result recipe, int which){
-
+    public void addRecipe(Result recipe, int which) {
 
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_TITLE, recipe.getTitle());
         values.put(COLUMN_URL, recipe.getInstructionUrl());
         SQLiteDatabase db = getWritableDatabase();
-        if(which==0) {
+        if (which == 0) {
             db.insert(FAVOURITE_TABLE_NAME, null, values);
-        }
-        else if(which==1){
+        } else if (which == 1) {
             db.insert(DONE_TABLE_NAME, null, values);
         }
         db.close();
 
     }
 
-    public void deleteRecipe(Result recipe, int which){
+    public void deleteRecipe(Result recipe, int which) {
 
         SQLiteDatabase db = getWritableDatabase();
 
-        if(which==0) {
+        if (which == 0) {
             db.execSQL("DELETE FROM " + FAVOURITE_TABLE_NAME + " WHERE " + COLUMN_URL + "=\"" + recipe.getInstructionUrl() + "\";");
-        }
-        else if(which==1){
+        } else if (which == 1) {
             db.execSQL("DELETE FROM " + DONE_TABLE_NAME + " WHERE " + COLUMN_URL + "=\"" + recipe.getInstructionUrl() + "\";");
         }
     }
@@ -146,22 +139,20 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     public boolean checkRecipe(Result recipe, int which) {
 
         SQLiteDatabase db = getWritableDatabase();
-        String query="";
-        if(which==0) {
+        String query = "";
+        if (which == 0) {
             query = "SELECT count(*) FROM " + FAVOURITE_TABLE_NAME + " WHERE url = \"" + recipe.getInstructionUrl() + "\";";
-        }
-        else if(which==1){
+        } else if (which == 1) {
             query = "SELECT count(*) FROM " + DONE_TABLE_NAME + " WHERE url = \"" + recipe.getInstructionUrl() + "\";";
         }
         boolean check = false;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
         int count = c.getInt(0);
-        if (count>0){
+        if (count > 0) {
 
             check = true;
-        }
-        else if (count==0){
+        } else if (count == 0) {
             check = false;
         }
 
@@ -172,23 +163,20 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     }
 
 
-
-
-    public ArrayList<HashMap<String, String>> getDatabase(int which){
+    public ArrayList<HashMap<String, String>> getDatabase(int which) {
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
 
         SQLiteDatabase db = getWritableDatabase();
-        String query="";
-        if(which==0) {
+        String query = "";
+        if (which == 0) {
             query = "SELECT title, url FROM " + FAVOURITE_TABLE_NAME + ";";
-        }
-        else if(which==1){
+        } else if (which == 1) {
             query = "SELECT title, url FROM " + DONE_TABLE_NAME + ";";
         }
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while (!c.isAfterLast()){
-            if (c.getString(c.getColumnIndex("title")) != null){
+        while (!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex("title")) != null) {
                 HashMap<String, String> recipe = new HashMap<>();
                 recipe.put("title", c.getString(c.getColumnIndex("title")));
                 recipe.put("url", c.getString(c.getColumnIndex("url")));
@@ -202,16 +190,14 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     }
 
 
-
-
-    public String getName(){
+    public String getName() {
         String name = "";
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT firstName FROM " + USER_TABLE_NAME + ";";
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while (!c.isAfterLast()){
-            if (c.getString(c.getColumnIndex("firstName")) != null){
+        while (!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex("firstName")) != null) {
                 name += c.getString(c.getColumnIndex("firstName"));
                 //name += "\n";
             }
@@ -223,14 +209,14 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     }
 
 
-    public String getSurname(){
+    public String getSurname() {
         String name = "";
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT lastName FROM " + USER_TABLE_NAME + ";";
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while (!c.isAfterLast()){
-            if (c.getString(c.getColumnIndex("lastName")) != null){
+        while (!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex("lastName")) != null) {
                 name += c.getString(c.getColumnIndex("lastName"));
                 //name += "\n";
             }
@@ -241,7 +227,7 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
         return name;
     }
 
-    public void updateDailyIntake(int intake){
+    public void updateDailyIntake(int intake) {
 
         String query = "UPDATE " + USER_TABLE_NAME + " SET " + COLUMN_DAILY_INTAKE + "=" + intake + ";";
         SQLiteDatabase db = getWritableDatabase();
@@ -250,7 +236,7 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
 
     }
 
-    public void updateBadgeCount(int badges){
+    public void updateBadgeCount(int badges) {
 
         String query = "UPDATE " + USER_TABLE_NAME + " SET " + COLUMN_BADGE_COUNT + "=" + badges + ";";
         SQLiteDatabase db = getWritableDatabase();
@@ -259,16 +245,16 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
 
     }
 
-    public int getDailyIntake(){
+    public int getDailyIntake() {
 
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT " + COLUMN_DAILY_INTAKE + " FROM " + USER_TABLE_NAME + ";";
         int intake = 0;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while (!c.isAfterLast()){
+        while (!c.isAfterLast()) {
 
-            if (c.getString(c.getColumnIndex(COLUMN_DAILY_INTAKE)) !=null){
+            if (c.getString(c.getColumnIndex(COLUMN_DAILY_INTAKE)) != null) {
                 intake = c.getInt(c.getColumnIndex(COLUMN_DAILY_INTAKE));
 
             }
@@ -279,16 +265,16 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
 
     }
 
-    public int getBadgeCount(){
+    public int getBadgeCount() {
 
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT " + COLUMN_BADGE_COUNT + " FROM " + USER_TABLE_NAME + ";";
         int badges = 0;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while (!c.isAfterLast()){
+        while (!c.isAfterLast()) {
 
-            if (c.getString(c.getColumnIndex(COLUMN_BADGE_COUNT)) !=null){
+            if (c.getString(c.getColumnIndex(COLUMN_BADGE_COUNT)) != null) {
                 badges = c.getInt(c.getColumnIndex(COLUMN_BADGE_COUNT));
 
             }
@@ -299,17 +285,17 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
 
     }
 
-    public int getDaysStrike(){
+    public int getDaysStreak() {
 
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT " + COLUMN_DAYS_STRIKE + " FROM " + USER_TABLE_NAME + ";";
+        String query = "SELECT " + COLUMN_DAYS_STREAK + " FROM " + USER_TABLE_NAME + ";";
         int strike = 0;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while (!c.isAfterLast()){
+        while (!c.isAfterLast()) {
 
-            if (c.getString(c.getColumnIndex(COLUMN_DAYS_STRIKE)) !=null){
-                strike = c.getInt(c.getColumnIndex(COLUMN_DAYS_STRIKE));
+            if (c.getString(c.getColumnIndex(COLUMN_DAYS_STREAK)) != null) {
+                strike = c.getInt(c.getColumnIndex(COLUMN_DAYS_STREAK));
 
             }
             c.moveToNext();
@@ -320,16 +306,16 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     }
 
 
-    public int getRecipeCount(){
+    public int getRecipeCount() {
 
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT " + COLUMN_RECIPE_COUNT + " FROM " + USER_TABLE_NAME + ";";
         int recipes = 0;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while (!c.isAfterLast()){
+        while (!c.isAfterLast()) {
 
-            if (c.getString(c.getColumnIndex(COLUMN_RECIPE_COUNT)) !=null){
+            if (c.getString(c.getColumnIndex(COLUMN_RECIPE_COUNT)) != null) {
                 recipes = c.getInt(c.getColumnIndex(COLUMN_RECIPE_COUNT));
 
             }
@@ -340,16 +326,16 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
 
     }
 
-    public int getOrderCount(){
+    public int getOrderCount() {
 
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT " + COLUMN_ORDER_COUNT + " FROM " + USER_TABLE_NAME + ";";
         int orders = 0;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while (!c.isAfterLast()){
+        while (!c.isAfterLast()) {
 
-            if (c.getString(c.getColumnIndex(COLUMN_ORDER_COUNT)) !=null){
+            if (c.getString(c.getColumnIndex(COLUMN_ORDER_COUNT)) != null) {
                 orders = c.getInt(c.getColumnIndex(COLUMN_ORDER_COUNT));
 
             }
@@ -361,17 +347,16 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     }
 
 
-    public void updateRecipeCount(int which){
+    public void updateRecipeCount(int which) {
 
         SQLiteDatabase db = getWritableDatabase();
-        String query="";
-        String update="";
-        if(which==0) {
+        String query = "";
+        String update = "";
+        if (which == 0) {
             //for future if necessary to use the count of favourite recipes; currently not needed
             //query = "SELECT count(*) FROM " + FAVOURITE_TABLE_NAME + ";";
 
-        }
-        else if(which==1){
+        } else if (which == 1) {
             query = "SELECT count(*) FROM " + DONE_TABLE_NAME + ";";
             Cursor c = db.rawQuery(query, null);
             c.moveToFirst();
@@ -386,28 +371,26 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     }
 
 
-    public void updateOrderCount(){
+    public void updateOrderCount() {
 
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT " + COLUMN_ORDER_COUNT + " FROM " + USER_TABLE_NAME + ";";
         int orders = 0;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while (!c.isAfterLast()){
+        while (!c.isAfterLast()) {
 
-            if (c.getString(c.getColumnIndex(COLUMN_ORDER_COUNT)) !=null){
+            if (c.getString(c.getColumnIndex(COLUMN_ORDER_COUNT)) != null) {
                 orders = c.getInt(c.getColumnIndex(COLUMN_ORDER_COUNT));
 
             }
             c.moveToNext();
         }
 
-        orders=orders+1;
+        orders = orders + 1;
 
 
-
-            String update = "UPDATE " + USER_TABLE_NAME + " SET " + COLUMN_ORDER_COUNT + "=" + orders + ";";
-
+        String update = "UPDATE " + USER_TABLE_NAME + " SET " + COLUMN_ORDER_COUNT + "=" + orders + ";";
 
 
         db.execSQL(update);
@@ -416,69 +399,61 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     }
 
 
-
-    public void checkDateAndUpdate(boolean isStrike){
+    public void checkDateAndUpdate(boolean isStrike) {
 
         SQLiteDatabase db = getWritableDatabase();
-            //update the database
-            if(isStrike) {
+        //update the database
+        if (isStrike) {
 
 
-                String query = "SELECT " + COLUMN_DAILY_INTAKE + " FROM " + USER_TABLE_NAME + ";";
-                int intake = 0;
-                Cursor c = db.rawQuery(query, null);
+            String query = "SELECT " + COLUMN_DAILY_INTAKE + " FROM " + USER_TABLE_NAME + ";";
+            int intake = 0;
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+            while (!c.isAfterLast()) {
+
+                if (c.getString(c.getColumnIndex(COLUMN_DAILY_INTAKE)) != null) {
+                    intake = c.getInt(c.getColumnIndex(COLUMN_DAILY_INTAKE));
+
+                }
+                c.moveToNext();
+            }
+
+            if (intake >= 5) {
+
+                query = "SELECT " + COLUMN_DAYS_STREAK + " FROM " + USER_TABLE_NAME + ";";
+                int strike = 0;
+                c = db.rawQuery(query, null);
                 c.moveToFirst();
                 while (!c.isAfterLast()) {
 
-                    if (c.getString(c.getColumnIndex(COLUMN_DAILY_INTAKE)) != null) {
-                        intake = c.getInt(c.getColumnIndex(COLUMN_DAILY_INTAKE));
+                    if (c.getString(c.getColumnIndex(COLUMN_DAYS_STREAK)) != null) {
+                        strike = c.getInt(c.getColumnIndex(COLUMN_DAYS_STREAK));
 
                     }
                     c.moveToNext();
                 }
+                strike = strike + 1;
 
-                if (intake >= 5) {
-
-                    query = "SELECT " + COLUMN_DAYS_STRIKE + " FROM " + USER_TABLE_NAME + ";";
-                    int strike = 0;
-                    c = db.rawQuery(query, null);
-                    c.moveToFirst();
-                    while (!c.isAfterLast()) {
-
-                        if (c.getString(c.getColumnIndex(COLUMN_DAYS_STRIKE)) != null) {
-                            strike = c.getInt(c.getColumnIndex(COLUMN_DAYS_STRIKE));
-
-                        }
-                        c.moveToNext();
-                    }
-                    strike = strike + 1;
-
-                    query = "UPDATE " + USER_TABLE_NAME + " SET " + COLUMN_DAYS_STRIKE + "=" + strike + ";";
-                    db.execSQL(query);
-                    query = "UPDATE " + USER_TABLE_NAME + " SET " + COLUMN_DAILY_INTAKE + "=0;";
-                    db.execSQL(query);
-
-                }
-            }
-            else if(isStrike==false){
-                String query = "UPDATE " + USER_TABLE_NAME + " SET " + COLUMN_DAYS_STRIKE + "=0;";
+                query = "UPDATE " + USER_TABLE_NAME + " SET " + COLUMN_DAYS_STREAK + "=" + strike + ";";
                 db.execSQL(query);
                 query = "UPDATE " + USER_TABLE_NAME + " SET " + COLUMN_DAILY_INTAKE + "=0;";
                 db.execSQL(query);
 
             }
+        } else if (isStrike == false) {
+            String query = "UPDATE " + USER_TABLE_NAME + " SET " + COLUMN_DAYS_STREAK + "=0;";
+            db.execSQL(query);
+            query = "UPDATE " + USER_TABLE_NAME + " SET " + COLUMN_DAILY_INTAKE + "=0;";
+            db.execSQL(query);
 
-
-
+        }
 
 
     }
 
 
-
-
     public boolean checkData(String email) {
-
 
 
         SQLiteDatabase db = getWritableDatabase();
@@ -488,9 +463,9 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
         boolean check = false;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while (!c.isAfterLast()){
+        while (!c.isAfterLast()) {
 
-            if (c.getString(c.getColumnIndex("email")) !=null){
+            if (c.getString(c.getColumnIndex("email")) != null) {
                 storedEmail = c.getString(c.getColumnIndex("email"));
 
             }
@@ -498,8 +473,7 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
         }
 
 
-
-        if (storedEmail.equals(email)){
+        if (storedEmail.equals(email)) {
             check = true;
         }
 
@@ -513,16 +487,15 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
     public boolean checkDatabaseEmpty() {
 
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT count(*) FROM " + USER_TABLE_NAME +  ";";
+        String query = "SELECT count(*) FROM " + USER_TABLE_NAME + ";";
         boolean check = false;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
         int count = c.getInt(0);
-        if (count>0){
+        if (count > 0) {
 
             check = false;
-        }
-        else if (count==0){
+        } else if (count == 0) {
             check = true;
         }
 
@@ -531,10 +504,6 @@ public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory f
 
         return check;
     }
-
-
-
-
 
 
 }

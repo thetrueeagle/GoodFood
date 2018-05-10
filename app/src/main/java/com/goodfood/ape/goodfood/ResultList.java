@@ -38,7 +38,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import static com.goodfood.ape.goodfood.Login.MyPREFERENCES;
 
 public class ResultList extends AppCompatActivity {
 
@@ -72,14 +71,28 @@ public class ResultList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
+
+
+        ImageView left = findViewById(R.id.left_nav);
+        left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager.arrowScroll(View.FOCUS_LEFT);
+            }
+        });
+        ImageView right = findViewById(R.id.right_nav);
+        right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager.arrowScroll(View.FOCUS_RIGHT);
+            }
+        });
+
+
         Intent intent = getIntent();
         url = intent.getStringExtra("URL");
 
         new GetRecipes().execute();
-
-
-
-
 
 
     }
@@ -141,17 +154,20 @@ public class ResultList extends AppCompatActivity {
             TextView textView = rootView.findViewById(R.id.title);
             ImageView image = rootView.findViewById(R.id.image);
             ListView ingredients = rootView.findViewById(R.id.ingredients);
-            Button btnIngredients = rootView.findViewById(R.id.instructions);
+            Button btnInstructions = rootView.findViewById(R.id.instructions);
             final ArrayList<Result> results =  (ArrayList<Result>) getArguments().getSerializable("recipeList");
             int size = results.size();
             if(size==0){
                 image.setImageResource(R.drawable.sadface);
                 textView.setText("Sorry, no results found!");
-                btnIngredients.setVisibility(View.INVISIBLE);
+                btnInstructions.setVisibility(View.INVISIBLE);
 
             }
             else {
                 final int number = getArguments().getInt(ARG_SECTION_NUMBER);
+                if(number==1){
+                    Toast.makeText(getContext(), "Swipe to see more", Toast.LENGTH_LONG).show();
+                }
                 textView.setText(results.get(number - 1).getTitle());
                 String imageURL = results.get(number - 1).getImageUrl();
                 Picasso.with(getActivity()).load(imageURL).into(image);
@@ -162,7 +178,7 @@ public class ResultList extends AppCompatActivity {
 
                 final Uri uri = Uri.parse(results.get(number - 1).getInstructionUrl()); // missing 'http://' will cause crashed
 
-                btnIngredients.setOnClickListener(new View.OnClickListener() {
+                btnInstructions.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -190,12 +206,14 @@ public class ResultList extends AppCompatActivity {
                             db.addRecipe(results.get(number - 1), 0);
 
                             favouriteBtn.setImageResource(android.R.drawable.btn_star_big_on);
+                            Toast.makeText(getContext(), "Recipe added to \"Favourites\"", Toast.LENGTH_LONG).show();
                         }
                         if (actual.getConstantState().equals(d2)) {
 
                             db.deleteRecipe(results.get(number - 1), 0);
 
                             favouriteBtn.setImageResource(android.R.drawable.btn_star_big_off);
+                            Toast.makeText(getContext(), "Recipe removed from \"Favourites\"", Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -220,6 +238,7 @@ public class ResultList extends AppCompatActivity {
                             db.updateRecipeCount(1);
 
                             doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
+                            Toast.makeText(getContext(), "Recipe added to \"Done\"", Toast.LENGTH_LONG).show();
                         }
                         if (actual.getConstantState().equals(d2)) {
 
@@ -227,6 +246,7 @@ public class ResultList extends AppCompatActivity {
                             db.updateRecipeCount(1);
 
                             doneBtn.setImageResource(android.R.drawable.checkbox_off_background);
+                            Toast.makeText(getContext(), "Recipe removed from \"Done\"", Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -295,7 +315,7 @@ public class ResultList extends AppCompatActivity {
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url);
 
-            Log.e(TAG, "Response from url: " + jsonStr);
+            //Log.e(TAG, "Response from url: " + jsonStr);
 
             if (jsonStr != null) {
                 try {
@@ -331,7 +351,7 @@ public class ResultList extends AppCompatActivity {
 
                     }
                 } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    //Log.e(TAG, "Json parsing error: " + e.getMessage());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -344,7 +364,7 @@ public class ResultList extends AppCompatActivity {
 
                 }
             } else {
-                Log.e(TAG, "Couldn't get json from server.");
+                //Log.e(TAG, "Couldn't get json from server.");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

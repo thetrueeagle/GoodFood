@@ -83,9 +83,6 @@ public class Recipes extends AppCompatActivity {
                     }
                 });
 
-
-
-
         // 3. Get the AlertDialog from create()
         builder.show();
 
@@ -238,18 +235,18 @@ public class Recipes extends AppCompatActivity {
             String healthParam="";
             String calorieParam="";
 
-
             String[] splited = keyword.split("\\s+");
             if(splited.length==1){
-                keywordParam=keywordParam+keyword;
+                keywordParam=keywordParam+"\'"+keyword+"\'";
             }
             else {
 
                 for (int i = 0; i < splited.length; i++) {
-                    keywordParam += splited[i] + "+";
+                    keywordParam += "\'" + splited[i] + "+\'";
                 }
+                keywordParam = keywordParam.substring(0, keywordParam.length()-2);
             }
-            keywordParam = keywordParam.substring(0, keywordParam.length()-1);
+
 
 
             if (ingredients!=0){

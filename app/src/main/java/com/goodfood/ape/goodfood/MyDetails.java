@@ -15,7 +15,7 @@ public class MyDetails extends AppCompatActivity {
 
 
         TextView dailyIntake = findViewById(R.id.dailyIntakeValue);
-        TextView daysStrike = findViewById(R.id.daysStrikeValue);
+        TextView daysStrike = findViewById(R.id.daysStreakValue);
         TextView recipes = findViewById(R.id.recipesMadeValue);
         TextView badges = findViewById(R.id.badgesEarnedValue);
         TextView orders = findViewById(R.id.ordersMadeValue);
@@ -24,7 +24,7 @@ public class MyDetails extends AppCompatActivity {
         MyDBHandler db = new MyDBHandler(MyDetails.this, null, null, 1);
 
         dailyIntake.setText(Integer.toString(db.getDailyIntake()));
-        daysStrike.setText(Integer.toString(db.getDaysStrike()));
+        daysStrike.setText(Integer.toString(db.getDaysStreak()));
         recipes.setText(Integer.toString(db.getRecipeCount()));
         badges.setText(Integer.toString(db.getBadgeCount()));
         orders.setText(Integer.toString(db.getOrderCount()));

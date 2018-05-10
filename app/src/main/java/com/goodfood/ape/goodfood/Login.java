@@ -18,10 +18,7 @@ public class Login extends Activity {
     EditText email;
     Button login;
     MyDBHandler db;
-    SharedPreferences sharedpreferences;
-
-    public static final String MyPREFERENCES = "MyPrefs";
-    public static final String PREFS_NAME = "name";
+    private PrefManager prefManager;
 
 
     @Override
@@ -33,7 +30,7 @@ public class Login extends Activity {
         email = findViewById(R.id.email);
         login = findViewById(R.id.log_in_button);
 
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
 
 
         login.setOnClickListener(new OnClickListener() {
@@ -55,11 +52,9 @@ public class Login extends Activity {
 
                         Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_LONG).show();
 
+                        prefManager = new PrefManager(Login.this);
+                        prefManager.setName(db.getName());
 
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-
-                        editor.putString(PREFS_NAME, username);
-                        editor.apply();
 
                         Intent intent = new Intent(Login.this, Home.class);
                         startActivity(intent);

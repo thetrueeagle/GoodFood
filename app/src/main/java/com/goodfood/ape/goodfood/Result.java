@@ -9,7 +9,6 @@ import java.lang.reflect.Array;
 
 public class Result implements Serializable {
 
-
     private String uri;
     private String title;
     private String imageUrl;

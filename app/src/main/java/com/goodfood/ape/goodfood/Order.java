@@ -112,17 +112,21 @@ public class Order extends AppCompatActivity {
 
         String emailBody = "Hello! \nI would like to order "+bags+" vegetable bag(s). \n"+comment+"\nExtras:" +extras+"\nAllergies:"+allergies+"\nThanks in advance!\n"+name;
 
-
         Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, "Veg Bag Order");
         intent.putExtra(Intent.EXTRA_TEXT, emailBody);
         intent.setData(Uri.parse("mailto:matt.woodthorpe@stir.ac.uk")); // or just "mailto:" for blank
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
-        startActivity(intent);
+        //startActivity(intent);
         db.updateOrderCount();
 
-
+        try {
+            startActivity(Intent.createChooser(intent, "How to send mail?"));
+            db.updateOrderCount();
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getApplicationContext(), "You do not have an email application; unable to generate email.", Toast.LENGTH_LONG).show();
+        }
 
 
 
