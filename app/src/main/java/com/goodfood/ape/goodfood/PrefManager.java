@@ -20,6 +20,7 @@ public class PrefManager {
     private static final String PREF_NAME = "name";
     private static final String PREF_CODE = "code";
     private static final String PREF_DATE = "date";
+    private static final String PREF_DATACOLL = "data";
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
 
@@ -52,13 +53,13 @@ public class PrefManager {
         editor.apply();
     }
 
-    public void setCode(String code){
-        editor.putString(PREF_CODE, code);
+    public void setCode(Boolean version){
+        editor.putBoolean(PREF_CODE, version);
         editor.commit();
     }
 
-    public String getCode(){
-        return pref.getString(PREF_CODE, "");
+    public Boolean getCode(){
+        return pref.getBoolean(PREF_CODE, false);
     }
 
     public void setDate(int date){
@@ -68,6 +69,15 @@ public class PrefManager {
 
     public int getDate(){
         return pref.getInt(PREF_DATE, -1);
+    }
+
+    public void setDataColl(Boolean version){
+        editor.putBoolean(PREF_DATACOLL, version);
+        editor.commit();
+    }
+
+    public Boolean getDataColl(){
+        return pref.getBoolean(PREF_DATACOLL, true);
     }
 
 }

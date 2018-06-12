@@ -134,4 +134,20 @@
                 android:layout_marginLeft="15dp" />
         </TableRow>
     </TableLayout>
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="198dp"
+        android:layout_height="204dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:alpha="0.8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/detailsTable"
+        app:layout_constraintVertical_bias="0.967"
+        app:srcCompat="@drawable/raspberry" />
 </android.support.constraint.ConstraintLayout>

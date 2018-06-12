@@ -3,6 +3,7 @@ package com.goodfood.ape.goodfood;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ public class StartScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
 
+        MyDBHandler db = new MyDBHandler(this, null, null, 1);
         prefManager = new PrefManager(this);
         String name = prefManager.getName();
         if(!name.equals(""))
@@ -38,6 +40,10 @@ public class StartScreen extends AppCompatActivity {
 
 
         Button btnSignUpActivity = findViewById(R.id.sign_up_button);
+        if(db.checkDatabaseEmpty()==false){
+            btnSignUpActivity.setEnabled(false);
+            btnSignUpActivity.setBackgroundColor(Color.parseColor("#66595959"));
+        }
         btnSignUpActivity.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){

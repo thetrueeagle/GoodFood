@@ -1,38 +1,83 @@
 package com.goodfood.ape.goodfood;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.URL;
+
+
 
 
 public class Home extends AppCompatActivity {
 
-    MyDBHandler db;
+    //MyDBHandler db;
     TextView welcome;
     private PrefManager prefManager;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+
+
+
+
+        prefManager = new PrefManager(this);
+        if(prefManager.getCode()==true) {
+            setContentView(R.layout.activity_home);
+
+            Button btnAchievementsActivity = findViewById(R.id.achievements);
+            btnAchievementsActivity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home.this, Achievements.class);
+                    startActivity(intent);
+                }
+            });
+
+            Button btnMyProfileActivity = findViewById(R.id.my_details);
+            btnMyProfileActivity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home.this, MyDetails.class);
+                    startActivity(intent);
+                }
+            });
+            new NetworkCheck(this).execute();
+        }
+        if(prefManager.getCode()==false) {
+            setContentView(R.layout.activity_home_no);
+        }
+
 
 
         welcome = findViewById(R.id.welcome);
 
-        prefManager = new PrefManager(this);
+
         String name = prefManager.getName();
 
 
         welcome.setText("Welcome, " + name); //display welcome name
+        new NetworkCheck(this).execute();
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,7 +85,7 @@ public class Home extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Successfully logged out", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(), StartScreen.class));
             }
-        });
+        });*/
 
 
         Button btnOrderActivity = findViewById(R.id.order_veg_bag);
@@ -70,14 +115,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        Button btnMyProfileActivity = findViewById(R.id.my_details);
-        btnMyProfileActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Home.this, MyDetails.class);
-                startActivity(intent);
-            }
-        });
+
 
         Button btnInformationActivity = findViewById(R.id.information);
         btnInformationActivity.setOnClickListener(new View.OnClickListener() {
@@ -88,14 +126,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        Button btnAchievementsActivity = findViewById(R.id.achievements);
-        btnAchievementsActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Home.this, Achievements.class);
-                startActivity(intent);
-            }
-        });
+
 
 
     }
@@ -105,6 +136,7 @@ public class Home extends AppCompatActivity {
 
 
     }
+
 
 
 }

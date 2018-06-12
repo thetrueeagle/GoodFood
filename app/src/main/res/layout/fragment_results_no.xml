@@ -57,6 +57,7 @@
         android:layout_marginTop="8dp"
 
         android:background="@drawable/border"
+        android:backgroundTint="@android:color/darker_gray"
         android:text="Instructions"
         android:textColor="#000000"
         android:textStyle="bold"
@@ -85,24 +86,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.148" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/doneButton"
-        android:layout_width="47dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:onClick="markAsDone"
-        android:src="@android:drawable/checkbox_off_background"
-        app:layout_constraintBottom_toTopOf="@+id/image"
-        app:layout_constraintEnd_toStartOf="@+id/title"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.17" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -118,25 +101,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ingredients"
         app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/doneText"
-        android:layout_width="78dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:text="Have you cooked this?"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/doneButton" />
-
-    <TextView
-        android:id="@+id/favouriteText"
-        android:layout_width="62dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:text="Did you like this?"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/favouriteButton" />
 
 </android.support.constraint.ConstraintLayout>

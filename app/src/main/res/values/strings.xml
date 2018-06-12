@@ -86,12 +86,56 @@
     <string name="slide_4_desc">You can keep track of your daily fruit and veggie intake! Remember, it\'s at least 5-a-day!</string>
 
     <string name="slide_5_title">Achievements</string>
-    <string name="slide_5_desc">And for all those things you can earn badges, as well as track your daily intake to remain motivated!</string>
+    <string name="slide_5_desc">And for all those things you can earn badges, as well as track your daily intake and streaks to remain motivated!</string>
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
 
 
+    <string name="general">Welcome to the GoodFood app!\nThis app in an honours student’s dissertation project in collaboration with The Green &amp; Blue Space.\nThe aim of the app is to promote and encourage healthier eating amongst university students and possibly staff.\nBy interacting with the app users can earn various achievements regarding their daily fruit and veg intake, cooking enthusiasm etc. More on this in other info sections!\nWe hope you find this app useful and interesting. Currently it has undergone its first stage of development, therefore has only a limited amount of functions, but this will hopefully be improved in the future.\nHappy eating!
+</string>
+
+    <string name="general_no">Welcome to the GoodFood app!\nThis app in an honours student’s dissertation project in collaboration with The Green &amp; Blue Space.\nThe aim of the app is to promote and encourage healthier eating amongst university students and possibly staff.\nWe hope you find this app useful and interesting. Currently it has undergone its first stage of development, therefore has only a limited amount of functions, but this will hopefully be improved in the future.\nHappy eating!
+</string>
+
+    <string name="order">The Green &amp; Blue Space provides the opportunity to order veg bags that contain seasonal and locally sourced veg. You can now order them via this app in the \“Order Veg Bag\” section.\n
+                \n
+                Times\nFor each week orders are only accepted on Mondays and Tuesdays until 5pm. Out of these times you will not be able to make an order.\n
+                If you have successfully made an order, you can pick up your veg bag on Thursday from 11:00 until 4:30pm in The Green &amp; Blue Space, which is located in the Atrium towards the bridge exit.\n
+                \n
+                Field explanations\nWhen making an order, choose the number of bags you would like to order (normally this would be 1, but in case you are ordering for a friend or hosting a huge dinner party, other options are available). Please also indicate if you would like to order any extras* or if you have any allergies (e.g. beetroot). Finally, leave a comment if you wish and click Submit. This will automatically generate the email for you and you’ll just have to click send from your email app.\n
+                \n*Extras - additionally you can order eggs (£1.75 for 6 eggs) and also extra vegetable (e.g. sweet potatoes, leeks etc.) \n
+                \n
+                Pricing\nThe cost of one vegetable bag is £6.50.\nA box of 6 eggs costs £1.75.\nPrices for other extras vary, as these come from wholesale and the price is known only when the food arrives.
+</string>
+
+    <string name="recipe">Search\nThe app provides a search facility for you to search by keyword, number of ingredients, dietary requirements etc. Enter your parameters and click Search for the results to be displayed. Please be sensible with the search parameters, as, if you enter too many, there will be no results!\n
+                \nFavourites\nWhen you find a recipe you like and want to save it for later, click the star icon on the top right corner. You can later view these by clicking the Favourites button.\n
+                \nDone\nWhen you have successfully cooked something from a recipe, mark it ‘Done’ by clicking the box in the top left corner. You can view the recipes you’ve already made by clicking the Done button.
+</string>
+
+    <string name="recipe_no">Search\nThe app provides a search facility for you to search by keyword, number of ingredients, dietary requirements etc. Enter your parameters and click Search for the results to be displayed. Please be sensible with the search parameters, as, if you enter too many, there will be no results!\n
+                \nFavourites\nWhen you find a recipe you like and want to save it for later, click the star icon on the top right corner. You can later view these by clicking the Favourites button.
+</string>
+
+    <string name="dailyIntake">Daily Intake\nIt is important to eat fruit and veg on a daily basis. This will help you keep track of this. Whenever you eat some fruit or veg during the day, click the + button on this page. The goal is 5 pieces of fruit and veg per day, but don’t hesitate to eat more!
+    </string>
+
+    <string name="achieve">"Achievements\nCurrently, there are 3 ways you can earn achievements – by making vegetable bag orders, by making recipes and by continuously eating 5 pieces of fruit and veg every day. These will give you badges that will be displayed in the Achievements section.
+    </string>
+
+
+
+    <string name="info">Local Food Scene\nIn the Local Food Scene section you can find out about various places that can help you eat healthier. Just click on the images and will take you to the appropriate webpage with all the info!
+</string>
+    <string name="feedback">If you are using this app and something breaks, looks weird, does not work or else if you have any suggestions, please send an email to:\ncwd@cs.stir.ac.uk\nsma@cs.stir.ac.uk\nape00007@students.stir.ac.uk</string>
+    <string name="_5_a_day">5-a-day</string>
+    <string name="daily_intake_space">Daily Intake</string>
+    <string name="view_history">View History</string>
+    <string name="info_button_text">Don\'t know if it counts? Click on the icon below and find out!</string>
+    <string name="daily_intake_question">How many units of fruit and veg did you have today?</string>
+    <string name="save">Save</string>
+    <string name="researchInfo">Thank you for taking part. If you wish to end your participation, click the button below. If you also no longer wish for your data to be used, check the box before clicking the button. \nIf you would like to find out more about the research, please email:\ncwd@cs.stir.ac.uk\nsma@cs.stir.ac.uk</string>
 
 
 </resources>

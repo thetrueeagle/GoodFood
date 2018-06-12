@@ -5,22 +5,27 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
 
-import static android.app.PendingIntent.getActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 
 public class Recipes extends AppCompatActivity {
 
     private View view;
     private int ingredients;
     private int temp;
-    private String temp1;
     private String[] dietLabels = new String[6];
     private String[] healthLabels = new String[27];
     private int calorieMin;
@@ -29,23 +34,71 @@ public class Recipes extends AppCompatActivity {
     private String keyword;
 
 
+    private static final Callback<Void> callCallback = new Callback<Void>() {
+        @Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+            Log.d("XXX", "Submitted. " + response);
+        }
+
+        @Override
+        public void onFailure(Call<Void> call, Throwable throwable) {
+            Log.e("XXX", "Failed", throwable);
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
 
-
+        final PrefManager prefManager = new PrefManager(this);
+        final MyDBHandler db = new MyDBHandler(this, null, null, 0);
         Button btnSearch = findViewById(R.id.searchButton);
         btnSearch.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                //add variable collection
-                EditText keywordField = findViewById(R.id.keywordField);
-                keyword = keywordField.getText().toString();
-                finalUrl=generateURL(keyword, ingredients, dietLabels, healthLabels, calorieMin, calorieMax);
-                Intent intent = new Intent(Recipes.this, ResultList.class);
-                intent.putExtra("URL", finalUrl);
-                startActivity(intent);
+
+                NetworkCheck check = new NetworkCheck(Recipes.this){
+                    @Override
+                    public void onPostExecute(Boolean result){
+                        if (result==false){
+                            Toast.makeText(Recipes.this, "No internet connection. Cannot retrieve recipes.. Please connect to the internet!", Toast.LENGTH_LONG).show();
+                        }
+                        else if(result){
+                            //add variable collection
+                            EditText keywordField = findViewById(R.id.keywordField);
+                            keyword = keywordField.getText().toString();
+                            finalUrl=generateURL(keyword, ingredients, dietLabels, healthLabels, calorieMin, calorieMax);
+                            Intent intent = new Intent(Recipes.this, ResultList.class);
+                            intent.putExtra("URL", finalUrl);
+                            startActivity(intent);
+
+                            Boolean dataColl = prefManager.getDataColl();
+                            if(dataColl) {
+
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl("https://docs.google.com/forms/d/e/")
+                                        .build();
+                                final DataCollection dataCollWebService = retrofit.create(DataCollection.class);
+
+
+                                String email = db.getEmail();
+                                Boolean code = prefManager.getCode();
+                                String activity = "RECIPE SEARCH CLICK";
+                                String info = finalUrl;
+
+                                Call<Void> sendDataCall = dataCollWebService.sendEngagement(email, code, activity, info);
+                                sendDataCall.enqueue(callCallback);
+                            }
+
+
+
+                        }
+                    }
+                };
+                check.execute();
+
             }
         });
 

@@ -30,5 +30,14 @@ public class Information extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btnResearch = findViewById(R.id.researchInfoBtn);
+        btnResearch.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(Information.this, Research.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -1,9 +1,7 @@
 package com.goodfood.ape.goodfood;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -30,6 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -37,6 +36,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class ResultList extends AppCompatActivity {
@@ -46,6 +50,19 @@ public class ResultList extends AppCompatActivity {
 
     private ProgressDialog pDialog;
     private ArrayList<Result> recipeList = new ArrayList<>();
+
+    private static final Callback<Void> callCallback = new Callback<Void>() {
+        @Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+            Log.d("XXX", "Submitted. " + response);
+        }
+
+        @Override
+        public void onFailure(Call<Void> call, Throwable throwable) {
+            Log.e("XXX", "Failed", throwable);
+        }
+    };
+
 
 
 
@@ -91,6 +108,7 @@ public class ResultList extends AppCompatActivity {
 
         Intent intent = getIntent();
         url = intent.getStringExtra("URL");
+
 
         new GetRecipes().execute();
 
@@ -150,12 +168,113 @@ public class ResultList extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            final View rootView = inflater.inflate(R.layout.fragment_results, container, false);
+
+            final PrefManager prefManager = new PrefManager(getContext());
+            View rootView;
+            final MyDBHandler db = new MyDBHandler(getContext(), null, null, 1);
+            final ArrayList<Result> results =  (ArrayList<Result>) getArguments().getSerializable("recipeList");
+            final int number = getArguments().getInt(ARG_SECTION_NUMBER);
+
+            //new instance retrofit to send data to forms
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://docs.google.com/forms/d/e/")
+                    .build();
+            final DataCollection dataCollWebService = retrofit.create(DataCollection.class);
+            if(prefManager.getCode()==true) {
+
+                 rootView = inflater.inflate(R.layout.fragment_results, container, false);
+                 final Boolean dataColl = prefManager.getDataColl();
+
+
+                final FloatingActionButton doneBtn = rootView.findViewById(R.id.doneButton);
+                if (db.checkRecipe(results.get(number - 1), 1)) {
+                    doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
+                }
+                doneBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //add recipe to favourite list
+
+                        Drawable.ConstantState d1 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_off_background).getConstantState();
+                        Drawable.ConstantState d2 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_on_background).getConstantState();
+                        Drawable actual = doneBtn.getDrawable();
+                        if (actual.getConstantState().equals(d1)) {
+
+                            db.addRecipe(results.get(number - 1), 1);
+                            db.updateRecipeCount(1);
+
+                            doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
+                            int recipes = db.getRecipeCount();
+                            //notify user badge earned
+                            if (recipes == 1 || recipes == 10 || recipes == 50 || recipes == 100 || recipes == 500 || recipes == 1000) {
+
+                                String uri = "@drawable/cookhat"+recipes;  // where cookhat+recipes is the file
+
+                                int imageResource = getResources().getIdentifier(uri, null, getContext().getPackageName());
+
+                                Drawable res = getResources().getDrawable(imageResource);
+                                new MaterialStyledDialog.Builder(getContext())
+                                        .setTitle("Awesome!")
+                                        .setDescription("Well done! You've earned a new badge!")
+                                        .setHeaderDrawable(res)
+                                        .withDialogAnimation(true)
+                                        .setPositiveText("OK!")
+                                        .show();
+                                if(dataColl) {
+                                    String email = db.getEmail();
+                                    Boolean code = prefManager.getCode();
+                                    String activity = "RECIPE COUNT BADGE";
+                                    String info = Integer.toString(db.getRecipeCount());
+
+                                    Call<Void> sendDataCall = dataCollWebService.sendEngagement(email, code, activity, info);
+                                    sendDataCall.enqueue(callCallback);
+                                }
+
+
+                            }
+                            else {
+                                Toast.makeText(getContext(), "Recipe added to \"Done\"", Toast.LENGTH_SHORT).show();
+                            }
+
+                            if(dataColl) {
+                                //send data about recipe marked as done
+                                String email = db.getEmail();
+                                Boolean code = prefManager.getCode();
+                                String activity = "RECIPE DONE";
+                                String info = Integer.toString(db.getRecipeCount());
+
+                                Call<Void> sendDataCall = dataCollWebService.sendEngagement(email, code, activity, info);
+                                sendDataCall.enqueue(callCallback);
+                            }
+
+
+
+                        }
+                        if (actual.getConstantState().equals(d2)) {
+
+                            db.deleteRecipe(results.get(number - 1), 1);
+                            db.updateRecipeCount(1);
+
+                            doneBtn.setImageResource(android.R.drawable.checkbox_off_background);
+                            Toast.makeText(getContext(), "Recipe removed from \"Done\"", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+
+
+
+            }
+            else {
+                rootView = inflater.inflate(R.layout.fragment_results_no, container, false);
+            }
+
             TextView textView = rootView.findViewById(R.id.title);
             ImageView image = rootView.findViewById(R.id.image);
             ListView ingredients = rootView.findViewById(R.id.ingredients);
             Button btnInstructions = rootView.findViewById(R.id.instructions);
-            final ArrayList<Result> results =  (ArrayList<Result>) getArguments().getSerializable("recipeList");
+
             int size = results.size();
             if(size==0){
                 image.setImageResource(R.drawable.sadface);
@@ -164,7 +283,7 @@ public class ResultList extends AppCompatActivity {
 
             }
             else {
-                final int number = getArguments().getInt(ARG_SECTION_NUMBER);
+
                 if(number==1){
                     Toast.makeText(getContext(), "Swipe to see more", Toast.LENGTH_LONG).show();
                 }
@@ -188,7 +307,7 @@ public class ResultList extends AppCompatActivity {
                     }
                 });
 
-                final MyDBHandler db = new MyDBHandler(getContext(), null, null, 1);
+
                 final FloatingActionButton favouriteBtn = rootView.findViewById(R.id.favouriteButton);
                 if (db.checkRecipe(results.get(number - 1), 0)) {
                     favouriteBtn.setImageResource(android.R.drawable.btn_star_big_on);
@@ -206,51 +325,21 @@ public class ResultList extends AppCompatActivity {
                             db.addRecipe(results.get(number - 1), 0);
 
                             favouriteBtn.setImageResource(android.R.drawable.btn_star_big_on);
-                            Toast.makeText(getContext(), "Recipe added to \"Favourites\"", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Recipe added to \"Favourites\"", Toast.LENGTH_SHORT).show();
                         }
                         if (actual.getConstantState().equals(d2)) {
 
                             db.deleteRecipe(results.get(number - 1), 0);
 
                             favouriteBtn.setImageResource(android.R.drawable.btn_star_big_off);
-                            Toast.makeText(getContext(), "Recipe removed from \"Favourites\"", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Recipe removed from \"Favourites\"", Toast.LENGTH_SHORT).show();
                         }
 
                     }
                 });
 
 
-                final FloatingActionButton doneBtn = rootView.findViewById(R.id.doneButton);
-                if (db.checkRecipe(results.get(number - 1), 1)) {
-                    doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
-                }
-                doneBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //add recipe to favourite list
 
-                        Drawable.ConstantState d1 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_off_background).getConstantState();
-                        Drawable.ConstantState d2 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_on_background).getConstantState();
-                        Drawable actual = doneBtn.getDrawable();
-                        if (actual.getConstantState().equals(d1)) {
-
-                            db.addRecipe(results.get(number - 1), 1);
-                            db.updateRecipeCount(1);
-
-                            doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
-                            Toast.makeText(getContext(), "Recipe added to \"Done\"", Toast.LENGTH_LONG).show();
-                        }
-                        if (actual.getConstantState().equals(d2)) {
-
-                            db.deleteRecipe(results.get(number - 1), 1);
-                            db.updateRecipeCount(1);
-
-                            doneBtn.setImageResource(android.R.drawable.checkbox_off_background);
-                            Toast.makeText(getContext(), "Recipe removed from \"Done\"", Toast.LENGTH_LONG).show();
-                        }
-
-                    }
-                });
             }
 
 
@@ -369,12 +458,11 @@ public class ResultList extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(getApplicationContext(),
-                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                "Couldn't get results. Check your internet connection or adjust search parameters.",
                                 Toast.LENGTH_LONG)
                                 .show();
                     }
                 });
-
             }
             return null;
         }

@@ -11,14 +11,14 @@
     tools:showIn="@layout/activity_daily_intake">
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/dailyIntakeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/rock_salt"
-        android:text="Daily Intake"
+        android:text="@string/daily_intake_space"
         android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="bold|italic"
@@ -27,21 +27,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.daimajia.numberprogressbar.NumberProgressBar
-        android:id="@+id/number_progress_bar"
-        style="@style/NumberProgressBar_Passing_Green"
-        android:layout_width="255dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="92dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView16"
+    <com.marcok.stepprogressbar.StepProgressBar
+        android:id="@+id/intakeBar"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        app:activeDotColor="@android:color/holo_green_dark"
+        app:activeDotIndex="0"
+        app:cumulativeDots="false"
+        app:dotSize="25dp"
+        app:inactiveDotColor="#37474f"
+        app:layout_constraintBottom_toTopOf="@+id/addButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        custom:progress_current="1"
-        custom:progress_reached_bar_height="20dp"
-        custom:progress_unreached_bar_height="15dp" />
+        app:numberDots="10"
+        app:spacing="10dp" />
 
     <TextView
         android:id="@+id/textView16"
@@ -50,7 +53,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Don't know if it counts? Click on the icon below and find out!"
+        android:text="@string/info_button_text"
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="18sp"
@@ -61,92 +64,138 @@
 
     <ImageButton
         android:id="@+id/infoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:backgroundTint="#66c2ff"
+        android:background="#66c2ff"
+        android:contentDescription="Button for more info on daily intake "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         custom:srcCompat="@android:drawable/ic_menu_info_details" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/title5aday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="44dp"
-        android:text="5-a-day"
+        android:layout_marginTop="128dp"
+        android:text="@string/_5_a_day"
         android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/number_progress_bar"
+        app:layout_constraintBottom_toTopOf="@+id/intakeBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/dailyIntakeTitle"
+        app:layout_constraintVertical_bias="0.277" />
 
     <ImageButton
         android:id="@+id/addButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="88dp"
         android:background="#66c2ff"
-        android:backgroundTintMode="src_over"
-        android:foregroundTint="@android:color/holo_green_dark"
-        android:foregroundTintMode="src_atop"
+        android:contentDescription="Button to add daily intake "
         android:src="@android:drawable/ic_menu_add"
-        app:layout_constraintBottom_toTopOf="@+id/textView16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/number_progress_bar"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBottom_toTopOf="@+id/history"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/removeButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="76dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:background="#66c2ff"
+        android:contentDescription="Button to remove daily intake "
         android:src="@android:drawable/ic_delete"
         app:layout_constraintBottom_toTopOf="@+id/textView16"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.289"
-        app:layout_constraintStart_toEndOf="@+id/addButton"
-        app:layout_constraintTop_toBottomOf="@+id/number_progress_bar"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintHorizontal_bias="0.232"
+        app:layout_constraintStart_toEndOf="@+id/addButton" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/dailyStreakFlame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="96dp"
+        android:contentDescription="Flame icon for daily streak display"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        app:layout_constraintStart_toEndOf="@+id/dailyIntakeIcon"
         app:layout_constraintTop_toTopOf="parent"
         custom:srcCompat="@drawable/fire" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/dailyIntakeIcon"
         android:layout_width="89dp"
         android:layout_height="195dp"
         android:layout_marginEnd="50dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="68dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView7"
+        android:layout_marginTop="56dp"
+        android:contentDescription="Icon to display daily intake "
+        app:layout_constraintEnd_toStartOf="@+id/dailyStreakFlame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         custom:srcCompat="@drawable/circle" />
+
+    <TextView
+        android:id="@+id/countSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/dailyIntakeIcon"
+        app:layout_constraintEnd_toEndOf="@+id/dailyIntakeIcon"
+        app:layout_constraintStart_toStartOf="@+id/dailyIntakeIcon"
+        app:layout_constraintTop_toTopOf="@+id/dailyIntakeIcon" />
+
+    <TextView
+        android:id="@+id/streak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/dailyStreakFlame"
+        app:layout_constraintEnd_toEndOf="@+id/dailyStreakFlame"
+        app:layout_constraintStart_toStartOf="@+id/dailyStreakFlame"
+        app:layout_constraintTop_toTopOf="@+id/dailyStreakFlame"
+        app:layout_constraintVertical_bias="0.796" />
+
+    <Button
+        android:id="@+id/history"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/holo_blue_dark"
+        android:text="@string/view_history"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

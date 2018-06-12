@@ -17,7 +17,7 @@ public class Achievements extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievements);
-        MyDBHandler db = new MyDBHandler(Achievements.this, "", null, 1); //create a new DB Handler for database queries
+        MyDBHandler db = new MyDBHandler(Achievements.this, null, null, 1); //create a new DB Handler for database queries
         int count =1; //each time this page is viewed, the badge count is updated in the database
 
         TableLayout table = findViewById(R.id.achievementsTable);
@@ -58,7 +58,7 @@ public class Achievements extends AppCompatActivity {
             TableRow tr2 = new TableRow(this);
 
             final ImageView image2 = new ImageView(this);
-            image2.setImageResource(R.drawable.shop);
+            image2.setImageResource(R.drawable.shop1);
 
             tr2.addView(image2);
             image2.getLayoutParams().height=windowHeight/2-200;
@@ -208,7 +208,7 @@ public class Achievements extends AppCompatActivity {
             TableRow tr8 = new TableRow(this);
 
             final ImageView image8 = new ImageView(this);
-            image8.setImageResource(R.drawable.cookhat);
+            image8.setImageResource(R.drawable.cookhat1);
 
             tr8.addView(image8);
             image8.getLayoutParams().height=windowHeight/2-200;
@@ -358,7 +358,7 @@ public class Achievements extends AppCompatActivity {
             TableRow tr14 = new TableRow(this);
 
             final ImageView image14 = new ImageView(this);
-            image14.setImageResource(R.drawable.apple);
+            image14.setImageResource(R.drawable.apple1);
 
             tr14.addView(image14);
             image14.getLayoutParams().height=windowHeight/2-200;

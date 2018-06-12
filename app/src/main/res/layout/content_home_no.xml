@@ -7,21 +7,21 @@
     android:background="#66c2ff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.goodfood.ape.goodfood.Home"
-    tools:showIn="@layout/activity_home">
+    tools:showIn="@layout/activity_home_no">
 
 
     <Button
         android:id="@+id/order_veg_bag"
         android:layout_width="150dp"
-        android:layout_height="110dp"
-        android:layout_marginBottom="30dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="60dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="15dp"
         android:background="@drawable/buttonshape"
         android:text="@string/order_veg_bags"
-        android:textColor="@android:color/holo_orange_light"
+        android:textColor="#ffffff"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/achievements"
+        app:layout_constraintBottom_toTopOf="@+id/information"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.613"
         app:layout_constraintStart_toEndOf="@+id/recipes" />
@@ -29,38 +29,23 @@
     <Button
         android:id="@+id/recipes"
         android:layout_width="150dp"
-        android:layout_height="110dp"
-        android:layout_marginBottom="30dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="64dp"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="24dp"
         android:background="@drawable/buttonshape"
-        android:text="@string/recipes"
-        android:textColor="@android:color/holo_orange_light"
+        android:text="@string/title_activity_recipes"
+        android:textColor="#ffffff"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/daily_intake"
         app:layout_constraintEnd_toStartOf="@+id/order_veg_bag"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/my_details"
-        android:layout_width="150dp"
-        android:layout_height="110dp"
-        android:layout_marginBottom="25dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/buttonshape"
-        android:text="@string/my_details"
-        android:textColor="#ffffff"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/information"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/information"
-        android:layout_width="150dp"
-        android:layout_height="110dp"
-        android:layout_marginBottom="25dp"
+        android:layout_width="153dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="120dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="15dp"
         android:background="@drawable/buttonshape"
@@ -69,14 +54,14 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/my_details" />
+        app:layout_constraintStart_toEndOf="@+id/daily_intake" />
 
     <TextView
         android:id="@+id/welcome"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="#ffffff"
@@ -93,50 +78,45 @@
     <Button
         android:id="@+id/daily_intake"
         android:layout_width="150dp"
-        android:layout_height="110dp"
-        android:layout_marginBottom="30dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="120dp"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="24dp"
         android:background="@drawable/buttonshape"
-        android:text="@string/daily_intake"
-        android:textColor="@android:color/holo_orange_light"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/my_details"
-        app:layout_constraintEnd_toStartOf="@+id/achievements"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/achievements"
-        android:layout_width="150dp"
-        android:layout_height="110dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="15dp"
-        android:background="@drawable/buttonshape"
-        android:text="@string/achievements"
+        android:text="@string/slide_4_title"
         android:textColor="#ffffff"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/information"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/daily_intake" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/information"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="139dp"
-        android:layout_height="160dp"
+        android:id="@+id/imageView4"
+        android:layout_width="113dp"
+        android:layout_height="113dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:alpha="0.8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/banana" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="74dp"
+        android:layout_height="76dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="68dp"
+        android:alpha="0.8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/cherry_icon" />
+        app:srcCompat="@drawable/tomato" />
 
 </android.support.constraint.ConstraintLayout>

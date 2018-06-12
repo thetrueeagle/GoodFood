@@ -69,10 +69,24 @@ public class SignUp extends Activity {
                         db.addUser(user);
                         prefManager = new PrefManager(SignUp.this);
                         prefManager.setName(edfirst);
-                        prefManager.setCode(edcode);
+                        prefManager.setDataColl(true);
+                        //depending on which password is entered, a boolean is set to true for gamified version and false for non-gamified. These values are later used to inflate different layouts.
+                    //change the 'equals' to whatever passwords you set
+                        if (edcode.equals("12345")) { //gamified
+                        prefManager.setCode(true);
+                            Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(getApplicationContext(), Welcome.class));
+                    }
+                    else if(edcode.equals("54321")){ //non-gamified
+                        prefManager.setCode(false);
+                            Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(getApplicationContext(), Welcome.class));
+                    }
+                    else{
+                            Toast.makeText(getApplicationContext(), "Invalid code. try again!", Toast.LENGTH_LONG).show();
+                        }
 
-                        Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(getApplicationContext(), Home.class));
+
                     }
 
                 else if(db.checkDatabaseEmpty()==false){

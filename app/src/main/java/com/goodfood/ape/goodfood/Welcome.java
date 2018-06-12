@@ -33,6 +33,7 @@ public class Welcome extends AppCompatActivity {
     private int[] layouts;
     private Button btnSkip, btnNext;
     private PrefManager prefManager;
+    private Boolean version;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +58,28 @@ public class Welcome extends AppCompatActivity {
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
 
+        version = prefManager.getCode();
+
 
         // layouts of all welcome sliders
         // add few more layouts if you want
-        layouts = new int[]{
-                R.layout.welcome1,
-                R.layout.welcome2,
-                R.layout.welcome3,
-                R.layout.welcome4,
-                R.layout.welcome5};
+        if(version) {
+            layouts = new int[]{
+                    R.layout.welcome1,
+                    R.layout.welcome2,
+                    R.layout.welcome3,
+                    R.layout.welcome4,
+                    R.layout.welcome5,
+                    R.layout.welcome6};
+        }
+        else{
+            layouts = new int[]{
+                    R.layout.welcome1,
+                    R.layout.welcome2,
+                    R.layout.welcome3,
+                    R.layout.welcome4,
+                    R.layout.welcome6};
+        }
 
         // adding bottom dots
         addBottomDots(0);
@@ -76,6 +90,7 @@ public class Welcome extends AppCompatActivity {
         myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+
 
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +108,11 @@ public class Welcome extends AppCompatActivity {
                 if (current < layouts.length) {
                     // move to next screen
                     viewPager.setCurrentItem(current);
+                    if((version==false)&&(current==4)){
+                        btnNext.setTextColor(Color.BLACK);
+                        btnSkip.setTextColor(Color.BLACK);
+                    }
+
                 } else {
                     launchHomeScreen();
                 }
@@ -112,11 +132,17 @@ public class Welcome extends AppCompatActivity {
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(35);
             dots[i].setTextColor(colorsInactive[currentPage]);
+            if((version==false)&&(currentPage==4)){
+                dots[i].setTextColor(colorsInactive[currentPage+1]);
+            }
             dotsLayout.addView(dots[i]);
         }
 
         if (dots.length > 0)
             dots[currentPage].setTextColor(colorsActive[currentPage]);
+        if((version==false)&&(currentPage==4)){
+            dots[currentPage].setTextColor(colorsActive[currentPage+1]);
+        }
     }
 
     private int getItem(int i) {
@@ -125,7 +151,7 @@ public class Welcome extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(Welcome.this, StartScreen.class));
+        startActivity(new Intent(Welcome.this, Home.class));
         finish();
     }
 
