@@ -1,23 +1,16 @@
 package com.goodfood.ape.goodfood;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.os.Handler;
+
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.URL;
 
 
 
@@ -34,8 +27,6 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
 
         prefManager = new PrefManager(this);
@@ -59,7 +50,15 @@ public class Home extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-            new NetworkCheck(this).execute();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    new NetworkCheck(Home.this).execute();
+                }
+            }, 2000);
+
+
         }
         if(prefManager.getCode()==false) {
             setContentView(R.layout.activity_home_no);
@@ -74,7 +73,12 @@ public class Home extends AppCompatActivity {
 
 
         welcome.setText("Welcome, " + name); //display welcome name
-        new NetworkCheck(this).execute();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                new NetworkCheck(Home.this).execute();
+            }
+        }, 2000);
 
 
         /*FloatingActionButton fab = findViewById(R.id.fab);

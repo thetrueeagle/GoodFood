@@ -21,6 +21,7 @@ public class PrefManager {
     private static final String PREF_CODE = "code";
     private static final String PREF_DATE = "date";
     private static final String PREF_DATACOLL = "data";
+    private static final String PREF_GOAL = "goal";
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
 
@@ -78,6 +79,15 @@ public class PrefManager {
 
     public Boolean getDataColl(){
         return pref.getBoolean(PREF_DATACOLL, true);
+    }
+
+    public void setGoal(String goal){
+        editor.putString(PREF_GOAL, goal);
+        editor.commit();
+    }
+
+    public String getGoal(){
+        return pref.getString(PREF_GOAL, "");
     }
 
 }

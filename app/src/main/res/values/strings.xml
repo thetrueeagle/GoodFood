@@ -135,7 +135,7 @@
     <string name="info_button_text">Don\'t know if it counts? Click on the icon below and find out!</string>
     <string name="daily_intake_question">How many units of fruit and veg did you have today?</string>
     <string name="save">Save</string>
-    <string name="researchInfo">Thank you for taking part. If you wish to end your participation, click the button below. If you also no longer wish for your data to be used, check the box before clicking the button. \nIf you would like to find out more about the research, please email:\ncwd@cs.stir.ac.uk\nsma@cs.stir.ac.uk</string>
+    <string name="researchInfo">Thank you for taking part. If you wish to end your participation, click the button below. If you also no longer wish for your previous data to be used, check the box before clicking the button and it will be removed. \nIf you would like to find out more about the research, please email:\ncwd@cs.stir.ac.uk\nsma@cs.stir.ac.uk</string>
 
 
 </resources>

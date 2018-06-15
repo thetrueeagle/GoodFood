@@ -29,14 +29,14 @@ public class StartScreen extends AppCompatActivity {
             startActivity(intent);
         }
 
-        Button btnLogInActivity = findViewById(R.id.log_in_button);
+        /*Button btnLogInActivity = findViewById(R.id.log_in_button);
         btnLogInActivity.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(StartScreen.this, Login.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
 
         Button btnSignUpActivity = findViewById(R.id.sign_up_button);

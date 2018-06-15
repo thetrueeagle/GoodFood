@@ -85,8 +85,6 @@ public class Research extends AppCompatActivity {
                                                 //add variable collection
 
                                                 if (check) {
-                                                    Toast.makeText(Research.this, "Thank you for participating!", Toast.LENGTH_LONG).show();
-
 
                                                     Call<Void> sendDataCall = dataCollWebService.sendUserInfo("", "", email, 0, 0, 0, 0, 0, "The user has withdrawn consent to use their data");
                                                     sendDataCall.enqueue(callCallback);
@@ -149,28 +147,28 @@ public class Research extends AppCompatActivity {
                                                     }
 
 
-                                                    Toast.makeText(Research.this, "Thank you for participating and submitting your data!", Toast.LENGTH_LONG).show();
                                                     prefManager.setDataColl(false);
                                                 }
 
 
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(Research.this);
-                                                builder.setCancelable(true);
-                                                builder.setTitle("Thank you!");
-                                                builder.setMessage("Thank you for participating! You can continue using the app, however data will no longer be collected. \nHappy eating!");
-                                                builder.setPositiveButton("OK",
-                                                        new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog, int which) {
 
-                                                            }
-                                                        });
-
-                                                AlertDialog dialogEnd = builder.create();
-                                                dialogEnd.show();
 
 
                                             }
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(Research.this);
+                                            builder.setCancelable(true);
+                                            builder.setTitle("Thank you!");
+                                            builder.setMessage("Thank you for participating! You can continue using the app, however data will no longer be collected. \nHappy eating!");
+                                            builder.setPositiveButton("OK",
+                                                    new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+
+                                                        }
+                                                    });
+
+                                            AlertDialog dialogEnd = builder.create();
+                                            dialogEnd.show();
 
 
                                         }

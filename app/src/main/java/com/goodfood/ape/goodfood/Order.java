@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,6 +28,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class Order extends AppCompatActivity {
+
+
 
 
     private static final Callback<Void> callCallback = new Callback<Void>() {
@@ -125,9 +128,11 @@ public class Order extends AppCompatActivity {
 
     }
 
+
+
     private void submitOrder(String bags, String comment, String extras, String allergies) {
 
-        MyDBHandler db = new MyDBHandler(this, null, null, 0);
+        final MyDBHandler db = new MyDBHandler(this, null, null, 0);
         String name = db.getName()+" "+db.getSurname();
 
         String emailBody = "Hello! \nI would like to order "+bags+" vegetable bag(s). \n"+comment+"\nExtras:" +extras+"\nAllergies:"+allergies+"\nThanks in advance!\n"+name;
@@ -143,7 +148,7 @@ public class Order extends AppCompatActivity {
 
         try {
             startActivity(Intent.createChooser(intent, "How to send mail?"));
-            db.updateOrderCount();
+
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(getApplicationContext(), "You do not have an email application; unable to generate email.", Toast.LENGTH_LONG).show();
         }
@@ -153,11 +158,18 @@ public class Order extends AppCompatActivity {
 
         PrefManager prefManager = new PrefManager(this);
         Boolean dataColl = prefManager.getDataColl();
+        Boolean version = prefManager.getCode();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://docs.google.com/forms/d/e/")
                 .build();
         final DataCollection dataCollWebService = retrofit.create(DataCollection.class);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                db.updateOrderCount();
+            }
+        }, 5000);
         int order = db.getOrderCount();
         String email = db.getEmail();
         Boolean code = prefManager.getCode();
@@ -169,9 +181,9 @@ public class Order extends AppCompatActivity {
             sendDataCall.enqueue(callCallback);
         }
 
-
-        if(order==1 || order==10 || order==50 || order==100 || order==200 || order==500){
-            String uri = "@drawable/shop"+order;  // where shop+order is the file
+        if(version){
+        if(order==1 || order==10 || order==50 || order==100 || order==200 || order==500) {
+            String uri = "@drawable/shop" + order;  // where shop+order is the file
 
             int imageResource = getResources().getIdentifier(uri, null, getPackageName());
 
@@ -184,11 +196,12 @@ public class Order extends AppCompatActivity {
                     .setPositiveText("OK!")
                     .show();
 
-            if(dataColl) {
+            if (dataColl) {
                 activity = "ORDERS MADE BADGE";
                 Call<Void> sendDataCall = dataCollWebService.sendEngagement(email, code, activity, info);
                 sendDataCall.enqueue(callCallback);
             }
+        }
 
         }
 

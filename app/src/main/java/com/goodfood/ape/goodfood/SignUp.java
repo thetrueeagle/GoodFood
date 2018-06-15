@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class SignUp extends Activity {
 
-    EditText first, last, email, code;
+    EditText first, last, email, code, dailyIntake;
     Button register;
     MyDBHandler db;
     private PrefManager prefManager;
@@ -46,6 +46,7 @@ public class SignUp extends Activity {
         last = findViewById(R.id.lastName);
         email = findViewById(R.id.email);
         code = findViewById(R.id.userCode);
+        dailyIntake = findViewById(R.id.dailyIntakeGoal);
 
         register = findViewById(R.id.register_button);
         db = new MyDBHandler(SignUp.this, null, null, 1);
@@ -62,6 +63,7 @@ public class SignUp extends Activity {
                     String edlast = last.getText().toString();
                     String edemail = email.getText().toString();
                     String edcode = code.getText().toString();
+                    String intakeGoal = dailyIntake.getText().toString();
 
 
                         Users user = new Users(edfirst, edlast, edemail, 0, 0, 0, 0);
@@ -70,6 +72,7 @@ public class SignUp extends Activity {
                         prefManager = new PrefManager(SignUp.this);
                         prefManager.setName(edfirst);
                         prefManager.setDataColl(true);
+                        prefManager.setGoal(intakeGoal);
                         //depending on which password is entered, a boolean is set to true for gamified version and false for non-gamified. These values are later used to inflate different layouts.
                     //change the 'equals' to whatever passwords you set
                         if (edcode.equals("12345")) { //gamified

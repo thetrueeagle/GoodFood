@@ -108,7 +108,7 @@ public class Welcome extends AppCompatActivity {
                 if (current < layouts.length) {
                     // move to next screen
                     viewPager.setCurrentItem(current);
-                    if((version==false)&&(current==4)){
+                    if(((version==false)&&(current==4))||((version==true)&&(current==5))){
                         btnNext.setTextColor(Color.BLACK);
                         btnSkip.setTextColor(Color.BLACK);
                     }

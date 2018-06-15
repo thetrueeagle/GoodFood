@@ -14,6 +14,7 @@
         android:id="@+id/dailyIntakeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
@@ -22,10 +23,12 @@
         android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView16"
@@ -71,16 +74,16 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/dailyIntakeQuestion"
         app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintHorizontal_bias="0.804"
+        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dailyIntakeTitle"
-        app:layout_constraintVertical_bias="0.373" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
         android:id="@+id/countSpinner"
         android:layout_width="261dp"
         android:layout_height="23dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:textAlignment="center"
@@ -93,7 +96,7 @@
         android:id="@+id/dailyIntakeQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:gravity="fill_horizontal"
         android:text="@string/daily_intake_question"
@@ -109,45 +112,49 @@
         android:id="@+id/save"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginBottom="24dp"
         android:background="@android:color/holo_blue_dark"
+        android:gravity="center"
         android:text="@string/save"
         android:textColor="#ffffff"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView16"
+        app:layout_constraintBottom_toTopOf="@+id/history"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/history"
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginStart="20dp"
-        android:background="@android:color/holo_blue_dark"
+        style="@style/button_blue_white_bold_18"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="24dp"
         android:text="@string/view_history"
-        android:textColor="#ffffff"
-        android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView16"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.558"
-        app:layout_constraintStart_toEndOf="@+id/save" />
+        app:layout_constraintEnd_toStartOf="@+id/changeGoal"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="139dp"
-        android:layout_height="252dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="40dp"
+        android:layout_width="130dp"
+        android:layout_height="123dp"
+        android:layout_marginEnd="36dp"
         android:layout_marginTop="8dp"
         android:alpha="0.8"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/dailyIntakeQuestion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.073"
+        app:layout_constraintVertical_bias="0.695"
         custom:srcCompat="@drawable/applefruit" />
+
+    <Button
+        android:id="@+id/changeGoal"
+        style="@style/button_blue_white_bold_18"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="10dp"
+        android:text="Change goal"
+        app:layout_constraintBottom_toTopOf="@+id/textView16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/history" />
 
 </android.support.constraint.ConstraintLayout>

@@ -14,6 +14,7 @@
         android:id="@+id/dailyIntakeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
@@ -22,10 +23,12 @@
         android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/title5aday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
 
     <com.marcok.stepprogressbar.StepProgressBar
         android:id="@+id/intakeBar"
@@ -66,7 +69,7 @@
         android:id="@+id/infoButton"
         android:layout_width="50dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="#66c2ff"
@@ -80,10 +83,9 @@
         android:id="@+id/title5aday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="128dp"
         android:text="@string/_5_a_day"
         android:textColor="#ffffff"
         android:textSize="24sp"
@@ -91,36 +93,35 @@
         app:layout_constraintBottom_toTopOf="@+id/intakeBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dailyIntakeTitle"
-        app:layout_constraintVertical_bias="0.277" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/addButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginStart="88dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="20dp"
         android:background="#66c2ff"
         android:contentDescription="Button to add daily intake "
-        android:src="@android:drawable/ic_menu_add"
+        android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toTopOf="@+id/history"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/removeButton" />
 
     <ImageButton
         android:id="@+id/removeButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="76dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="100dp"
         android:background="#66c2ff"
         android:contentDescription="Button to remove daily intake "
         android:src="@android:drawable/ic_delete"
         app:layout_constraintBottom_toTopOf="@+id/textView16"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.232"
-        app:layout_constraintStart_toEndOf="@+id/addButton" />
+        app:layout_constraintEnd_toStartOf="@+id/addButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/dailyStreakFlame"
@@ -187,15 +188,31 @@
         android:layout_width="145dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="24dp"
         android:background="@android:color/holo_blue_dark"
         android:text="@string/view_history"
         android:textColor="#ffffff"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView16"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/changeGoal"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/changeGoal"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="10dp"
+        android:background="@android:color/holo_blue_dark"
+        android:text="Change goal"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/history" />
 
 </android.support.constraint.ConstraintLayout>

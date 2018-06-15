@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-
 public class MyDBHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "app.db";
@@ -26,7 +25,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String FAVOURITE_TABLE_NAME = "favourite";
     public static final String DONE_TABLE_NAME = "done";
     public static final String INTAKE_TABLE_NAME = "intake";
-
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_FIRSTNAME = "firstName";
     public static final String COLUMN_LASTNAME = "lastName";
@@ -37,13 +35,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_RECIPE_COUNT = "recipeCount";
     public static final String COLUMN_ORDER_COUNT = "orderCount";
     public static final String COLUMN_BADGE_COUNT = "badgeCount";
-
     public static final String COLUMN_URL = "url";
     public static final String COLUMN_TITLE = "title";
-
     public static final String COLUMN_DATE = "date";
-
-
 
 
     private static final String CREATE_USER_TABLE_QUERY =
@@ -89,8 +83,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_FAVOURITE_TABLE_QUERY);
         db.execSQL(CREATE_DONE_TABLE_QUERY);
         db.execSQL(CREATE_INTAKE_TABLE_QUERY);
-
-
         //db.close();
 
     }
@@ -511,7 +503,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
 
-    public void checkDateAndUpdate(boolean isStrike) {
+    public void checkDateAndUpdate(boolean isStrike, String goal) {
 
         SQLiteDatabase db = getWritableDatabase();
         //update the database
@@ -531,7 +523,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 c.moveToNext();
             }
 
-            if (intake >= 5) {
+            if (intake >= Integer.parseInt(goal)) {
 
                 query = "SELECT " + COLUMN_DAYS_STREAK + " FROM " + USER_TABLE_NAME + ";";
                 int strike = 0;

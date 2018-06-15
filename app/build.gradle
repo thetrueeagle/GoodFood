@@ -46,7 +46,4 @@ dependencies {
     implementation 'com.muddzdev:styleabletoast:2.1.2'
     implementation 'com.github.javiersantos:MaterialStyledDialogs:2.1'
 
-
-
-
 }

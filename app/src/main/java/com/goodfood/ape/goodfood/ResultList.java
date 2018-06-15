@@ -182,48 +182,78 @@ public class ResultList extends AppCompatActivity {
             final DataCollection dataCollWebService = retrofit.create(DataCollection.class);
             if(prefManager.getCode()==true) {
 
-                 rootView = inflater.inflate(R.layout.fragment_results, container, false);
-                 final Boolean dataColl = prefManager.getDataColl();
+                rootView = inflater.inflate(R.layout.fragment_results, container, false);
+                final Boolean dataColl = prefManager.getDataColl();
 
 
-                final FloatingActionButton doneBtn = rootView.findViewById(R.id.doneButton);
-                if (db.checkRecipe(results.get(number - 1), 1)) {
-                    doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
-                }
-                doneBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //add recipe to favourite list
+                TextView textView = rootView.findViewById(R.id.title);
+                ImageView image = rootView.findViewById(R.id.image);
+                ListView ingredients = rootView.findViewById(R.id.ingredients);
+                Button btnInstructions = rootView.findViewById(R.id.instructions);
 
-                        Drawable.ConstantState d1 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_off_background).getConstantState();
-                        Drawable.ConstantState d2 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_on_background).getConstantState();
-                        Drawable actual = doneBtn.getDrawable();
-                        if (actual.getConstantState().equals(d1)) {
+                int size = results.size();
+                if (size == 0) {
+                    image.setImageResource(R.drawable.sadface);
+                    textView.setText("Sorry, no results found!");
+                    btnInstructions.setVisibility(View.INVISIBLE);
 
-                            db.addRecipe(results.get(number - 1), 1);
-                            db.updateRecipeCount(1);
+                } else {
 
-                            doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
-                            int recipes = db.getRecipeCount();
-                            //notify user badge earned
-                            if (recipes == 1 || recipes == 10 || recipes == 50 || recipes == 100 || recipes == 500 || recipes == 1000) {
 
-                                String uri = "@drawable/cookhat"+recipes;  // where cookhat+recipes is the file
+                    final FloatingActionButton doneBtn = rootView.findViewById(R.id.doneButton);
+                    if (db.checkRecipe(results.get(number - 1), 1)) {
+                        doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
+                    }
+                    doneBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //add recipe to favourite list
 
-                                int imageResource = getResources().getIdentifier(uri, null, getContext().getPackageName());
+                            Drawable.ConstantState d1 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_off_background).getConstantState();
+                            Drawable.ConstantState d2 = ContextCompat.getDrawable(getContext(), android.R.drawable.checkbox_on_background).getConstantState();
+                            Drawable actual = doneBtn.getDrawable();
+                            if (actual.getConstantState().equals(d1)) {
 
-                                Drawable res = getResources().getDrawable(imageResource);
-                                new MaterialStyledDialog.Builder(getContext())
-                                        .setTitle("Awesome!")
-                                        .setDescription("Well done! You've earned a new badge!")
-                                        .setHeaderDrawable(res)
-                                        .withDialogAnimation(true)
-                                        .setPositiveText("OK!")
-                                        .show();
-                                if(dataColl) {
+                                db.addRecipe(results.get(number - 1), 1);
+                                db.updateRecipeCount(1);
+
+                                doneBtn.setImageResource(android.R.drawable.checkbox_on_background);
+                                int recipes = db.getRecipeCount();
+                                //notify user badge earned
+                                if (recipes == 1 || recipes == 10 || recipes == 50 || recipes == 100 || recipes == 500 || recipes == 1000) {
+
+                                    String uri = "@drawable/cookhat" + recipes;  // where cookhat+recipes is the file
+
+                                    int imageResource = getResources().getIdentifier(uri, null, getContext().getPackageName());
+
+                                    Drawable res = getResources().getDrawable(imageResource);
+                                    new MaterialStyledDialog.Builder(getContext())
+                                            .setTitle("Awesome!")
+                                            .setDescription("Well done! You've earned a new badge!")
+                                            .setHeaderDrawable(res)
+                                            .withDialogAnimation(true)
+                                            .setPositiveText("OK!")
+                                            .show();
+                                    if (dataColl) {
+                                        String email = db.getEmail();
+                                        Boolean code = prefManager.getCode();
+                                        String activity = "RECIPE COUNT BADGE";
+                                        String info = Integer.toString(db.getRecipeCount());
+
+                                        Call<Void> sendDataCall = dataCollWebService.sendEngagement(email, code, activity, info);
+                                        sendDataCall.enqueue(callCallback);
+                                    }
+
+
+                                } else {
+                                    Toast.makeText(getContext(), "Recipe added to \"Done\"", Toast.LENGTH_SHORT).show();
+                                }
+
+                                if (dataColl) {
+                                    //send data about recipe marked as done
                                     String email = db.getEmail();
                                     Boolean code = prefManager.getCode();
-                                    String activity = "RECIPE COUNT BADGE";
+                                    String activity = "RECIPE DONE";
                                     String info = Integer.toString(db.getRecipeCount());
 
                                     Call<Void> sendDataCall = dataCollWebService.sendEngagement(email, code, activity, info);
@@ -232,39 +262,20 @@ public class ResultList extends AppCompatActivity {
 
 
                             }
-                            else {
-                                Toast.makeText(getContext(), "Recipe added to \"Done\"", Toast.LENGTH_SHORT).show();
+                            if (actual.getConstantState().equals(d2)) {
+
+                                db.deleteRecipe(results.get(number - 1), 1);
+                                db.updateRecipeCount(1);
+
+                                doneBtn.setImageResource(android.R.drawable.checkbox_off_background);
+                                Toast.makeText(getContext(), "Recipe removed from \"Done\"", Toast.LENGTH_SHORT).show();
                             }
 
-                            if(dataColl) {
-                                //send data about recipe marked as done
-                                String email = db.getEmail();
-                                Boolean code = prefManager.getCode();
-                                String activity = "RECIPE DONE";
-                                String info = Integer.toString(db.getRecipeCount());
-
-                                Call<Void> sendDataCall = dataCollWebService.sendEngagement(email, code, activity, info);
-                                sendDataCall.enqueue(callCallback);
-                            }
-
-
-
                         }
-                        if (actual.getConstantState().equals(d2)) {
-
-                            db.deleteRecipe(results.get(number - 1), 1);
-                            db.updateRecipeCount(1);
-
-                            doneBtn.setImageResource(android.R.drawable.checkbox_off_background);
-                            Toast.makeText(getContext(), "Recipe removed from \"Done\"", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
+                    });
 
 
-
-
+                }
             }
             else {
                 rootView = inflater.inflate(R.layout.fragment_results_no, container, false);
@@ -338,11 +349,7 @@ public class ResultList extends AppCompatActivity {
                     }
                 });
 
-
-
             }
-
-
 
             return rootView;
         }
@@ -410,8 +417,6 @@ public class ResultList extends AppCompatActivity {
                 try {
                     JSONObject result = new JSONObject(jsonStr);
                     JSONArray hits = result.getJSONArray("hits");
-
-
 
                         // looping through contents
                         for (int i = 0; i < hits.length(); i++) {

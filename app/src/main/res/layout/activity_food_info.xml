@@ -23,29 +23,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/greenAndBlue"
-        android:layout_width="234dp"
-        android:layout_height="132dp"
-        android:layout_gravity="top|center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="3"
-        android:src="@drawable/university_of_stirling_students_union_project_logo_large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/riversideBakery" />
-
-    <ImageView
-        android:id="@+id/healthFoodShop"
+        android:id="@+id/happyCow"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_gravity="center_vertical|center_horizontal|center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_weight="1"
+        app:layout_constraintEnd_toStartOf="@+id/society"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:srcCompat="@drawable/cow" />
+
+    <ImageView
+        android:id="@+id/society"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_vertical|center_horizontal|center"
         android:layout_marginEnd="48dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="3"
+        android:layout_marginTop="36dp"
+        android:layout_weight="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/farmersMarket"
-        app:srcCompat="@drawable/healthfoodstore" />
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:srcCompat="@drawable/sucs" />
 
     <ImageView
         android:id="@+id/riversideBakery"
@@ -59,18 +60,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/foodAssembly"
         app:srcCompat="@drawable/riversidebakery" />
-
-    <ImageView
-        android:id="@+id/farmersMarket"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_gravity="center"
-        android:layout_marginEnd="48dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/society"
-        app:srcCompat="@drawable/dddad1effa55a2cd191aadeb83f8d170" />
 
     <ImageView
         android:id="@+id/foodAssembly"
@@ -87,28 +76,40 @@
         app:srcCompat="@drawable/assembly" />
 
     <ImageView
-        android:id="@+id/society"
+        android:id="@+id/farmersMarket"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_gravity="center"
         android:layout_marginEnd="48dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        app:srcCompat="@drawable/sucs" />
+        app:layout_constraintTop_toBottomOf="@+id/society"
+        app:srcCompat="@drawable/dddad1effa55a2cd191aadeb83f8d170" />
 
     <ImageView
-        android:id="@+id/happyCow"
-        android:layout_width="120dp"
+        android:id="@+id/greenAndBlue"
+        android:layout_width="220dp"
         android:layout_height="120dp"
-        android:layout_gravity="center"
+        android:layout_gravity="top|center"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
         android:layout_weight="1"
-        app:layout_constraintEnd_toStartOf="@+id/society"
+        android:src="@drawable/university_of_stirling_students_union_project_logo_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.536"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        app:srcCompat="@drawable/cow" />
+        app:layout_constraintTop_toBottomOf="@+id/riversideBakery" />
+
+    <ImageView
+        android:id="@+id/healthFoodShop"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/farmersMarket"
+        app:srcCompat="@drawable/healthfoodstore" />
+
 </android.support.constraint.ConstraintLayout>

@@ -42,7 +42,7 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="242dp">
+        android:layout_height="316dp">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -102,6 +102,22 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="User code "
+                    android:inputType="number" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/dailyIntakeGoal"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="What is your daily intake goal?"
                     android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 

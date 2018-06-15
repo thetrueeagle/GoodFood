@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -19,6 +22,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.marcok.stepprogressbar.StepProgressBar;
 
@@ -36,7 +41,7 @@ public class DailyIntake extends AppCompatActivity {
 
 
     private PrefManager prefManager;
-    private TextView count, streak;
+    private TextView count, streak, title;
     private final String[] labels = {"1", "", "", "", "5", "", "7", "", "", "Champion"};
     private MyDBHandler db;
     private int lastUpdated, today;
@@ -68,6 +73,11 @@ public class DailyIntake extends AppCompatActivity {
                 .baseUrl("https://docs.google.com/forms/d/e/")
                 .build();
         final DataCollection dataCollWebService = retrofit.create(DataCollection.class);
+
+
+        final String goal = prefManager.getGoal();
+
+
         if (prefManager.getDate()!=-1) { //checks if a stored date is present
 
 
@@ -75,43 +85,46 @@ public class DailyIntake extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             today = calendar.get(Calendar.DAY_OF_YEAR);
 
+
             if ((today - lastUpdated == 1)) { //checks if it is exactly the next day
 
-                db.checkDateAndUpdate(true); //strike maintained (if intake>=5)
+                db.checkDateAndUpdate(true, goal); //strike maintained (if intake>=5)
                 lastUpdated = today;
                 prefManager.setDate(lastUpdated);
 
                 //notify user badge earned + send to forms
-                int streak = db.getDaysStreak();
-                if(streak==1 || streak==5 || streak==10 || streak==20 || streak==50 || streak==100) {
-                    String uri = "@drawable/apple"+streak;  // where apple+streak is the file
+                if(prefManager.getCode()) {
+                    int streak = db.getDaysStreak();
+                    if (streak == 1 || streak == 5 || streak == 10 || streak == 20 || streak == 50 || streak == 100) {
+                        String uri = "@drawable/apple" + streak;  // where apple+streak is the file
 
-                    int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+                        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
 
-                    Drawable res = getResources().getDrawable(imageResource);
-                    new MaterialStyledDialog.Builder(this)
-                            .setTitle("Awesome!")
-                            .setDescription("Well done! You've earned a new badge!")
-                            .setHeaderDrawable(res)
-                            .withDialogAnimation(true)
-                            .setPositiveText("OK!")
-                            .show();
+                        Drawable res = getResources().getDrawable(imageResource);
+                        new MaterialStyledDialog.Builder(this)
+                                .setTitle("Awesome!")
+                                .setDescription("Well done! You've earned a new badge!")
+                                .setHeaderDrawable(res)
+                                .withDialogAnimation(true)
+                                .setPositiveText("OK!")
+                                .show();
 
-                    if(dataColl) { //checks if data collection is still active; only then send to forms
-                        String email = db.getEmail();
-                        Boolean code = prefManager.getCode();
-                        String activity = "DAILY INTAKE STREAK BADGE";
-                        String info = Integer.toString(streak);
+                        if (dataColl) { //checks if data collection is still active; only then send to forms
+                            String email = db.getEmail();
+                            Boolean code = prefManager.getCode();
+                            String activity = "DAILY INTAKE STREAK BADGE";
+                            String info = Integer.toString(streak);
 
-                        Call<Void> sendDataCall = dataCollWebService.sendEngagement(email, code, activity, info);
-                        sendDataCall.enqueue(callCallback);
+                            Call<Void> sendDataCall = dataCollWebService.sendEngagement(email, code, activity, info);
+                            sendDataCall.enqueue(callCallback);
+                        }
                     }
                 }
 
 
 
             } else if ((today - lastUpdated > 1)) { //checks if more than 1 day has passed
-                db.checkDateAndUpdate(false); //strike has been lost
+                db.checkDateAndUpdate(false, goal); //strike has been lost
                 lastUpdated = today;
                 prefManager.setDate(lastUpdated);
 
@@ -174,11 +187,8 @@ public class DailyIntake extends AppCompatActivity {
 
 
 
-                        if(intakeBar.getCurrentProgressDot()==4){
-                            Toast.makeText(getApplicationContext(), "You've achieved 5-a-day!", Toast.LENGTH_LONG).show();
-                        }
-                        if(intakeBar.getCurrentProgressDot()==6){
-                            Toast.makeText(getApplicationContext(), "You've achieved 7-a-day!", Toast.LENGTH_LONG).show();
+                        if(intakeBar.getCurrentProgressDot()==(Integer.parseInt(goal)-1)){
+                            Toast.makeText(getApplicationContext(), "You've achieved your daily intake goal of "+goal+"!", Toast.LENGTH_LONG).show();
                         }
                         if(intakeBar.getCurrentProgressDot()==9){
                             Toast.makeText(getApplicationContext(), "You're a champion!", Toast.LENGTH_LONG).show();
@@ -205,11 +215,8 @@ public class DailyIntake extends AppCompatActivity {
                         count.setText(Integer.toString(intakeBar.getCurrentProgressDot()+1));
 
 
-                        if(intakeBar.getCurrentProgressDot()==4){
-                            Toast.makeText(getApplicationContext(), "You've achieved 5-a-day!", Toast.LENGTH_LONG).show();
-                        }
-                        if(intakeBar.getCurrentProgressDot()==6){
-                            Toast.makeText(getApplicationContext(), "You've achieved 7-a-day!", Toast.LENGTH_LONG).show();
+                        if(intakeBar.getCurrentProgressDot()==(Integer.parseInt(goal)-1)){
+                            Toast.makeText(getApplicationContext(), "You've achieved your daily intake goal of "+goal+"!", Toast.LENGTH_LONG).show();
                         }
                         if(intakeBar.getCurrentProgressDot()==9){
                             Toast.makeText(getApplicationContext(), "You're a champion!", Toast.LENGTH_LONG).show();
@@ -268,6 +275,58 @@ public class DailyIntake extends AppCompatActivity {
 
 
         }
+
+
+
+        title = findViewById(R.id.title5aday);
+        title.setText(goal+"-a-day");
+
+
+
+
+        Button changeGoal = findViewById(R.id.changeGoal);
+        changeGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final EditText edittext = new EditText(DailyIntake.this);
+                edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+                edittext.setGravity(View.TEXT_ALIGNMENT_CENTER);
+                edittext.setWidth(180);
+                String uri = "@drawable/vegetables";
+
+                int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+                Drawable res = getResources().getDrawable(imageResource);
+                new MaterialStyledDialog.Builder(DailyIntake.this)
+                        .setTitle("Change goal")
+                        .setDescription("What is your new daily intake goal?")
+                        .setHeaderDrawable(res)
+                        .withDialogAnimation(true)
+                        .setPositiveText("Save")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                String newGoal = edittext.getText().toString();
+                                prefManager.setGoal(newGoal);
+
+                                Call<Void> sendDataCall = dataCollWebService.sendEngagement(db.getEmail(), prefManager.getCode(), "DAILY INTAKE GOAL CHANGE", newGoal);
+                                sendDataCall.enqueue(callCallback);
+
+                                // Refresh main activity upon close of dialog box
+                                Intent refresh = new Intent(DailyIntake.this, DailyIntake.class);
+                                startActivity(refresh);
+                                finish(); //
+                            }
+                        })
+                        .setNegativeText("Cancel")
+                        .setCustomView(edittext)
+                        .show();
+
+
+
+
+            }
+        });
 
 
 

@@ -48,6 +48,17 @@ public class Recipes extends AppCompatActivity {
 
 
     @Override
+    protected void onResume(){
+        super.onResume();
+        ingredients=0;
+        temp=0;
+        dietLabels= new String[6];
+        healthLabels= new String[27];
+        calorieMax=0;
+        calorieMin=0;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
@@ -105,9 +116,6 @@ public class Recipes extends AppCompatActivity {
 
     }
 
-
-
-
     public void selectIngredientNo(View view){
 
 
@@ -118,7 +126,7 @@ public class Recipes extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         ingredients = temp+1;
                         TextView maxIngredients = findViewById(R.id.maxField);
-                        maxIngredients.setText("Max number of ingredients - "+ ingredients);
+                        maxIngredients.setText("Max number of ingredients");
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -174,6 +182,7 @@ public class Recipes extends AppCompatActivity {
 
 
                 });
+
 
 
         // 3. Get the AlertDialog from create()

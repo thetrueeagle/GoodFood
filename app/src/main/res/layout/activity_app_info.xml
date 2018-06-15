@@ -69,13 +69,13 @@
         android:text="Recipes"
         android:textColor="#ffffff"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/dailyIntake"
+        app:layout_constraintBottom_toTopOf="@+id/dailyIntakeGoal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.119"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/dailyIntake"
+        android:id="@+id/dailyIntakeGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="35dp"
