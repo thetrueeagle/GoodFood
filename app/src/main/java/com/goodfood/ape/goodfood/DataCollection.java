@@ -13,45 +13,45 @@ import retrofit2.http.POST;
 public interface DataCollection {
 
 
-    @POST("1FAIpQLSf00Xkw2EdplPjf6oVuuS3ysMxaHGHyCfDumTV9GE5HEWKk4Q/formResponse")
+    @POST("1o3RzxfL3epQxcloYlxo6281u1keKWT7Djv0xwEAubEY/formResponse")
     @FormUrlEncoded
     Call<Void> sendEngagement(
-            @Field("entry.1083588543") String email,
-            @Field("entry.1887351760") Boolean code,
-            @Field("entry.202177462") String activity,
-            @Field("entry.521407862") String info
+            @Field("entry.1807650696") String email,
+            @Field("entry.1555002673") Boolean code,
+            @Field("entry.1545826018") String activity,
+            @Field("entry.777766750") String info
     );
 
-    @POST("1FAIpQLScIsWZYI0HTbClZCTl_VTfMJay9N9EdL1tI1PBIzV1j4JUglA/formResponse")
+    @POST("1NhSrukxM_bpuqqn4Am7wiDqbJLD_unFd65axzWaCDjk/formResponse")
     @FormUrlEncoded
     Call<Void> sendDailyIntake(
-            @Field("entry.504471132") String email,
-            @Field("entry.262224557") String date,
-            @Field("entry.1261611035") String intake
+            @Field("entry.1490968695") String email,
+            @Field("entry.1389886381") String date,
+            @Field("entry.63782285") String intake
     );
 
-    @POST("1FAIpQLSdJbSmhTWGNkpkniZlt8lybdXBQr4Sdufsh9xUKv6MnUaYLng/formResponse")
+    @POST("1z_W9W-bsUI5JaCUMLLNo5ZpK5k8s5sniYHBp6SwLdo4/formResponse")
     @FormUrlEncoded
     Call<Void> sendUserInfo(
-            @Field("entry.552012012") String name,
-            @Field("entry.1833083128") String surname,
-            @Field("entry.932178961") String email,
-            @Field("entry.1293719396") int streak,
-            @Field("entry.917452373") int intake,
-            @Field("entry.876880012") int recipes,
-            @Field("entry.1173570779") int orders,
-            @Field("entry.1621145241") int badges,
-            @Field("entry.224183158") String notes
+            @Field("entry.1381769090") String name,
+            @Field("entry.1575705471") String surname,
+            @Field("entry.129493829") String email,
+            @Field("entry.60583996") int streak,
+            @Field("entry.1936839258") int intake,
+            @Field("entry.2111959000") int recipes,
+            @Field("entry.1099430937") int orders,
+            @Field("entry.2036134188") int badges,
+            @Field("entry.2026806379") String notes
     );
 
 
-    @POST("1FAIpQLSfY0xa_d8Iip2e7-5H0TbXip90mYfhaQUYi_unaYb5Pn0MqHg/formResponse")
+    @POST("1djt_-R4SRAdUw2V2Tj2jnwUSBNsB0FzufVY-YwolK6o/formResponse")
     @FormUrlEncoded
     Call<Void> sendRecipes(
-            @Field("entry.307570954") String email,
-            @Field("entry.1022679419") String title,
-            @Field("entry.732097508") String url,
-            @Field("entry.20409953") String category
+            @Field("entry.252113994") String email,
+            @Field("entry.464655268") String title,
+            @Field("entry.1356132088") String url,
+            @Field("entry.810498609") String category
     );
 
 

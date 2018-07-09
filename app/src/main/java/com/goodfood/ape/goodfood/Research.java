@@ -51,7 +51,7 @@ public class Research extends AppCompatActivity {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://docs.google.com/forms/d/e/")
+                .baseUrl("https://docs.google.com/forms/d/")
                 .build();
         final DataCollection dataCollWebService = retrofit.create(DataCollection.class);
 

@@ -177,7 +177,7 @@ public class ResultList extends AppCompatActivity {
 
             //new instance retrofit to send data to forms
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://docs.google.com/forms/d/e/")
+                    .baseUrl("https://docs.google.com/forms/d/")
                     .build();
             final DataCollection dataCollWebService = retrofit.create(DataCollection.class);
             if(prefManager.getCode()==true) {
