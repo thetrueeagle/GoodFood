@@ -64,7 +64,7 @@ public class Achievements extends AppCompatActivity {
             image2.getLayoutParams().height=windowHeight/2-200;
             image2.getLayoutParams().width=windowWidth/2;
             TextView description2 = new TextView(this);
-            description2.setText("One Veg Bag order!");
+            description2.setText("One Veg Bag ordered!");
             description2.setGravity(Gravity.CENTER);
             description2.setTextAppearance(this, R.style.textAchievements);
             tr2.addView(description2);
@@ -89,7 +89,7 @@ public class Achievements extends AppCompatActivity {
             image3.getLayoutParams().height=windowHeight/2-200;
             image3.getLayoutParams().width=windowWidth/2;
             TextView description3 = new TextView(this);
-            description3.setText("Ten Veg Bag order!");
+            description3.setText("Ten Veg Bags ordered!");
             description3.setGravity(Gravity.CENTER);
             description3.setTextAppearance(this, R.style.textAchievements);
             tr3.addView(description3);
@@ -114,7 +114,7 @@ public class Achievements extends AppCompatActivity {
             image4.getLayoutParams().height=windowHeight/2-200;
             image4.getLayoutParams().width=windowWidth/2;
             TextView description4 = new TextView(this);
-            description4.setText("Fifty Veg Bag order!");
+            description4.setText("Fifty Veg Bags ordered!");
             description4.setGravity(Gravity.CENTER);
             description4.setTextAppearance(this, R.style.textAchievements);
             tr4.addView(description4);
@@ -139,7 +139,7 @@ public class Achievements extends AppCompatActivity {
             image5.getLayoutParams().height=windowHeight/2-200;
             image5.getLayoutParams().width=windowWidth/2;
             TextView description5 = new TextView(this);
-            description5.setText("Hundred Veg Bag order!");
+            description5.setText("Hundred Veg Bags ordered!");
             description5.setGravity(Gravity.CENTER);
             description5.setTextAppearance(this, R.style.textAchievements);
             tr5.addView(description5);
@@ -164,7 +164,7 @@ public class Achievements extends AppCompatActivity {
             image6.getLayoutParams().height=windowHeight/2-200;
             image6.getLayoutParams().width=windowWidth/2;
             TextView description6 = new TextView(this);
-            description6.setText("Two hundred Veg Bag order!");
+            description6.setText("Two hundred Veg Bags ordered!");
             description6.setGravity(Gravity.CENTER);
             description6.setTextAppearance(this, R.style.textAchievements);
             tr6.addView(description6);
@@ -189,7 +189,7 @@ public class Achievements extends AppCompatActivity {
             image7.getLayoutParams().height=windowHeight/2-200;
             image7.getLayoutParams().width=windowWidth/2;
             TextView description7 = new TextView(this);
-            description7.setText("Five hundred Veg Bag order!");
+            description7.setText("Five hundred Veg Bags ordered!");
             description7.setGravity(Gravity.CENTER);
             description7.setTextAppearance(this, R.style.textAchievements);
             tr7.addView(description7);
@@ -364,7 +364,7 @@ public class Achievements extends AppCompatActivity {
             image14.getLayoutParams().height=windowHeight/2-200;
             image14.getLayoutParams().width=windowWidth/2;
             TextView description14 = new TextView(this);
-            description14.setText("Holding a one day strike!");
+            description14.setText("Holding a one day streak!");
             description14.setGravity(Gravity.CENTER);
             description14.setTextAppearance(this, R.style.textAchievements);
             tr14.addView(description14);
@@ -389,7 +389,7 @@ public class Achievements extends AppCompatActivity {
             image15.getLayoutParams().height=windowHeight/2-200;
             image15.getLayoutParams().width=windowWidth/2;
             TextView description15 = new TextView(this);
-            description15.setText("Holding a five day strike!");
+            description15.setText("Holding a five day streak!");
             description15.setGravity(Gravity.CENTER);
             description15.setTextAppearance(this, R.style.textAchievements);
             tr15.addView(description15);
@@ -414,7 +414,7 @@ public class Achievements extends AppCompatActivity {
             image16.getLayoutParams().height=windowHeight/2-200;
             image16.getLayoutParams().width=windowWidth/2;
             TextView description16 = new TextView(this);
-            description16.setText("Holding a ten day strike!");
+            description16.setText("Holding a ten day streak!");
             description16.setGravity(Gravity.CENTER);
             description16.setTextAppearance(this, R.style.textAchievements);
             tr16.addView(description16);
@@ -439,7 +439,7 @@ public class Achievements extends AppCompatActivity {
             image17.getLayoutParams().height=windowHeight/2-200;
             image17.getLayoutParams().width=windowWidth/2;
             TextView description17 = new TextView(this);
-            description17.setText("Holding a twenty day strike!");
+            description17.setText("Holding a twenty day streak!");
             description17.setGravity(Gravity.CENTER);
             description17.setTextAppearance(this, R.style.textAchievements);
             tr17.addView(description17);
@@ -464,7 +464,7 @@ public class Achievements extends AppCompatActivity {
             image18.getLayoutParams().height=windowHeight/2-200;
             image18.getLayoutParams().width=windowWidth/2;
             TextView description18 = new TextView(this);
-            description18.setText("Holding a fifty day strike!");
+            description18.setText("Holding a fifty day streak!");
             description18.setGravity(Gravity.CENTER);
             description18.setTextAppearance(this, R.style.textAchievements);
             tr18.addView(description18);
@@ -489,7 +489,7 @@ public class Achievements extends AppCompatActivity {
             image19.getLayoutParams().height=windowHeight/2-200;
             image19.getLayoutParams().width=windowWidth/2;
             TextView description19 = new TextView(this);
-            description19.setText("Holding a hundred day strike!");
+            description19.setText("Holding a hundred day streak!");
             description19.setGravity(Gravity.CENTER);
             description19.setTextAppearance(this, R.style.textAchievements);
             tr19.addView(description19);
@@ -514,7 +514,7 @@ public class Achievements extends AppCompatActivity {
             image20.getLayoutParams().height=windowHeight/2-200;
             image20.getLayoutParams().width=windowWidth/2;
             TextView description20 = new TextView(this);
-            description20.setText("All badges obtained!!!");
+            description20.setText("All badges obtained!");
             description20.setGravity(Gravity.CENTER);
             description20.setTextAppearance(this, R.style.textAchievements);
             tr20.addView(description20);
