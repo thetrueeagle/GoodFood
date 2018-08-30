@@ -215,4 +215,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/history" />
 
+    <TextView
+        android:id="@+id/dailyIntakeNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:text="Daily Intake"
+        app:layout_constraintEnd_toStartOf="@+id/dailyStreakText"
+        app:layout_constraintHorizontal_bias="0.015"
+        app:layout_constraintStart_toStartOf="@+id/dailyIntakeIcon"
+        app:layout_constraintTop_toBottomOf="@+id/countSpinner" />
+
+    <TextView
+        android:id="@+id/dailyStreakText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="32dp"
+        android:text="Daily Streak"
+        app:layout_constraintEnd_toEndOf="@+id/dailyStreakFlame"
+        app:layout_constraintTop_toBottomOf="@+id/streak" />
+
 </android.support.constraint.ConstraintLayout>

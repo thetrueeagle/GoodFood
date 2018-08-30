@@ -28,7 +28,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class Order extends AppCompatActivity {
-
+    boolean purchased = false;
 
 
 
@@ -84,7 +84,11 @@ public class Order extends AppCompatActivity {
                             "Orders are not accepted for this week anymore, try again on Monday :)",
                             Toast.LENGTH_LONG)
                             .show();
+
+
+
                 }
+
                 else {
 
 
@@ -100,13 +104,14 @@ public class Order extends AppCompatActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(Order.this);
                     builder.setCancelable(true);
                     builder.setTitle("Confirm order");
-                    builder.setMessage("Are you sure you want to order?");
+                    builder.setMessage("Are you sure you want to order?\nPlease remember to pay for and collect your vegetable bag from the green and blue space on Thursday.\nFailure to do so may result in future orders being rejected.");
                     builder.setPositiveButton("Confirm",
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    purchased = true;
+                                   submitOrder(amount, comment, extras, allergies);
 
-                                    submitOrder(amount, comment, extras, allergies);
                                 }
                             });
                     builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -119,9 +124,9 @@ public class Order extends AppCompatActivity {
                     dialog.show();
 
 
-                }
+                    }
 
-            }
+                }
         });
 
 
@@ -141,7 +146,7 @@ public class Order extends AppCompatActivity {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, "Veg Bag Order");
         intent.putExtra(Intent.EXTRA_TEXT, emailBody);
-        intent.setData(Uri.parse("mailto:matt.woodthorpe@stir.ac.uk")); // or just "mailto:" for blank
+        intent.setData(Uri.parse("matt.woodthorpe@stir.ac.uk" + "?bcc=" + "cwd@cs.stir.ac.uk,sma@cs.stir.ac.uk")); // or just "mailto:" for blank
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
         //startActivity(intent);
         //db.updateOrderCount();

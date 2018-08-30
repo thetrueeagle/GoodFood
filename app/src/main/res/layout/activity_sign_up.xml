@@ -117,8 +117,9 @@
                     android:layout_height="58dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="What is your daily intake goal?"
-                    android:inputType="number" />
+                    android:hint="What is your daily fruit and vegetable intake goal?"
+                    android:inputType="number"
+                    android:textSize="14sp" />
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>

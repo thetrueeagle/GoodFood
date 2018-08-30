@@ -299,7 +299,7 @@ public class DailyIntake extends AppCompatActivity {
                 Drawable res = getResources().getDrawable(imageResource);
                 new MaterialStyledDialog.Builder(DailyIntake.this)
                         .setTitle("Change goal")
-                        .setDescription("What is your new daily intake goal?")
+                        .setDescription("What is your new daily fruit and vegetable intake goal?")
                         .setHeaderDrawable(res)
                         .withDialogAnimation(true)
                         .setPositiveText("Save")
